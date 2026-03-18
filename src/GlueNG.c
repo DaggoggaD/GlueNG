@@ -64,15 +64,16 @@ void initialize() {
 	initialize_magic_bitboards();
 }
 
-
 int main()
 {
 	initialize();
 	Board board = { 0 };
-	load_fen_board("4r3/P6P/8/8/8/8/8/R3K2R w KQ - 0 1", &board);
+	load_fen_board("rnbqkbnr/ppp1p1pp/8/3pPp2/8/8/PPPP1PPP/RNBQKBNR w KQkq f6 0 3", &board);
 	debug_board_visualizer(&board);
 
 	MoveList list = { 0 };
 	white_generate_pseudo_moves(&board, &list);
-	printf("Generated %d pseudo-legal moves for white:\n", list.count);
+
+	debug_move_list(&list);
+
 }

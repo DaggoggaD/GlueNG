@@ -172,15 +172,19 @@ static inline int get_lsb_index(U64 b) {
 
 // Bit packing to save space:
 // 0 - 5: fromSquare (0-63) 6 - 11: toSquare (0-63) 12 - 15: piece type (0-5)
-// 16 - 19: promotion
+// 16 - 19: promotion 20: enPassant (0 - 1)
+// 
+// Note: promotion: 0 = no promotion, != 0 PieceType piece
+//		 enPassant: 0 = not enPassant move, 1 = enPassant move
+// 
 // Decode it with GET_FROM_SQUARE(move), GET_TO_SQUARE(move), GET_PIECE_TYPE(move) macros.
-void add_move_to_list(MoveList *list, int fromSquare, int toSquare, PieceType piece, PieceType promoted_to) {
+void add_move_to_list(MoveList *list, int fromSquare, int toSquare, PieceType piece, PieceType promoted_to, bool enPassant) {
 	if (list->count >= 256) {
 		fprintf(stderr, "Error: Move list is full. Cannot add more moves.\n");
 		return;
 	}
 	
-	int move = fromSquare | (toSquare << 6) | (piece << 12) | (promoted_to << 16);
+	int move = fromSquare | (toSquare << 6) | (piece << 12) | (promoted_to << 16) | (enPassant << 20);
 	
 	list->moves[list->count] = move;
 	list->count++;
@@ -198,7 +202,7 @@ void white_generate_pseudo_moves(Board *board, MoveList *list) {
 		int toSquare = get_lsb_index(normalPushes);
 		int fromSquare = toSquare - 8; 
 
-		add_move_to_list(list, fromSquare, toSquare, PAWN,0);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, 0, 0);
 		normalPushes &= normalPushes - 1;
 	}
 
@@ -206,10 +210,10 @@ void white_generate_pseudo_moves(Board *board, MoveList *list) {
 		int toSquare = get_lsb_index(promotions);
 		int fromSquare = toSquare - 8;
 
-		add_move_to_list(list, fromSquare, toSquare, PAWN, QUEEN);
-		add_move_to_list(list, fromSquare, toSquare, PAWN, ROOK);
-		add_move_to_list(list, fromSquare, toSquare, PAWN, BISHOP);
-		add_move_to_list(list, fromSquare, toSquare, PAWN, KNIGHT);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, QUEEN, 0);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, ROOK, 0);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, BISHOP, 0);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, KNIGHT, 0);
 
 		promotions &= promotions - 1;
 	}
@@ -220,7 +224,7 @@ void white_generate_pseudo_moves(Board *board, MoveList *list) {
 		int toSquare = get_lsb_index(doublePushes);
 		int fromSquare = toSquare - 16; 
 
-		add_move_to_list(list, fromSquare, toSquare, PAWN, 0);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, 0,0);
 		doublePushes &= doublePushes - 1;
 	}
 
@@ -235,7 +239,7 @@ void white_generate_pseudo_moves(Board *board, MoveList *list) {
 		int toSquare = get_lsb_index(normalEastAttacks);
 		int fromSquare = toSquare - 9;
 
-		add_move_to_list(list, fromSquare, toSquare, PAWN, 0);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, 0,0);
 
 		normalEastAttacks &= normalEastAttacks - 1;
 	}
@@ -244,10 +248,10 @@ void white_generate_pseudo_moves(Board *board, MoveList *list) {
 		int toSquare = get_lsb_index(promotions);
 		int fromSquare = toSquare - 9;
 
-		add_move_to_list(list, fromSquare, toSquare, PAWN, QUEEN);
-		add_move_to_list(list, fromSquare, toSquare, PAWN, ROOK);
-		add_move_to_list(list, fromSquare, toSquare, PAWN, BISHOP);
-		add_move_to_list(list, fromSquare, toSquare, PAWN, KNIGHT);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, QUEEN,0);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, ROOK,0);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, BISHOP,0);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, KNIGHT,0);
 
 		promotions &= promotions - 1;
 	}
@@ -263,7 +267,7 @@ void white_generate_pseudo_moves(Board *board, MoveList *list) {
 		int toSquare = get_lsb_index(normalWestAttacks);
 		int fromSquare = toSquare - 7;
 
-		add_move_to_list(list, fromSquare, toSquare, PAWN, 0);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, 0,0);
 
 		normalWestAttacks &= normalWestAttacks - 1;
 	}
@@ -272,10 +276,10 @@ void white_generate_pseudo_moves(Board *board, MoveList *list) {
 		int toSquare = get_lsb_index(promotions);
 		int fromSquare = toSquare - 7;
 
-		add_move_to_list(list, fromSquare, toSquare, PAWN, QUEEN);
-		add_move_to_list(list, fromSquare, toSquare, PAWN, ROOK);
-		add_move_to_list(list, fromSquare, toSquare, PAWN, BISHOP);
-		add_move_to_list(list, fromSquare, toSquare, PAWN, KNIGHT);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, QUEEN,0);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, ROOK,0);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, BISHOP,0);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, KNIGHT,0);
 		
 		promotions &= promotions - 1;
 	}
@@ -290,7 +294,7 @@ void white_generate_pseudo_moves(Board *board, MoveList *list) {
 		while (attacks) {
 			int targetSquare = get_lsb_index(attacks);
 
-			add_move_to_list(list, square, targetSquare, KNIGHT, 0);
+			add_move_to_list(list, square, targetSquare, KNIGHT, 0,0);
 
 			attacks &= attacks - 1;
 		}
@@ -308,7 +312,7 @@ void white_generate_pseudo_moves(Board *board, MoveList *list) {
 		while (attacks) {
 			int targetSquare = get_lsb_index(attacks);
 
-			add_move_to_list(list, square, targetSquare, BISHOP, 0);
+			add_move_to_list(list, square, targetSquare, BISHOP, 0,0);
 
 			attacks &= attacks - 1;
 
@@ -326,7 +330,7 @@ void white_generate_pseudo_moves(Board *board, MoveList *list) {
 		while (attacks) {
 			int targetSquare = get_lsb_index(attacks);
 
-			add_move_to_list(list, square, targetSquare, ROOK, 0);
+			add_move_to_list(list, square, targetSquare, ROOK, 0,0);
 
 			attacks &= attacks - 1;
 
@@ -344,7 +348,7 @@ void white_generate_pseudo_moves(Board *board, MoveList *list) {
 		while (attacks) {
 			int targetSquare = get_lsb_index(attacks);
 
-			add_move_to_list(list, square, targetSquare, QUEEN, 0);
+			add_move_to_list(list, square, targetSquare, QUEEN, 0,0);
 
 			attacks &= attacks - 1;
 
@@ -363,7 +367,7 @@ void white_generate_pseudo_moves(Board *board, MoveList *list) {
 		while (attacks) {
 			int targetSquare = get_lsb_index(attacks);
 
-			add_move_to_list(list, square, targetSquare, KING, 0);
+			add_move_to_list(list, square, targetSquare, KING, 0,0);
 
 			attacks &= attacks - 1;
 
@@ -377,7 +381,7 @@ void white_generate_pseudo_moves(Board *board, MoveList *list) {
 		int index = get_lsb_index(castling);
 		U64 castlingBitMask = castlingBlockers[index] & board->occupiedBitboards[BOTH];
 		if (castlingBitMask == 0) {
-			add_move_to_list(list, E1, castlingDestinations[index], KING, 0);
+			add_move_to_list(list, E1, castlingDestinations[index], KING, 0,0);
 		}
 
 
@@ -385,6 +389,20 @@ void white_generate_pseudo_moves(Board *board, MoveList *list) {
 	}
 
 
+	if (board->enPassant != -1) {
+		U64 enPassantSquare = 1ULL << board->enPassant;
+
+		U64 attacksToEnPassant = (so_ea_pawns(enPassantSquare) | so_we_pawns(enPassantSquare)) & board->pieceBitboards[WHITE][PAWN];
+		
+		while (attacksToEnPassant) {
+			int fromSquare = get_lsb_index(attacksToEnPassant);
+
+			add_move_to_list(list, fromSquare, board->enPassant, PAWN, 0, true);
+
+			attacksToEnPassant &= attacksToEnPassant - 1;
+		}
+
+	}
 
 }
 
@@ -395,7 +413,7 @@ void black_generate_pseudo_moves(Board* board, MoveList* list) {
 		int toSquare = get_lsb_index(singlePushes);
 		int fromSquare = toSquare + 8;
 
-		add_move_to_list(list, fromSquare, toSquare, PAWN, 0);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, 0,0);
 		singlePushes &= singlePushes - 1;
 	}
 
@@ -405,7 +423,7 @@ void black_generate_pseudo_moves(Board* board, MoveList* list) {
 		int toSquare = get_lsb_index(doublePushes);
 		int fromSquare = toSquare + 16;
 
-		add_move_to_list(list, fromSquare, toSquare, PAWN, 0);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, 0,0);
 		doublePushes &= doublePushes - 1;
 	}
 
@@ -416,7 +434,7 @@ void black_generate_pseudo_moves(Board* board, MoveList* list) {
 		int toSquare = get_lsb_index(pawnAttacksEast);
 		int fromSquare = toSquare + 7;
 
-		add_move_to_list(list, fromSquare, toSquare, PAWN, 0);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, 0,0);
 
 		pawnAttacksEast &= pawnAttacksEast - 1;
 	}
@@ -428,7 +446,7 @@ void black_generate_pseudo_moves(Board* board, MoveList* list) {
 		int toSquare = get_lsb_index(pawnAttacksWest);
 		int fromSquare = toSquare + 9;
 
-		add_move_to_list(list, fromSquare, toSquare, PAWN, 0);
+		add_move_to_list(list, fromSquare, toSquare, PAWN, 0,0);
 
 		pawnAttacksWest &= pawnAttacksWest - 1;
 	}
@@ -443,7 +461,7 @@ void black_generate_pseudo_moves(Board* board, MoveList* list) {
 		while (attacks) {
 			int targetSquare = get_lsb_index(attacks);
 
-			add_move_to_list(list, square, targetSquare, KNIGHT, 0);
+			add_move_to_list(list, square, targetSquare, KNIGHT, 0,0);
 
 			attacks &= attacks - 1;
 		}
@@ -461,7 +479,7 @@ void black_generate_pseudo_moves(Board* board, MoveList* list) {
 		while (attacks) {
 			int targetSquare = get_lsb_index(attacks);
 
-			add_move_to_list(list, square, targetSquare, BISHOP, 0);
+			add_move_to_list(list, square, targetSquare, BISHOP, 0,0);
 
 			attacks &= attacks - 1;
 
@@ -479,7 +497,7 @@ void black_generate_pseudo_moves(Board* board, MoveList* list) {
 		while (attacks) {
 			int targetSquare = get_lsb_index(attacks);
 
-			add_move_to_list(list, square, targetSquare, ROOK, 0);
+			add_move_to_list(list, square, targetSquare, ROOK, 0,0);
 
 			attacks &= attacks - 1;
 
@@ -497,7 +515,7 @@ void black_generate_pseudo_moves(Board* board, MoveList* list) {
 		while (attacks) {
 			int targetSquare = get_lsb_index(attacks);
 
-			add_move_to_list(list, square, targetSquare, QUEEN, 0);
+			add_move_to_list(list, square, targetSquare, QUEEN, 0,0);
 
 			attacks &= attacks - 1;
 
@@ -516,7 +534,7 @@ void black_generate_pseudo_moves(Board* board, MoveList* list) {
 		while (attacks) {
 			int targetSquare = get_lsb_index(attacks);
 
-			add_move_to_list(list, square, targetSquare, KING, 0);
+			add_move_to_list(list, square, targetSquare, KING, 0,0);
 
 			attacks &= attacks - 1;
 

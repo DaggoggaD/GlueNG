@@ -4,10 +4,12 @@
 #define GET_MOVE_SOURCE(move) ((move) & 0x3F)
 #define GET_MOVE_TARGET(move) (((move) >> 6) & 0x3F)
 #define GET_MOVE_PIECE(move)  (((move) >> 12) & 0xF)
+#define GET_PROMOTION_PIECE(move)  (((move) >> 16) & 0xF)
+#define GET_MOVE_EN_PASSANT(move)  (((move) >> 20) & 0x1)
 
 #include "Headers.h"
 
-typedef struct {
+typedef struct MoveList{
     int moves[256];
     int count;
 } MoveList;

@@ -5,6 +5,7 @@
 
 U64 knightAttackSquares[64];
 U64 kingAttackSquares[64];
+U64 pawnSingleAttacks[PlayerN][64];
 
 U64 rookOccupanciesMasks[64];
 U64 bishopOccupanciesMasks[64];

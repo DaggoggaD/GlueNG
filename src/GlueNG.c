@@ -53,47 +53,6 @@ int chebyshev_distance(int square1, int square2) {
 	return (rankDiff > fileDiff) ? rankDiff : fileDiff;
 }
 
-U64 knight_attacks_from_square(int square) {
-	if (square < 0 || square > 63) {
-		fprintf(stderr, "Error: Invalid square input. Square must be between 0 and 63.\n");
-		return 0ULL;
-	}
-	return knightAttackSquares[square];
-}
-
-U64 king_attacks_from_square(int square) {
-	if (square < 0 || square > 63) {
-		fprintf(stderr, "Error: Invalid square input. Square must be between 0 and 63.\n");
-		return 0ULL;
-	}
-	return kingAttackSquares[square];
-}
-
-U64 get_rook_attacks_from_square(int square, U64 blockers) {
-	if (square < 0 || square > 63) {
-		fprintf(stderr, "Error: Invalid square input. Square must be between 0 and 63.\n");
-		return 0ULL;
-	}
-	int magicIndex = get_magic_index(blockers, &RookMagics[square]);
-	return RookMoves[square][magicIndex];
-}
-
-U64 get_bishop_attacks_from_square(int square, U64 blockers) {
-	if (square < 0 || square > 63) {
-		fprintf(stderr, "Error: Invalid square input. Square must be between 0 and 63.\n");
-		return 0ULL;
-	}
-	int magicIndex = get_magic_index(blockers, &BishopMagics[square]);
-	return BishopMoves[square][magicIndex];
-}
-
-U64 get_queen_attacks_from_square(int square, U64 blockers) {
-	if (square < 0 || square > 63) {
-		fprintf(stderr, "Error: Invalid square input. Square must be between 0 and 63.\n");
-		return 0ULL;
-	}
-	return get_rook_attacks_from_square(square, blockers) | get_bishop_attacks_from_square(square, blockers);
-}
 
 void initialize() {
 	initialize_knight_attack_squares();
@@ -110,9 +69,10 @@ int main()
 {
 	initialize();
 	Board board = { 0 };
-	load_fen_board("8/8/5p2/p7/8/2B5/8/p3p3 w - - 0 1", &board);
+	load_fen_board("4r3/P6P/8/8/8/8/8/R3K2R w KQ - 0 1", &board);
 	debug_board_visualizer(&board);
 
-	debug_bitmask_visualizer(get_bishop_attacks_from_square(C3, board.occupiedBitboards[BOTH]));
-	
+	MoveList list = { 0 };
+	white_generate_pseudo_moves(&board, &list);
+	printf("Generated %d pseudo-legal moves for white:\n", list.count);
 }

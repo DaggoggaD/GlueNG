@@ -8,9 +8,11 @@
 #include "Debug.h"
 #include "LookUpTables.h"
 #include "MagicBitboards.h"
+#include "PseudoMovesCalc.h"
 #include "GlueNG.h"
 
 #include <string.h>
 #include <inttypes.h>
+#include <intrin.h>
 
 #endif // !HEADERS_H

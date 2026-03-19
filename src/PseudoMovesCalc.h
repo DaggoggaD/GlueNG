@@ -30,4 +30,6 @@ U64 get_queen_pseudo_moves(int square, U64 blockers, U64 ownPieces);
 
 void white_generate_pseudo_moves(Board* board, MoveList* list);
 
+void black_generate_pseudo_moves(Board* board, MoveList* list);
+
 #endif // !PSEUDO_MOVES_CALC_H

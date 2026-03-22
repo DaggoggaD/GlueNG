@@ -1,6 +1,7 @@
 #include "PseudoMovesCalc.h"
 
 const U64 rank1 = 0x00000000000000FFULL;
+const U64 rank2 = 0x000000000000FF00ULL;
 const U64 rank4 = 0x00000000FF000000ULL;
 const U64 rank5 = 0x000000FF00000000ULL;
 const U64 rank8 = 0xFF00000000000000ULL;
@@ -19,52 +20,42 @@ const int CastlingDestinations[4] = {
 	C8
 };
 
-
+// Get function for all pseudo moves from a square, checking only for own 
+// side collision.
 
 U64 get_knight_pseudo_moves(int square, U64 ownPieces) {
-	if (square < 0 || square > 63) {
-		fprintf(stderr, "Error: Invalid square input. Square must be between 0 and 63.\n");
-		return 0ULL;
-	}
+	assert(square >= 0 && square <= 63);
+
 	return knightAttackSquares[square] & ~ownPieces;
 }
 
 U64 get_king_pseudo_moves(int square, U64 ownPieces) {
-	if (square < 0 || square > 63) {
-		fprintf(stderr, "Error: Invalid square input. Square must be between 0 and 63.\n");
-		return 0ULL;
-	}
+	assert(square >= 0 && square <= 63);
+
 	return kingAttackSquares[square] & ~ownPieces;
 }
 
-U64 get_rook_pseudo_moves(int square, U64 blockers, U64 ownPieces) {
-	if (square < 0 || square > 63) {
-		fprintf(stderr, "Error: Invalid square input. Square must be between 0 and 63.\n");
-		return 0ULL;
-	}
+inline static U64 get_rook_pseudo_moves(int square, U64 blockers, U64 ownPieces) {
+	assert(square >= 0 && square <= 63);
 	int magicIndex = get_magic_index(blockers, &RookMagics[square]);
 	U64 attacks = RookMoves[square][magicIndex];
 
 	return attacks & ~ownPieces;
 }
 
-U64 get_bishop_pseudo_moves(int square, U64 blockers, U64 ownPieces) {
-	if (square < 0 || square > 63) {
-		fprintf(stderr, "Error: Invalid square input. Square must be between 0 and 63.\n");
-		return 0ULL;
-	}
+inline static U64 get_bishop_pseudo_moves(int square, U64 blockers, U64 ownPieces) {
+	assert(square >= 0 && square <= 63);
 	int magicIndex = get_magic_index(blockers, &BishopMagics[square]);
 	U64 attacks = BishopMoves[square][magicIndex];
-
+/*	printf("%d\n", square);
+	debug_bitmask_visualizer(attacks & ~ownPieces);
+	printf("\n");
+	*/
 	return attacks & ~ownPieces;
 }
 
-U64 get_queen_pseudo_moves(int square, U64 blockers, U64 ownPieces) {
-	if (square < 0 || square > 63) {
-		fprintf(stderr, "Error: Invalid square input. Square must be between 0 and 63.\n");
-		return 0ULL;
-	}
-
+inline static U64 get_queen_pseudo_moves(int square, U64 blockers, U64 ownPieces) {
+	assert(square >= 0 && square <= 63);
 	return get_rook_pseudo_moves(square, blockers, ownPieces) | get_bishop_pseudo_moves(square, blockers, ownPieces);
 }
 
@@ -163,11 +154,7 @@ U64 black_pawns_all_attacks(U64 pawns) {
 
 // Gets the index of the least significant bit in a bitboard,
 // learnt from https://www.chessprogramming.org/BitScan.
-static inline int get_lsb_index(U64 b) {
-	unsigned long index;
-	_BitScanForward64(&index, b);
-	return index; 
-}
+
 
 // Bit packing to save space:
 // 0 - 5: fromSquare (0-63) 6 - 11: toSquare (0-63) 12 - 15: piece type (0-5)
@@ -190,6 +177,9 @@ void add_move_to_list(MoveList *list, int fromSquare, int toSquare, PieceType pi
 }
 
 //								--- PseudoLegal Move Generation ---
+
+// Add all possible moves from a square by a specific piece type, 
+// for all the pieces of that type
 
 static inline void white_generate_pawn_pseudo(Board* board, MoveList* list) {
 	// PAWNS - Single pushes
@@ -381,16 +371,32 @@ static inline void white_generate_king_pseudo(Board* board, MoveList* list) {
 }
 
 static inline void white_generate_castling_legal(Board* board, MoveList* list) {
-	int castling = board->castlingPerms & (WKCA | WQCA);
-	while (castling) {
-		int index = get_lsb_index(castling);
-		U64 castlingBitMask = CastlingBlockers[index] & board->occupiedBitboards[BOTH];
+
+	if (board->castlingPerms & WKCA) {
+		U64 castlingBitMask = CastlingBlockers[0] & board->occupiedBitboards[BOTH];
+
 		if (castlingBitMask == 0) {
-			add_move_to_list(list, E1, CastlingDestinations[index], KING, 0, 0);
+
+			if (!is_square_attacked(board, E1, BLACK) && !is_square_attacked(board, F1, BLACK) &&
+				!is_square_attacked(board, G1, BLACK)) {
+				add_move_to_list(list, E1, G1, KING, 0, 0);
+
+			}
 		}
 
+	}
 
-		castling &= castling - 1;
+	if (board->castlingPerms & WQCA) {
+		U64 castlingBitMask = CastlingBlockers[1] & board->occupiedBitboards[BOTH];
+
+
+		if (castlingBitMask == 0) {
+			if (!is_square_attacked(board, E1, BLACK) && !is_square_attacked(board, D1, BLACK) &&
+				!is_square_attacked(board, C1, BLACK)) {
+				add_move_to_list(list, E1, C1, KING, 0, 0);
+			}
+		}
+
 	}
 }
 
@@ -605,17 +611,31 @@ static inline void black_generate_king_pseudo(Board* board, MoveList* list){
 }
 
 static inline void black_generate_castling_legal(Board* board, MoveList* list){
-	int castling = board->castlingPerms & (BKCA | BQCA);
-	while (castling)
-	{
-		int index = get_lsb_index(castling);
-		U64 castlingBitMask = CastlingBlockers[index] & board->occupiedBitboards[BOTH];
+
+	if (board->castlingPerms & BKCA) {
+		U64 castlingBitMask = CastlingBlockers[2] & board->occupiedBitboards[BOTH];
+
 		if (castlingBitMask == 0) {
-			add_move_to_list(list, E8, CastlingDestinations[index], KING, 0, 0);
+			if (!is_square_attacked(board, E8, WHITE) && !is_square_attacked(board, F8, WHITE) &&
+				!is_square_attacked(board, G8, WHITE)) {
+				add_move_to_list(list, E8, G8, KING, 0, 0);
+
+			}
 		}
 
+	}
 
-		castling &= castling - 1;
+	if (board->castlingPerms & BQCA) {
+		U64 castlingBitMask = CastlingBlockers[3] & board->occupiedBitboards[BOTH];
+		
+		if (castlingBitMask == 0) {
+			if (!is_square_attacked(board, E8, WHITE) && !is_square_attacked(board, D8, WHITE) &&
+				!is_square_attacked(board, C8, WHITE)) {
+				add_move_to_list(list, E8, C8, KING, 0, 0);
+
+			}
+		}
+
 	}
 }
 
@@ -636,8 +656,7 @@ static inline void black_generate_enp_pseudo(Board* board, MoveList* list){
 	}
 }
 
-
-
+// Generate and add to list all the possible pseudo legal moves in a certain board.
 void white_generate_pseudo_moves(Board *board, MoveList *list) {
 	// Generate a moveList entry for any possible
 	// pseudo legal move from current board position.
@@ -671,4 +690,32 @@ void black_generate_pseudo_moves(Board* board, MoveList* list) {
 
 	black_generate_castling_legal(board, list);
 	black_generate_enp_pseudo(board, list);
+}
+
+
+// Checks if a square is attacked by any "attackingSide" pieces.
+bool is_square_attacked(Board* board, int square, SelectionColor attackingSide) {
+	
+	SelectionColor defending = 1-attackingSide;
+
+	// Other side pawns
+	U64 pawns = board->pieceBitboards[attackingSide][PAWN];
+
+	if (pawnSingleAttacks[defending][square] & pawns) return true;
+
+	U64 knights = board->pieceBitboards[attackingSide][KNIGHT];
+	if (knightAttackSquares[square] & knights) return true;
+
+	U64 king = board->pieceBitboards[attackingSide][KING];
+	if (kingAttackSquares[square] & king) return true;
+
+	U64 bishopQueens = board->pieceBitboards[attackingSide][BISHOP] | board->pieceBitboards[attackingSide][QUEEN];
+	if (bishopQueens && (get_bishop_pseudo_moves(square, board->occupiedBitboards[BOTH], board->occupiedBitboards[defending])
+		& bishopQueens)) return true;
+
+	U64 rookQueens = board->pieceBitboards[attackingSide][ROOK] | board->pieceBitboards[attackingSide][QUEEN];
+	if (rookQueens && (get_rook_pseudo_moves(square, board->occupiedBitboards[BOTH], board->occupiedBitboards[defending])
+		& rookQueens)) return true;
+
+	return false;
 }

@@ -9,7 +9,10 @@
 #include "LookUpTables.h"
 #include "MagicBitboards.h"
 #include "PseudoMovesCalc.h"
+#include "CalcFunctions.h"
 #include "GlueNG.h"
+#include "MoveGeneration.h"
+#include <math.h>
 
 #include <string.h>
 #include <inttypes.h>

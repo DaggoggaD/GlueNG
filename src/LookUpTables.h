@@ -17,6 +17,7 @@ extern const U64 notABFile;
 extern const U64 notGHFile;
 
 // Called on startup, initializes knight, king attack bitboards.
+void initialize_pawn_single_attack_squares();
 void initialize_knight_attack_squares();
 void initialize_king_attack_squares();
 

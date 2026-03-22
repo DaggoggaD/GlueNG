@@ -8,7 +8,7 @@
 typedef unsigned long long U64;
 
 // Standard piece and square definitions taken from chess programming wiki
-typedef enum { PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING } PieceType;
+typedef enum { PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING, NONE } PieceType;
 
 typedef enum { EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK } PieceId;
 
@@ -31,6 +31,8 @@ typedef enum {
     A8, B8, C8, D8, E8, F8, G8, H8,
     NO_SQ
 } SquareId;
+
+extern const int castlingMask[64];
 
 
 // Castling permissions (represented as bit flags)

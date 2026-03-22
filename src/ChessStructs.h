@@ -3,8 +3,15 @@
 #define PieceTypeN 6
 #define PlayerN 2
 
-#include "ChessDefinitions.h"
+#include "Headers.h"
 
+typedef struct UndoHistory {
+	int castlingPerms;
+	int enPassant;
+	int halfMoves;
+	PieceType capturedPiece;
+
+} UndoHistory;
 
 typedef struct {
 	SelectionColor sideToMove;
@@ -15,14 +22,19 @@ typedef struct {
 	// Occupancy bitboards: [SelectionColor White - Black - Both]
 	U64 occupiedBitboards[3];
 
+	// Bigger, slower array used only to check piece type
+	// on specific square
+	PieceType pieceOnSquare[64];
+
 	// Special moves information
 	int castlingPerms;
-	int enPassant; //-1 if no en passant square, otherwise the index
+	int enPassant; // -1 if no en passant square, otherwise the index
 
 	// Move state information
 	int halfMoves;
 	short fiftyMoveCounter;
 	short repetitionCount;
+	UndoHistory history[1024];
 
 	// Evaluation helper stats
 	int kingSq[2];

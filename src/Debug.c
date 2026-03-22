@@ -129,6 +129,20 @@ void debug_precomputed_attack_visualizer(int square, PieceType type) {
 	}
 }
 
+void debug_move(int move) {
+	int from = GET_MOVE_SOURCE(move);
+	int to = GET_MOVE_TARGET(move);
+	int promoted = GET_PROMOTION_PIECE(move);
+	int isEp = GET_MOVE_EN_PASSANT(move);
+
+	char fromFile = (from % 8) + 'a';
+	char fromRank = (from / 8) + '1';
+	char toFile = (to % 8) + 'a';
+	char toRank = (to / 8) + '1';
+
+	printf("move: %c%c%c%c", fromFile, fromRank, toFile, toRank);
+}
+
 void debug_move_list(MoveList* list) {
 	printf("Moves: %d\n", list->count);
 

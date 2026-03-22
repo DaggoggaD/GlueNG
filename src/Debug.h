@@ -20,6 +20,7 @@ void debug_bitmask_visualizer(U64 bitmask);
 // S: square of interest, X: attacked square.
 void debug_precomputed_attack_visualizer(int square, PieceType type);
 
+void debug_move(int move);
 
 void debug_move_list(MoveList* list);
 

@@ -76,6 +76,20 @@ U64 calc_knight_attacks_on_square(U64 b) {
 		knight_no_No_We(b) | knight_no_We_We(b) | knight_so_We_We(b) | knight_so_So_We(b);
 }
 
+void initialize_pawn_single_attack_squares() {
+	// White
+	for (int square = 0; square < 64; square++) {
+		U64 bitboard = 1ULL << square;
+		pawnSingleAttacks[WHITE][square] = king_No_Ea(bitboard) | king_No_We(bitboard);
+	}
+
+	// Black
+	for (int square = 0; square < 64; square++) {
+		U64 bitboard = 1ULL << square;
+		pawnSingleAttacks[BLACK][square] = king_So_Ea(bitboard) | king_So_We(bitboard);
+	}
+}
+
 void initialize_king_attack_squares() {
 	for (int square = 0; square < 64; square++) {
 		U64 bitboard = 1ULL << square;

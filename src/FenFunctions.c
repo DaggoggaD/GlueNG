@@ -56,6 +56,14 @@ void place_fen_pieces(const char** fen, Board* board) {
 			SelectionColor color = (piece >= bP) ? BLACK : WHITE;
 			PieceType type = (piece - 1) % 6;
 			add_piece_to_board(type, color, index ^ 56, board);
+
+			if (type == KING) {
+
+				if (color == WHITE) board->kingSq[WHITE] = index ^ 56;
+				else board->kingSq[BLACK] = index ^ 56;
+
+			}
+
 			index++;
 		}
 
@@ -114,6 +122,53 @@ void set_fen_half_moves(const char* fen, Board* board) {
 	}
 }
 
+void set_piece_on_square(Board *board) {
+	U64 pawns = board->pieceBitboards[WHITE][PAWN] | board->pieceBitboards[BLACK][PAWN];
+	U64 knights = board->pieceBitboards[WHITE][KNIGHT] | board->pieceBitboards[BLACK][KNIGHT];
+	U64 bishops = board->pieceBitboards[WHITE][BISHOP] | board->pieceBitboards[BLACK][BISHOP];
+	U64 rooks = board->pieceBitboards[WHITE][ROOK] | board->pieceBitboards[BLACK][ROOK];
+	U64 queens = board->pieceBitboards[WHITE][QUEEN] | board->pieceBitboards[BLACK][QUEEN];
+	U64 king = board->pieceBitboards[WHITE][KING] | board->pieceBitboards[BLACK][KING];
+
+
+	for (int i = 0; i < BRD_SIZE; i++)
+	{
+		U64 searchedIndex = 1ULL << i;
+
+		if (pawns & searchedIndex) {
+			board->pieceOnSquare[i] = PAWN;
+			continue;
+		}
+		else if (knights & searchedIndex) {
+			board->pieceOnSquare[i] = KNIGHT;
+			continue;
+		}
+		else if (rooks & searchedIndex) {
+			board->pieceOnSquare[i] = ROOK;
+			continue;
+		}
+		else if (queens & searchedIndex) {
+			board->pieceOnSquare[i] = QUEEN;
+			continue;
+		}
+		else if (bishops & searchedIndex) {
+			board->pieceOnSquare[i] = BISHOP;
+			continue;
+		}
+		else if (king & searchedIndex) {
+			board->pieceOnSquare[i] = KING;
+			continue;
+		}
+		else {
+			board->pieceOnSquare[i] = NONE;
+			continue;
+		}
+
+
+	}
+
+}
+
 void load_fen_board(const char* fen, Board* board)
 {
 	place_fen_pieces(&fen, board);
@@ -129,5 +184,7 @@ void load_fen_board(const char* fen, Board* board)
 	fen++; // Skip space after en passant
 
 	set_fen_half_moves(fen, board);
+
+	set_piece_on_square(board);
 
 }

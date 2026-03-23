@@ -171,6 +171,8 @@ void set_piece_on_square(Board *board) {
 
 void load_fen_board(const char* fen, Board* board)
 {
+	memset(board, 0, sizeof(Board));
+
 	place_fen_pieces(&fen, board);
 	fen++; // Skip space after piece placement
 

@@ -637,6 +637,8 @@ int best_move(Board* board, int depth) {
 	if (board->sideToMove == WHITE) white_generate_pseudo_moves(board, &list);
 	else black_generate_pseudo_moves(board, &list);
 
+
+	
 	for (int i = 0; i < list.count; i++) {
 		int move = list.moves[i];
 
@@ -662,7 +664,11 @@ int best_move(Board* board, int depth) {
 		unmake_move(board, move, depth);
 
 		// Save score
-		if (score > best) {
+		// Bug fix: legalMoves == 1 is needed, as if it sees too long
+		// in the future, and there is no possible way out of checkmate,
+		// it will decide not to move any piece (a1a1) as none can deliver
+		// decent performance.
+		if (legalMoves == 1 || score > best) {
 			best = score;
 			bestMove = move;
 		}
@@ -671,8 +677,6 @@ int best_move(Board* board, int depth) {
 			alpha = best;
 		}
 	}
-
-	printf("Best eval found: %d\n", best);
-
+	
 	return bestMove;
 }

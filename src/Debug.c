@@ -140,7 +140,13 @@ void debug_move(int move) {
 	char toFile = (to % 8) + 'a';
 	char toRank = (to / 8) + '1';
 
-	printf("move: %c%c%c%c", fromFile, fromRank, toFile, toRank);
+	printf("%c%c%c%c", fromFile, fromRank, toFile, toRank);
+	if (promoted != 0) {
+		if (promoted == QUEEN) printf("q");
+		else if (promoted == ROOK) printf("r");
+		else if (promoted == BISHOP) printf("b");
+		else if (promoted == KNIGHT) printf("n");
+	}
 }
 
 void debug_move_list(MoveList* list) {

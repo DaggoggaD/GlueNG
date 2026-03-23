@@ -548,7 +548,7 @@ int evaluate(Board* board) {
 
 // Explores the moves tree, searching for the best eval.
 // Returns (int) best score.
-int nega_max(Board* board, int depth) {
+int nega_max(Board* board, int depth, int alpha, int beta) {
 	if (depth == 0) return evaluate(board);
 
 	int best = -INFINITY;
@@ -579,11 +579,25 @@ int nega_max(Board* board, int depth) {
 		
 		// From our point of view, the lower depth is in the opponent
 		// reference: an high score for him is a terrible score for us.
-		int score = -nega_max(board, depth-1);
+		int score = -nega_max(board, depth-1, -beta, -alpha);
 		unmake_move(board, move, depth);
 		
 		// Save score
 		if (score > best) best = score;
+
+
+		// Alpha-beta pruning
+
+		// Better move found, store new alpha
+		if(best > alpha) {
+			alpha = best;
+		}
+
+		// Move too good, opponent would pick any previous branch.
+		if (alpha > beta) {
+			break;
+		}
+
 	}
 
 	// If we didn't find any legal moves, it's either a checkmate (-infinity)
@@ -592,7 +606,7 @@ int nega_max(Board* board, int depth) {
 		SelectionColor otherSide = 1 - board->sideToMove;
 
 		if (is_square_attacked(board, board->kingSq[board->sideToMove], otherSide)) {
-			return -INFINITY + depth;
+			return -INFINITY - depth;
 		}
 		else {
 
@@ -607,6 +621,12 @@ int nega_max(Board* board, int depth) {
 // Explores the moves tree, with negamax. NOTE:
 // it returns the (int) best move, NOT score.
 int best_move(Board* board, int depth) {
+
+	// Here, for alpha-beta pruning, alpha represents our worst (pickable) scenario,
+	// bete the best one the opponent would give us.
+	int alpha = -INFINITY;
+	int beta = INFINITY;
+
 	int best = -INFINITY;
 	int bestMove = 0;
 	int legalMoves = 0;
@@ -638,13 +658,17 @@ int best_move(Board* board, int depth) {
 
 		// From our point of view, the lower depth is in the opponent
 		// reference: an high score for him is a terrible score for us.
-		int score = -nega_max(board, depth - 1);
+		int score = -nega_max(board, depth - 1, -beta, -alpha);
 		unmake_move(board, move, depth);
 
 		// Save score
 		if (score > best) {
 			best = score;
 			bestMove = move;
+		}
+
+		if (best > alpha) {
+			alpha = best;
 		}
 	}
 

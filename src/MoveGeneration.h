@@ -24,7 +24,7 @@ int pst_evaluation(Board* board);
 
 int evaluate(Board* board);
 
-int nega_max(Board* board, int depth);
+int nega_max(Board* board, int depth, int alpha, int beta);
 
 int best_move(Board* board, int depth);
 

@@ -38,7 +38,7 @@ int main()
         debug_board_visualizer(&board);
 
 
-        int best = best_move(&board, 4);
+        int best = best_move(&board, 7);
 
         printf("move played: \n");
         debug_move(best);

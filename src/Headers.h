@@ -12,6 +12,7 @@
 #include "CalcFunctions.h"
 #include "GlueNG.h"
 #include "MoveGeneration.h"
+#include "UCI.h"
 #include <math.h>
 
 #include <string.h>

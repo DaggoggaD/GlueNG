@@ -18,10 +18,12 @@ void initialize() {
 #pragma warning(suppress : 6262)
 int main()
 {
+    setbuf(stdout, NULL);
     initialize();
     
-    char fen_input[256];
+    uci_protocol_handler(7);
 
+    /*char fen_input[256];
     printf("GlueNG ready. Paste fen string.\n");
     printf("'Quit' to exit.\n");
 
@@ -37,13 +39,12 @@ int main()
         load_fen_board(fen_input, &board);
         debug_board_visualizer(&board);
 
-
         int best = best_move(&board, 7);
 
         printf("move played: \n");
         debug_move(best);
         printf("\n");
     }
-
+    */
 	return 0;
 }

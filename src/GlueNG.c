@@ -1,5 +1,5 @@
 #include "GlueNG.h"
-#include <time.h>
+
 
 void initialize() {
 	// Initialize attacks for "jumping" pieces
@@ -21,7 +21,7 @@ int main()
     setbuf(stdout, NULL);
     initialize();
     
-    uci_protocol_handler(7);
+    uci_protocol_handler(8);
 
     /*char fen_input[256];
     printf("GlueNG ready. Paste fen string.\n");

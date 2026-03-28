@@ -18,5 +18,6 @@
 #include <string.h>
 #include <inttypes.h>
 #include <intrin.h>
+#include <time.h>
 
 #endif // !HEADERS_H

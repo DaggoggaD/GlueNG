@@ -11,4 +11,6 @@ void add_piece_to_board(const PieceType piece, const SelectionColor color, int i
 
 int chebyshev_distance(int square1, int square2);
 
+int manhattan_distance(int square1, int square2);
+
 #endif // !CALC_FUNCTIONS_H

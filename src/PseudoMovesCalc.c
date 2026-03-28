@@ -695,7 +695,6 @@ void black_generate_pseudo_moves(Board* board, MoveList* list) {
 
 // Checks if a square is attacked by any "attackingSide" pieces.
 bool is_square_attacked(Board* board, int square, SelectionColor attackingSide) {
-	
 	SelectionColor defending = 1-attackingSide;
 
 	// Other side pawns

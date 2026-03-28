@@ -23,7 +23,7 @@ typedef struct {
 	U64 occupiedBitboards[3];
 
 	// Bigger, slower array used only to check piece type
-	// on specific square
+	// on specific square. NONE on empty squares
 	PieceType pieceOnSquare[64];
 
 	// Special moves information

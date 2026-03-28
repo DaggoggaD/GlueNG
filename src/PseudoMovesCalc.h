@@ -12,6 +12,7 @@
 
 typedef struct MoveList{
     int moves[256];
+	int scores[256];
     int count;
 } MoveList;
 

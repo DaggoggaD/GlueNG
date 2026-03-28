@@ -113,14 +113,50 @@ void uci_protocol_handler(int depth) {
 			uci_parse_pos(cmd, &board);
 		}
 		else if (strncmp(cmd, "go", 2) == 0) {
+			
+			int wTime = -1, bTime = -1, wInc = 0, bInc = 0;
+			char* ptr;
 
-			int best = best_move(&board, depth);
+			if ((ptr = strstr(cmd, "wtime")) != NULL) wTime = atoi(ptr + 6);
+			if ((ptr = strstr(cmd, "btime")) != NULL) bTime = atoi(ptr + 6);
+			if ((ptr = strstr(cmd, "winc")) != NULL) wInc = atoi(ptr + 5);
+			if ((ptr = strstr(cmd, "binc")) != NULL) bInc = atoi(ptr + 5);
+
+			int myTime = (board.sideToMove == WHITE) ? wTime : bTime;
+			int myInc = (board.sideToMove == WHITE) ? wInc : bInc;
+
+			int timeLimit = 5000;
+
+			if (myTime != -1) {
+				timeLimit = myTime / 30;
+
+				timeLimit += (myInc / 2);
+
+				if (timeLimit > myTime - 500) {
+					timeLimit = myTime - 500;
+				}
+
+				if (timeLimit < 50) {
+					timeLimit = 50;
+				}
+			}
+
+			int best = best_move_iterative_deepening(&board, timeLimit, 64);
 
 			printf("bestmove ");
 			debug_move(best);
 			printf("\n");
 		}
+		else if (strncmp(cmd, "d", 1) == 0) {
+			debug_board_visualizer(&board);
+		}
 
 	}
+
+}
+
+void uci_info_writer() {
+
+
 
 }

@@ -52,3 +52,15 @@ int chebyshev_distance(int square1, int square2) {
 
 	return (rankDiff > fileDiff) ? rankDiff : fileDiff;
 }
+
+int manhattan_distance(int square1, int square2) {
+	int rank1, file1, rank2, file2;
+
+	rank_file_from_index(square1, &rank1, &file1);
+	rank_file_from_index(square2, &rank2, &file2);
+
+	int rankDiff = (rank1 > rank2) ? rank1 - rank2 : rank2 - rank1;
+	int fileDiff = (file1 > file2) ? file1 - file2 : file2 - file1;
+
+	return rankDiff + fileDiff;
+}

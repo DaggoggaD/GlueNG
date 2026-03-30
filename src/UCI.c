@@ -88,7 +88,7 @@ void uci_parse_pos(char* cmd, Board* board) {
 }
 
 #pragma warning(suppress : 6262)
-void uci_protocol_handler(int depth) {
+void uci_protocol_handler() {
 	char cmd[2048];
 	Board board = { 0 };
 
@@ -141,22 +141,22 @@ void uci_protocol_handler(int depth) {
 				}
 			}
 
+			board.hashKey = get_zobrist_code(&board);
 			int best = best_move_iterative_deepening(&board, timeLimit, 64);
+			current_age++;
 
 			printf("bestmove ");
 			debug_move(best);
 			printf("\n");
+		}
+		else if (strncmp(cmd, "ucinewgame", 10) == 0) {
+			memset(TT, 0, ttSize * sizeof(TranspEntry));
+			current_age = 0;
 		}
 		else if (strncmp(cmd, "d", 1) == 0) {
 			debug_board_visualizer(&board);
 		}
 
 	}
-
-}
-
-void uci_info_writer() {
-
-
 
 }

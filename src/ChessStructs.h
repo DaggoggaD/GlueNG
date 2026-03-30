@@ -10,7 +10,7 @@ typedef struct UndoHistory {
 	int enPassant;
 	int halfMoves;
 	PieceType capturedPiece;
-
+	U64 hashKey;
 } UndoHistory;
 
 typedef struct {
@@ -38,6 +38,8 @@ typedef struct {
 
 	// Evaluation helper stats
 	int kingSq[2];
+
+	U64 hashKey;
 
 } Board;
 

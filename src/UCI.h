@@ -3,6 +3,6 @@
 
 #include "Headers.h"
 
-void uci_protocol_handler(int depth);
+void uci_protocol_handler();
 
 #endif // !UCI_H

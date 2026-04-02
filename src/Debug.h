@@ -20,8 +20,11 @@ void debug_bitmask_visualizer(U64 bitmask);
 // S: square of interest, X: attacked square.
 void debug_precomputed_attack_visualizer(int square, PieceType type);
 
+// Prints a move in human readable format, e.g. e2e4, g7g8q, etc.
+// Does not print annotations. Used in UCI output.
 void debug_move(int move);
 
+// Prints a list of moves in human readable format.
 void debug_move_list(MoveList* list);
 
 #endif // !DEBUG_H

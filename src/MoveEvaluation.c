@@ -103,14 +103,14 @@ const int opponentKingEndValueTable[64] = {
 	50, 40, 30, 20, 20, 30, 40, 50
 };
 
-// Generation helpers
+
+
+// --- Move evaluation ---
 
 static inline void generate_pseudo_moves(Board* board, MoveList* list) {
 	if (board->sideToMove == WHITE) white_generate_pseudo_moves(board, list);
 	else black_generate_pseudo_moves(board, list);
 }
-
-// --- Move evaluation ---
 
 static inline int mirror_index(int index) {
 	return index ^ 56;
@@ -145,7 +145,6 @@ static inline bool is_endgame(int noPawnEval) {
 	return (noPawnEval < END_GAME_SCORE) ? true : false;
 }
 
-// From white's perspective!
 int pst_evaluation(Board* board, int noPawnEval) {
 	int score = 0;
 
@@ -277,204 +276,23 @@ int evaluate(Board* board) {
 	return (board->sideToMove == WHITE) ? score : -score;
 }
 
-// --- Minimax ---
+// --- Move search ---
+// Despite many of the functions below containig similar code,
+// it's better not to merge them as they have different purposes,
+// and merging them would present more edge cases, making the code less readable.
 
-// Both these functions are extremely similar. They could probably
-// be merged, but it's probably faster and (way) clearer like this.
+bool is_repetition(Board* board, int ply) {
+	int limit = ply - board->halfMoves;
+	if (limit < 0) limit = 0;
 
-// At the end of the main search, it runs a deeper one till there are no more 
-// captures/promotions/enpassants.
-int quiescence_search(Board* board, int alpha, int beta, int ply) {
-	if (ply > MAX_PLY - 1) return evaluate(board);
-
-	nodesCalculated++;
-	if ((nodesCalculated & 2047) == 0) {
-		if (clock() > targetTime) {
-			timeOut = true;
+	for (int i = ply - 2; i >= limit; i -= 2) {
+		if (board->history[i].hashKey == board->hashKey) {
+			return true;
 		}
 	}
-
-	if (timeOut) return 0;
-
-	int standPat = evaluate(board);
-
-	int bestVal = standPat;
-
-	// If current player skips it's turn, and the evaluation is
-	// still very good, return immediatly.
-	if (bestVal >= beta) return bestVal;
-
-	// Otherwise, switch alpha
-	if (bestVal > alpha) alpha = bestVal;
-
-	MoveList list = { 0 };
-	generate_pseudo_moves(board, &list);
-
-	order_moves(board, &list, 0);
-
-	// Standard move iteration, checking only capture moves
-	for (int i = 1; i < list.count; i++)
-	{
-		int move = list.moves[i];
-
-		int toSq = GET_MOVE_TARGET(move);
-		PieceType captured = board->pieceOnSquare[toSq];
-
-		// Skip if not a capture
-		if (captured == NONE && GET_MOVE_EN_PASSANT(move) == 0 && GET_PROMOTION_PIECE(move) == 0) continue;
-
-		SelectionColor sideMoved = board->sideToMove;
-
-		make_move(board, move, sideMoved, ply);
-
-		if (is_square_attacked(board, board->kingSq[sideMoved], board->sideToMove)) {
-			unmake_move(board, move, ply);
-			continue;
-		}
-
-		int score = -quiescence_search(board, -beta, -alpha, ply + 1);
-		unmake_move(board, move, ply);
-
-		// Alpha beta checking
-		if (score >= beta) return score;
-		if (score > bestVal) bestVal = score;
-		if (score > alpha) alpha = score;
-
-	}
-
-	return bestVal;
+	return false;
 }
 
-// Explores the moves tree, searching for the best eval.
-// Returns (int) best score.
-int nega_max(Board* board, int depth, int alpha, int beta, int extension, int ply) {
-	nodesCalculated++;
-	if ((nodesCalculated & 2047) == 0) {
-		if (clock() > targetTime) {
-			timeOut = true;
-		}
-	}
-
-	// Transp table checking: if we already explored this position,
-	// and the stored depth is higher than the current one, 
-	// we can return the stored evaluation.
-	int originalAlpha = alpha;
-	TranspEntry* entry = &TT[get_hash_index(board->hashKey)];
-	int ttMove = 0;
-
-
-	if (entry->key == board->hashKey) {
-		ttMove = entry->bestMove;
-
-		if (entry->depth >= depth) {
-			if (entry->flag == EXACT) return entry->eval;
-			if (entry->flag == ALPHA && entry->eval <= alpha) return entry->eval;
-			if (entry->flag == BETA && entry->eval >= beta) return entry->eval;
-		}
-	}
-
-	if (timeOut) return 0;
-
-	if (depth == 0) return quiescence_search(board, alpha, beta, ply);
-
-	int best = -INFINITY;
-	int legalMoves = 0;
-	MoveList list = { 0 };
-
-	// Used to update the best position in this scenario, for the transposition table.
-	// If beta cut happens, it will be ignored, since the opponent will never pick it.
-	int bestMoveInPosition = 0;
-	
-	generate_pseudo_moves(board, &list);
-
-	// Add priority to bestMove from the TT, to improve alpha-beta pruning.
-	order_moves(board, &list, ttMove);
-
-	for (int i = 0; i < list.count; i++) {
-		int move = list.moves[i];
-
-		SelectionColor sideMoved = board->sideToMove;
-
-		// Make the move
-		make_move(board, move, sideMoved, ply);
-
-		
-		U64 realKey = get_zobrist_code(board);
-		
-
-		// Check if square is attacked. The opponent is now board->sideToMove,
-		// since make_move changes opponent side.
-		if (is_square_attacked(board, board->kingSq[sideMoved], board->sideToMove)) {
-
-			// The move is illegal: unmake move, without increasing the counter.
-			unmake_move(board, move, ply);
-			continue;
-		}
-
-		legalMoves++;
-
-
-		int currentExtension = extension < EXTENSION_DEEPNESS &&
-			is_square_attacked(board, board->kingSq[board->sideToMove], sideMoved) ? 1 : 0;
-
-		// From our point of view, the lower depth is in the opponent
-		// reference: an high score for him is a terrible score for us.
-		int score = -nega_max(board, depth - 1 + currentExtension, -beta, -alpha, extension + currentExtension, ply + 1);
-		unmake_move(board, move, ply);
-
-		if (timeOut) return 0;
-
-		// Save score
-		if (score > best) {
-			best = score;
-			bestMoveInPosition = move;
-		}
-
-		// Alpha-beta pruning
-
-		// Better move found, store new alpha
-		if (best > alpha) {
-			alpha = best;
-		}
-
-		// Move too good, opponent would pick any previous branch.
-		if (alpha >= beta) {
-			store_tt_entry(board->hashKey, depth, best, BETA, bestMoveInPosition);
-			return best;
-		}
-
-	}
-
-	// If we didn't find any legal moves, it's either a checkmate (-infinity)
-	// or a draw.
-	if (legalMoves == 0) {
-		SelectionColor otherSide = 1 - board->sideToMove;
-
-		if (is_square_attacked(board, board->kingSq[board->sideToMove], otherSide)) {
-			return -INFINITY - depth;
-		}
-		else {
-			return 0;
-		}
-	}
-
-	if (timeOut) return 0;
-
-	HashFlag flag;
-	if (best <= originalAlpha) {
-		flag = ALPHA;
-	}
-	else {
-		flag = EXACT;
-	}
-
-	store_tt_entry(board->hashKey, depth, best, flag, bestMoveInPosition);
-
-	return best;
-}
-
-// Helps massively alpha-beta pruning, by ordering the moves 
-// according to their scores.
 void order_moves(Board* board, MoveList* list, int ttMove) {
 
 	// Optimization for later: add both white and black attack squares bitboard,
@@ -538,29 +356,210 @@ void order_moves(Board* board, MoveList* list, int ttMove) {
 	}
 }
 
-// Explores the moves tree, with negamax. NOTE:
-// it returns the (int) best move, NOT score.
+int quiescence_search(Board* board, int alpha, int beta, int ply) {
+	if (ply > MAX_PLY - 1) return evaluate(board);
+
+	nodesCalculated++;
+	if ((nodesCalculated & 2047) == 0) {
+		if (clock() > targetTime) {
+			timeOut = true;
+		}
+	}
+	if (timeOut) return 0;
+
+	int standPat = evaluate(board);
+	int bestVal = standPat;
+
+	// If current player skips it's turn and the evaluation is
+	// still very good, return immediatly.
+	if (bestVal >= beta) return bestVal;
+
+	// Otherwise, switch alpha
+	if (bestVal > alpha) alpha = bestVal;
+
+	MoveList list = { 0 };
+	generate_pseudo_moves(board, &list);
+
+	order_moves(board, &list, 0);
+
+	// Standard move iteration, checking only capture moves
+	for (int i = 1; i < list.count; i++)
+	{
+		int move = list.moves[i];
+
+		int toSq = GET_MOVE_TARGET(move);
+		PieceType captured = board->pieceOnSquare[toSq];
+
+		// Skip if not a capture/promotion
+		if (captured == NONE && GET_MOVE_EN_PASSANT(move) == 0 && GET_PROMOTION_PIECE(move) == 0) continue;
+
+		SelectionColor sideMoved = board->sideToMove;
+
+		make_move(board, move, sideMoved, ply);
+
+		if (is_square_attacked(board, board->kingSq[sideMoved], board->sideToMove)) {
+			unmake_move(board, move, ply);
+			continue;
+		}
+
+		int score = -quiescence_search(board, -beta, -alpha, ply + 1);
+		unmake_move(board, move, ply);
+
+		// Alpha beta checking
+		if (score >= beta) return score;
+		if (score > bestVal) bestVal = score;
+		if (score > alpha) alpha = score;
+
+	}
+
+	return bestVal;
+}
+
+int nega_max(Board* board, int depth, int alpha, int beta, int extension, int ply) {
+	// Heavily commented by design, since all functions 
+	// below contain similar logic and calls.
+
+	nodesCalculated++;
+	if ((nodesCalculated & 2047) == 0) {
+		if (clock() > targetTime) {
+			timeOut = true;
+		}
+	}
+
+	if (ply > 0 && is_repetition(board, ply)) {
+		return 0;
+	}
+
+	// Transp table checking: if we have already explored this position,
+	// and the stored depth is higher than the current one, 
+	// we can return the stored evaluation.
+	int originalAlpha = alpha;
+	TranspEntry* entry = &TT[get_hash_index(board->hashKey)];
+	int ttMove = 0;
+
+	if (entry->key == board->hashKey) {
+		ttMove = entry->bestMove;
+
+		// This ensures some sort of "only if higher precision",
+		// despite depth is not the only determining factor.
+		if (entry->depth >= depth) {
+			if (entry->flag == EXACT) return entry->eval;
+			if (entry->flag == ALPHA && entry->eval <= alpha) return entry->eval;
+			if (entry->flag == BETA && entry->eval >= beta) return entry->eval;
+		}
+	}
+
+
+	if (timeOut) return 0;
+	if (depth == 0) return quiescence_search(board, alpha, beta, ply);
+
+	// --- Actual negamax search ---
+	int best = -INF;
+	int legalMoves = 0;
+	MoveList list = { 0 };
+
+	// Used to update the best position in this scenario, for the transposition table.
+	// If beta cut happens, it will be ignored, since the opponent will never pick it.
+	int bestMoveInPosition = 0;
+	
+	generate_pseudo_moves(board, &list);
+
+	// Add priority to bestMove from the TT, to improve alpha-beta pruning.
+	order_moves(board, &list, ttMove);
+
+	for (int i = 0; i < list.count; i++) {
+		int move = list.moves[i];
+		SelectionColor sideMoved = board->sideToMove;
+
+		make_move(board, move, sideMoved, ply);
+		U64 realKey = get_zobrist_code(board);
+		
+		// Check if square is attacked. The opponent is now board->sideToMove,
+		// since make_move changes opponent side.
+		if (is_square_attacked(board, board->kingSq[sideMoved], board->sideToMove)) {
+
+			// The move is illegal: unmake move, without increasing the counter.
+			unmake_move(board, move, ply);
+			continue;
+		}
+		legalMoves++;
+
+		// Move extension if in check (added in V0.4)
+		int currentExtension = extension < EXTENSION_DEEPNESS &&
+			is_square_attacked(board, board->kingSq[board->sideToMove], sideMoved) ? 1 : 0;
+
+		// From our point of view, the lower depth is in the opponent
+		// reference: an high score for him is a terrible score for us.
+		int score = -nega_max(board, depth - 1 + currentExtension, -beta, -alpha, extension + currentExtension, ply + 1);
+		unmake_move(board, move, ply);
+
+		if (timeOut) return 0;
+
+		// Save score
+		if (score > best) {
+			best = score;
+			bestMoveInPosition = move;
+		}
+
+		// Alpha-beta pruning
+
+		// Better move found, store new alpha
+		if (best > alpha) {
+			alpha = best;
+		}
+
+		// Move too good, opponent would pick any previous branch.
+		if (alpha >= beta) {
+			store_tt_entry(board->hashKey, depth, best, BETA, bestMoveInPosition);
+			return best;
+		}
+
+	}
+
+	// If we didn't find any legal moves, it's either a checkmate (-infinity)
+	// or a draw.
+	if (legalMoves == 0) {
+		SelectionColor otherSide = 1 - board->sideToMove;
+
+		if (is_square_attacked(board, board->kingSq[board->sideToMove], otherSide)) {
+			return -INF - depth;
+		}
+		else {
+			return 0;
+		}
+	}
+
+	if (timeOut) return 0;
+
+	HashFlag flag;
+	if (best <= originalAlpha) {
+		flag = ALPHA;
+	}
+	else {
+		flag = EXACT;
+	}
+
+	store_tt_entry(board->hashKey, depth, best, flag, bestMoveInPosition);
+	return best;
+}
+
 int best_move(Board* board, int depth, int currBest, int* outScore) {
 
 	// Here, for alpha-beta pruning, alpha represents our worst (pickable) scenario,
 	// bete the best one the opponent would give us.
-	int alpha = -INFINITY;
-	int beta = INFINITY;
-
-	int best = -INFINITY;
+	int alpha = -INF;
+	int beta = INF;
+	int best = -INF;
 	int bestMove = 0;
 	int legalMoves = 0;
-
 	MoveList list = { 0 };
 
 	// Generate pseudo legal moves
 	generate_pseudo_moves(board, &list);
-
 	order_moves(board, &list, currBest);
 
 	for (int i = 0; i < list.count; i++) {
 		int move = list.moves[i];
-
 		SelectionColor sideMoved = board->sideToMove;
 
 		// Make the move
@@ -586,44 +585,35 @@ int best_move(Board* board, int depth, int currBest, int* outScore) {
 		if (timeOut) break;
 
 		// Save score
-		// Bug fix: legalMoves == 1 is needed, as if it sees too long
-		// in the future, and there is no possible way out of checkmate,
-		// it will decide not to move any piece (a1a1) as none can deliver
-		// decent performance.
 		if (legalMoves == 1 || score > best) {
 			best = score;
 			bestMove = move;
 		}
 
-
+		// Alpha-beta pruning
 		if (best > alpha) {
 			alpha = best;
 		}
 	}
 
 	*outScore = best;
-
 	if(!timeOut) store_tt_entry(board->hashKey, depth, best, EXACT, bestMove);
-
 	return bestMove;
 }
 
-// Instead of running a single fixed depth search, runs at depth 1 ... max depth, or till
-// timeout.
 int best_move_iterative_deepening(Board* board, int maxTime, int maxDepth) {
-
 	timeOut = false;
 	nodesCalculated = 0;
 
 	int bestMove = 0;
-	int searchedScore = -INFINITY;
+	int searchedScore = -INF;
 	clock_t startTime = clock();
 	clock_t maxTicks = ((clock_t)maxTime * CLOCKS_PER_SEC) / 1000;
 	targetTime = startTime + maxTicks;
 
 	for (int i = 1; i < maxDepth; i++)
 	{
-		int currBestScore = -INFINITY - 1;
+		int currBestScore = -INF - 1;
 		int currBest = best_move(board, i, bestMove, &currBestScore);
 
 		if (timeOut) {
@@ -634,7 +624,7 @@ int best_move_iterative_deepening(Board* board, int maxTime, int maxDepth) {
 		searchedScore = currBestScore;
 
 
-		// UCI info
+		// UCI info output
 		clock_t currentTime = clock();
 		int timeElapsedMs = (int)((currentTime - startTime) * 1000 / CLOCKS_PER_SEC);
 		if (timeElapsedMs == 0) timeElapsedMs = 1;

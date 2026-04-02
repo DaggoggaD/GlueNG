@@ -1,7 +1,5 @@
 #include "MagicBitboards.h"
 
-// --- Heavily commented for clarity, since the magic bitboards concept is not trivial ---
-
 // MAGIC NUMBERS: used directly from 
 // https://github.com/maksimKorzh/bbc/blob/master/src/bbc_nnue/bbc.c
 
@@ -139,17 +137,13 @@ U64 BishopMagicNumbers[64] = {
     0x4010011029020020ULL
 };
 
-// Given a blockers configuration and a magic entry, it calculates the magic index 
-// by applying the magic multiplication and the appropriate shift.
-// [b]: blockers configuration bitboard. 
-// [entry]: magic entry containing the occupancies mask, the magic number and the index bits.
+
 int get_magic_index(U64 b, MagicEntry* entry) {
 	U64 occupancies = b & entry->occupanciesMask;
 	U64 index = (occupancies * entry->magicN) >> (64 - entry->indexBits);
 	return index;
 }
 
-// Counts the number of all active bits in a bitboard.
 int count_active_bits(U64 b) {
 	int count = 0;
 	for (short i = 0; i < 64; i++)
@@ -162,11 +156,6 @@ int count_active_bits(U64 b) {
 	return count;
 }
 
-// Given a mask and a patternID, it sets the bits in the occupancies 
-// bitboard according to the active bits in the mask and the patternID.
-// [mask]: pre-calculated bitboard, all possible positions without blockers and edges. 
-// [patternID]: number from 0 to 2^(active bits in the mask) - 1, used to set the 
-// corresponding bits in the occupancies bitboard.
 U64 set_occupancies_mapping(U64 mask, int patternID) {
 	U64 occupancies = 0ULL;
 	short indexes[64];
@@ -201,10 +190,6 @@ U64 set_occupancies_mapping(U64 mask, int patternID) {
 	return occupancies;
 }
 
-
-// Calculates all the attack rays for a rook, starting on the given square, 
-// and with the given blockers configuration. It does count also the blockers squares as attacked, 
-/// [square]: rook position, 0-63 index. [blockers]: bitboard with blockers positions.
 U64 calc_rook_attack_rays(int square, U64 blockers) {
 	U64 attacks = 0ULL;
 	int rank;
@@ -247,9 +232,6 @@ U64 calc_rook_attack_rays(int square, U64 blockers) {
 	return attacks;
 }
 
-
-// Same as for "calc_rook_attack_rays", but for bishops.
-/// [square]: bishop position, 0-63 index. [blockers]: bitboard with blockers positions.
 U64 calc_bishop_attack_rays(int square, U64 blockers) {
     U64 attacks = 0ULL;
     int rank;
@@ -288,10 +270,6 @@ U64 calc_bishop_attack_rays(int square, U64 blockers) {
     return attacks;
 }
 
-
-// Initializes both the rook, bishop and queen magic entries and attack tables.
-// NOTE: could easily be optimized by merging the loops, but it is more clear to keep them separated,
-// and the initialization is only done once on startup, so it is not a problem.
 void initialize_magic_bitboards() {
     for (int square = 0; square < BRD_SIZE; square++) {
 

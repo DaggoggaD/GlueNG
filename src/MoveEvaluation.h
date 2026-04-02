@@ -4,28 +4,56 @@
 
 #include "Headers.h"
 
-#define INFINITY 1000000
-#define END_GAME_SCORE 2000
-#define KING_BIAS_SCORE 200
-#define KING_CLOSENESS_BIAS 10
-#define EXTENSION_DEEPNESS 16
-#define MAX_PLY 50
 
+
+// --- Move evaluation ---
+
+// Generates pseudo-legal moves depending on the side to move
+static inline void generate_pseudo_moves(Board* board, MoveList* list);
+
+// The implementation is based on withe's perspective, 
+// so the black pieces are evaluated using mirrored PSTs
+static inline int mirror_index(int index);
+
+// Evaluates cuttent position based on material only.
+// (Also calculates the noPawnEval, which is used to determine endgame phase)
 int material_evaluation(Board* board, SelectionColor side, int* noPawnEval);
 
+// Determines if the position is in endgame phase, based on the noPawnEval value.
+static inline bool is_endgame(int noPawnEval);
+
+// Evaluates cuttent position based on piece position,
+// using piece-square tables. Also considers endgame phase for king evaluation.
+// From white's perspective.
 int pst_evaluation(Board* board, int noPawnEval);
 
+// Evaluates the current position, by summing material 
+// and piece-square tables evaluations. Also adds a bonus 
+// in endgame phase, based on the distance between the kings and
+// the opponent king distance to the border.
 int evaluate(Board* board);
 
-int nega_max(Board* board, int depth, int alpha, int beta, int extension);
 
+// --- Move search ---
+
+// Helps massively alpha-beta pruning, by ordering the moves 
+// according to their scores. (MVV - LVA + promotion bonus)
 void order_moves(Board* board, MoveList* list, int ttMove);
 
+// At the end of the main search, it runs a deeper one untill there are no more 
+// captures/promotions/enpassants.
+int quiescence_search(Board* board, int alpha, int beta, int ply);
+
+// Explores the moves tree, searching for the best eval.
+// Returns (int) best score.
+int nega_max(Board* board, int depth, int alpha, int beta, int extension);
+
+// Explores the moves tree, with negamax. NOTE:
+// it returns the (int) best move, NOT score.
 int best_move(Board* board, int depth, int currBest, int extension);
 
+// Instead of running a single fixed depth search, runs at depth 1 ... max depth, or till
+// timeout.
 int best_move_iterative_deepening(Board* board, int maxTime, int maxDepth);
 
-
 #endif // !MOVE_EVALUATION_H
-
-

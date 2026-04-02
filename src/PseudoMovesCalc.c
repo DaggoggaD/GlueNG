@@ -20,8 +20,8 @@ const int CastlingDestinations[4] = {
 	C8
 };
 
-// Get function for all pseudo moves from a square, checking only for own 
-// side collision.
+
+//						  --- Non sliding pieces ---
 
 U64 get_knight_pseudo_moves(int square, U64 ownPieces) {
 	assert(square >= 0 && square <= 63);
@@ -60,24 +60,17 @@ inline static U64 get_queen_pseudo_moves(int square, U64 blockers, U64 ownPieces
 }
 
 
-//								--- Pawns ---
+//							--- Pawns specifics---
 
 // Pawn movements directions. SET-WISE.
 U64 no_ea_pawns(U64 b) { return (b & notHFile) << 9; }
 U64 so_ea_pawns(U64 b) { return (b & notHFile) >> 7; }
 U64 no_we_pawns(U64 b) { return (b & notAFile) << 7; }
 U64 so_we_pawns(U64 b) { return (b & notAFile) >> 9; }
-
-U64 north_one_pawns(U64 pawns) {
-	return (pawns << 8);
-}
-
-U64 south_one_pawns(U64 pawns) {
-	return (pawns >> 8);
-}
+U64 north_one_pawns(U64 pawns) { return (pawns << 8); }
+U64 south_one_pawns(U64 pawns) { return (pawns >> 8); }
 
 //							 ### Pawn pushes ###
-
 // "Single/double push" functions, "1" on every destination square.
 
 U64 single_white_pawn_pushes(U64 pawns, U64 allPieces) {
@@ -137,8 +130,8 @@ U64 black_pawns_able_to_double_push(U64 pawns, U64 allPieces) {
 }
 
 //							 ### Pawn attacks ###
-
 // Attacks function for all the white pawns (set-wise)
+
 U64 white_pawns_all_attacks(U64 pawns) {
 	return no_ea_pawns(pawns) | no_we_pawns(pawns);
 }
@@ -152,18 +145,7 @@ U64 black_pawns_all_attacks(U64 pawns) {
 // for more infos.
 
 
-// Gets the index of the least significant bit in a bitboard,
-// learnt from https://www.chessprogramming.org/BitScan.
 
-
-// Bit packing to save space:
-// 0 - 5: fromSquare (0-63) 6 - 11: toSquare (0-63) 12 - 15: piece type (0-5)
-// 16 - 19: promotion 20: enPassant (0 - 1)
-// 
-// Note: promotion: 0 = no promotion, != 0 PieceType piece
-//		 enPassant: 0 = not enPassant move, 1 = enPassant move
-// 
-// Decode it with GET_FROM_SQUARE(move), GET_TO_SQUARE(move), GET_PIECE_TYPE(move) macros.
 void add_move_to_list(MoveList *list, int fromSquare, int toSquare, PieceType piece, PieceType promoted_to, bool enPassant) {
 	if (list->count >= 256) {
 		fprintf(stderr, "Error: Move list is full. Cannot add more moves.\n");
@@ -179,7 +161,7 @@ void add_move_to_list(MoveList *list, int fromSquare, int toSquare, PieceType pi
 //								--- PseudoLegal Move Generation ---
 
 // Add all possible moves from a square by a specific piece type, 
-// for all the pieces of that type
+// for all the pieces of that type.
 
 static inline void white_generate_pawn_pseudo(Board* board, MoveList* list) {
 	// PAWNS - Single pushes
@@ -656,7 +638,7 @@ static inline void black_generate_enp_pseudo(Board* board, MoveList* list){
 	}
 }
 
-// Generate and add to list all the possible pseudo legal moves in a certain board.
+
 void white_generate_pseudo_moves(Board *board, MoveList *list) {
 	// Generate a moveList entry for any possible
 	// pseudo legal move from current board position.
@@ -692,8 +674,6 @@ void black_generate_pseudo_moves(Board* board, MoveList* list) {
 	black_generate_enp_pseudo(board, list);
 }
 
-
-// Checks if a square is attacked by any "attackingSide" pieces.
 bool is_square_attacked(Board* board, int square, SelectionColor attackingSide) {
 	SelectionColor defending = 1-attackingSide;
 

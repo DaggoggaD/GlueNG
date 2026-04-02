@@ -174,16 +174,16 @@ void load_fen_board(const char* fen, Board* board)
 	memset(board, 0, sizeof(Board));
 
 	place_fen_pieces(&fen, board);
-	fen++; // Skip space after piece placement
+	fen++;
 
 	board->sideToMove = (*fen == 'w') ? WHITE : BLACK;
-	fen += 2; // Skip space after side to move
+	fen += 2;
 
 	set_fen_castling_permissions(&fen, board);
-	fen++; // Skip space after castling
+	fen++;
 
 	set_fen_en_passant(&fen, board);
-	fen++; // Skip space after en passant
+	fen++;
 
 	set_fen_half_moves(fen, board);
 

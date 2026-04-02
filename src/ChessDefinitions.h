@@ -1,6 +1,7 @@
 #ifndef CHESS_DEFINITIONS_H
 #define CHESS_DEFINITIONS_H
-#define BRD_SIZE 64
+
+
 
 #include <stdbool.h>
 #include <stdio.h>

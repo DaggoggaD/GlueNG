@@ -1,10 +1,9 @@
 #include "TranspTables.h"
-
+// RKISS from chessprogramming.org, see https://www.chessprogramming.org/Bob_Jenkins#RKISS
 TranspEntry* TT = NULL;
 int current_age = 0;
 int ttSize = 0;
 
-// RKISS from chessprogramming.org, see https://www.chessprogramming.org/Bob_Jenkins#RKISS
 U64 ran_val(ranctx* x) {
     U64 e = x->a - rot(x->b, 7);
     x->a = x->b ^ rot(x->c, 13);
@@ -14,7 +13,6 @@ U64 ran_val(ranctx* x) {
     return x->d;
 }
 
-// Used to intialize starting values, to avoid initial repetitions.
 void ran_init(ranctx* x, U64 seed) {
     U64 i;
     x->a = 0xf1ea5eed, x->b = x->c = x->d = seed;
@@ -22,7 +20,6 @@ void ran_init(ranctx* x, U64 seed) {
         (void)ran_val(x);
     }
 }
-
 
 void init_random_keys() {
     for (int side = 0; side < 2; side++)
@@ -84,8 +81,6 @@ U64 get_zobrist_code(Board* board) {
 
     return code;
 }
-
-
 
 void init_tt(int sizeMB) {
     ttSize = (sizeMB * 1024 * 1024) / sizeof(TranspEntry);

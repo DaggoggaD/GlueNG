@@ -19,7 +19,6 @@ U64 knight_no_We_We(U64 b) { return (b & notABFile) << 6; }
 U64 knight_so_We_We(U64 b) { return (b & notABFile) >> 10; }
 U64 knight_so_So_We(U64 b) { return (b & notAFile) >> 17; }
 
-
 U64 king_No(U64 b) { return b << 8; }
 U64 king_So(U64 b) { return b >> 8; }
 U64 king_Ea(U64 b) { return (b & notHFile) << 1; }
@@ -39,28 +38,26 @@ U64 calc_rook_occupancies_mask_on_square(int square) {
 
 	// Numbers from 1 to 6 because we want to exclude edge squares, 
 	// which are not relevant for occupancy variations.
-
 	for (int i = r + 1; i <= 6; i++) mask |= (1ULL << (i * 8 + f)); // N
 	for (int i = r - 1; i >= 1; i--) mask |= (1ULL << (i * 8 + f)); // S
 	for (int i = f + 1; i <= 6; i++) mask |= (1ULL << (r * 8 + i)); // E
-	for (int i = f - 1; i >= 1; i--) mask |= (1ULL << (r * 8 + i)); // O
+	for (int i = f - 1; i >= 1; i--) mask |= (1ULL << (r * 8 + i)); // W
 
 	return mask;
 }
 
 U64 calc_bishop_occupancies_mask_on_square(int square) {
 	U64 mask = 0ULL;
-	int r;
-	int f;
+	int r, f;
 	rank_file_from_index(square, &r, &f);
 
 	// Numbers from 1 to 6 because we want to exclude edge squares, 
 	// which are not relevant for occupancy variations.
-
 	for (int i = 1; i <= 6 && r + i <= 6 && f + i <= 6; i++) mask |= (1ULL << ((r + i) * 8 + f + i)); // NE
 	for (int i = 1; i <= 6 && r - i >= 1 && f + i <= 6; i++) mask |= (1ULL << ((r - i) * 8 + f + i)); // SE
-	for (int i = 1; i <= 6 && r + i <= 6 && f - i >= 1; i++) mask |= (1ULL << ((r + i) * 8 + f - i)); // NO
-	for (int i = 1; i <= 6 && r - i >= 1 && f - i >= 1; i++) mask |= (1ULL << ((r - i) * 8 + f - i)); // SO
+	for (int i = 1; i <= 6 && r + i <= 6 && f - i >= 1; i++) mask |= (1ULL << ((r + i) * 8 + f - i)); // NW
+	for (int i = 1; i <= 6 && r - i >= 1 && f - i >= 1; i++) mask |= (1ULL << ((r - i) * 8 + f - i)); // SW
+	
 	return mask;
 }
 
@@ -76,6 +73,8 @@ U64 calc_knight_attacks_on_square(U64 b) {
 		knight_no_No_We(b) | knight_no_We_We(b) | knight_so_We_We(b) | knight_so_So_We(b);
 }
 
+
+// Initializes the lookup tables for all pieces.
 void initialize_pawn_single_attack_squares() {
 	// White
 	for (int square = 0; square < 64; square++) {

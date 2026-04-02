@@ -1,7 +1,6 @@
 #include "MoveGeneration.h"
 
 
-
 // Castling helpers consts
 const int castlingMask[64] = {
 	13, 15, 15, 15, 12, 15, 15, 14,
@@ -335,5 +334,3 @@ void generate_legal_moves(Board* board, MoveList* list) {
 	}
 
 }
-
-

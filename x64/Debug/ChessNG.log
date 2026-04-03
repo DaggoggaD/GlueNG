@@ -1,5 +1,0 @@
-﻿C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppBuild.targets(551,5): warning MSB8028: la directory intermedia (x64\Debug\) contiene file condivisi da un altro progetto (ChessNG.vcxproj). Tale condizione può comportare un comportamento di pulizia e ricompilazione non corretto.
-  MoveEvaluation.c
-C:\Users\admin\Desktop\Code\Projects\C proj\ChessNG\ChessNG\ChessNG\src\MoveEvaluation.c(450,5): warning C4029: dichiarato un elenco di parametri formali diverso dalla definizione
-C:\Users\admin\Desktop\Code\Projects\C proj\ChessNG\ChessNG\ChessNG\src\MoveEvaluation.c(588,59): warning C4028: parametro formale 4 differente dalla dichiarazione
-  ChessNG.vcxproj -> C:\Users\admin\Desktop\Code\Projects\C proj\ChessNG\ChessNG\x64\Debug\GlueNG.exe

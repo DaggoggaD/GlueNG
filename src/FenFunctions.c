@@ -1,4 +1,4 @@
-#include "FenFunctions.h"
+#include "../include/FenFunctions.h"
 
 
 PieceId select_fen_piece(const char piece) {

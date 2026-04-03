@@ -1,4 +1,4 @@
-#include "MoveGeneration.h"
+#include "../include/MoveGeneration.h"
 
 
 // Castling helpers consts

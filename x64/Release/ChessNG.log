@@ -1,0 +1,24 @@
+﻿C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppBuild.targets(551,5): warning MSB8028: la directory intermedia (x64\Release\) contiene file condivisi da un altro progetto (ChessNG.vcxproj). Tale condizione può comportare un comportamento di pulizia e ricompilazione non corretto.
+  CalcFunctions.c
+  Debug.c
+  FenFunctions.c
+  GlueNG.c
+  LookUpTables.c
+  MagicBitboards.c
+  MoveEvaluation.c
+C:\Users\admin\Desktop\Code\Projects\C proj\ChessNG\ChessNG\ChessNG\src\MagicBitboards.c(144,9): warning C4244: 'return': conversione da 'U64' a 'int'. Possibile perdita di dati.
+C:\Users\admin\Desktop\Code\Projects\C proj\ChessNG\ChessNG\ChessNG\src\MoveEvaluation.c(450,79): warning C4028: parametro formale 6 differente dalla dichiarazione
+C:\Users\admin\Desktop\Code\Projects\C proj\ChessNG\ChessNG\ChessNG\src\MoveEvaluation.c(450,5): warning C4029: dichiarato un elenco di parametri formali diverso dalla definizione
+C:\Users\admin\Desktop\Code\Projects\C proj\ChessNG\ChessNG\ChessNG\src\MoveEvaluation.c(595,59): warning C4028: parametro formale 4 differente dalla dichiarazione
+  MoveGeneration.c
+  PseudoMovesCalc.c
+  TranspTables.c
+  UCI.c
+C:\Users\admin\Desktop\Code\Projects\C proj\ChessNG\ChessNG\ChessNG\src\UCI.c(4,18): warning C4267: 'inizializzazione': conversione da 'size_t' a 'int'. Possibile perdita di dati.
+C:\Users\admin\Desktop\Code\Projects\C proj\ChessNG\ChessNG\ChessNG\src\UCI.c(120,54): warning C4013: 'atoi' non definita. Verrà considerata come esterna che restituisce un int.
+  Generazione codice in corso...
+  24 of 116 functions (20.7%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    4 functions had inline decision re-evaluated but remain unchanged
+  Generazione codice terminata
+  ChessNG.vcxproj -> C:\Users\admin\Desktop\Code\Projects\C proj\ChessNG\ChessNG\x64\Release\GlueNG.exe

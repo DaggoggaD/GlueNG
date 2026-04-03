@@ -1,4 +1,4 @@
-#include "MagicBitboards.h"
+#include "../include/MagicBitboards.h"
 
 // MAGIC NUMBERS: used directly from 
 // https://github.com/maksimKorzh/bbc/blob/master/src/bbc_nnue/bbc.c

@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="File di intestazione">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="File di risorse">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="File di intestazione\Move Helpers">
+      <UniqueIdentifier>{5119df8d-b4a4-40f1-bbe0-514ae02c16e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File di intestazione\IO">
+      <UniqueIdentifier>{f77435cd-7df3-4bda-bf97-d84e9dced624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File di intestazione\Data types">
+      <UniqueIdentifier>{0b845535-296f-40f9-a38b-daed769d4179}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File di risorse\Move helpers">
+      <UniqueIdentifier>{aaf433f7-6a39-4317-b55a-562f33e990e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File di risorse\IO">
+      <UniqueIdentifier>{772bb70c-54ea-4681-a81a-5e651ec46c4e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\CalcFunctions.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ChessDefinitions.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ChessStructs.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Debug.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FenFunctions.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GlueNG.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Headers.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LookUpTables.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MagicBitboards.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MoveEvaluation.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MoveGeneration.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PseudoMovesCalc.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TranspTables.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UCI.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\CalcFunctions.c" />
+    <ClCompile Include="src\Debug.c" />
+    <ClCompile Include="src\FenFunctions.c" />
+    <ClCompile Include="src\GlueNG.c" />
+    <ClCompile Include="src\LookUpTables.c" />
+    <ClCompile Include="src\MagicBitboards.c" />
+    <ClCompile Include="src\MoveEvaluation.c" />
+    <ClCompile Include="src\MoveGeneration.c" />
+    <ClCompile Include="src\PseudoMovesCalc.c" />
+    <ClCompile Include="src\TranspTables.c" />
+    <ClCompile Include="src\UCI.c" />
+  </ItemGroup>
+</Project>

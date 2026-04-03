@@ -1,4 +1,4 @@
-#include "LookUpTables.h"
+#include "../include/LookUpTables.h"
 
 // Knight/king moves and constants (from https://www.chessprogramming.org/Knight_Pattern)
 const U64 notAFile = 0xfefefefefefefefeULL; // ~0x0101010101010101

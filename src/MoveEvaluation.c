@@ -1,4 +1,4 @@
-#include "MoveEvaluation.h"
+#include "../include/MoveEvaluation.h"
 
 bool timeOut = false;
 clock_t targetTime = 0;
@@ -281,6 +281,38 @@ int evaluate(Board* board) {
 // it's better not to merge them as they have different purposes,
 // and merging them would present more edge cases, making the code less readable.
 
+void make_null_move(Board* board, int currDepth) {
+	board->history[currDepth].castlingPerms = board->castlingPerms;
+	board->history[currDepth].enPassant = board->enPassant;
+	board->history[currDepth].halfMoves = board->halfMoves;
+	board->history[currDepth].hashKey = board->hashKey;
+
+	if (board->enPassant != -1) {
+		board->hashKey ^= enPassantKeys[board->enPassant % 8];
+		board->enPassant = -1;
+	}
+
+	board->sideToMove = 1 - board->sideToMove;
+	board->hashKey ^= sideKey;
+	
+	board->halfMoves = 0;
+}
+
+void unmake_null_move(Board* board, int currDepth) {
+	board->sideToMove = 1 - board->sideToMove;
+	board->enPassant = board->history[currDepth].enPassant;
+	board->halfMoves = board->history[currDepth].halfMoves;
+	board->hashKey = board->history[currDepth].hashKey;
+}
+
+bool is_heavy_board(Board* board) {
+	return (board->pieceBitboards[board->sideToMove][KNIGHT] |
+		board->pieceBitboards[board->sideToMove][BISHOP] |
+		board->pieceBitboards[board->sideToMove][ROOK] |
+		board->pieceBitboards[board->sideToMove][QUEEN]) > 0;
+}
+
+
 bool is_repetition(Board* board, int ply) {
 	int limit = ply - board->halfMoves;
 	if (limit < 0) limit = 0;
@@ -415,7 +447,7 @@ int quiescence_search(Board* board, int alpha, int beta, int ply) {
 	return bestVal;
 }
 
-int nega_max(Board* board, int depth, int alpha, int beta, int extension, int ply) {
+int nega_max(Board* board, int depth, int alpha, int beta, int extension, int ply, bool allowNull) {
 	// Heavily commented by design, since all functions 
 	// below contain similar logic and calls.
 
@@ -449,9 +481,26 @@ int nega_max(Board* board, int depth, int alpha, int beta, int extension, int pl
 		}
 	}
 
-
 	if (timeOut) return 0;
-	if (depth == 0) return quiescence_search(board, alpha, beta, ply);
+	if (depth <= 0) return quiescence_search(board, alpha, beta, ply);
+
+
+	// Null move pruning
+	bool ttFailsLow = false;
+	if (entry->key == board->hashKey && entry->eval < beta) {
+		ttFailsLow = true;
+	}
+
+	if (!ttFailsLow && !is_square_attacked(board, board->kingSq[board->sideToMove], 1 - board->sideToMove) && is_heavy_board(board)) {
+		int reduction = 4;
+
+		make_null_move(board, ply);
+		int eval = -nega_max(board, depth - reduction, -beta, -beta + 1, extension, ply + 1, false);
+		unmake_null_move(board, ply);
+
+		if (timeOut) return 0;
+		if (eval >= beta) return eval;
+	}
 
 	// --- Actual negamax search ---
 	int best = -INF;
@@ -490,7 +539,7 @@ int nega_max(Board* board, int depth, int alpha, int beta, int extension, int pl
 
 		// From our point of view, the lower depth is in the opponent
 		// reference: an high score for him is a terrible score for us.
-		int score = -nega_max(board, depth - 1 + currentExtension, -beta, -alpha, extension + currentExtension, ply + 1);
+		int score = -nega_max(board, depth - 1 + currentExtension, -beta, -alpha, extension + currentExtension, ply + 1, true);
 		unmake_move(board, move, ply);
 
 		if (timeOut) return 0;
@@ -579,7 +628,7 @@ int best_move(Board* board, int depth, int currBest, int* outScore) {
 
 		// From our point of view, the lower depth is in the opponent
 		// reference: an high score for him is a terrible score for us.
-		int score = -nega_max(board, depth - 1 + extension, -beta, -alpha, extension, 1);
+		int score = -nega_max(board, depth - 1 + extension, -beta, -alpha, extension, 1, true);
 		unmake_move(board, move, 0);
 
 		if (timeOut) break;

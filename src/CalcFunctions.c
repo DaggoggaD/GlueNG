@@ -1,4 +1,4 @@
-#include "CalcFunctions.h"
+#include "../include/CalcFunctions.h"
 
 void index_from_rank_file(const int rank, const int file, int* index)
 {

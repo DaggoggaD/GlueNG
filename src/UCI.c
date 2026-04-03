@@ -1,4 +1,4 @@
-#include "UCI.h"
+#include "../include/UCI.h"
 
 int parse_move_string(Board* board, char* move_string) {
 	int strLenght = strlen(move_string);
@@ -125,7 +125,7 @@ void uci_protocol_handler() {
 			int myTime = (board.sideToMove == WHITE) ? wTime : bTime;
 			int myInc = (board.sideToMove == WHITE) ? wInc : bInc;
 
-			int timeLimit = 5000;
+			int timeLimit = 10000;
 
 			if (myTime != -1) {
 				timeLimit = myTime / 30;

@@ -1,4 +1,4 @@
-#include "GlueNG.h"
+#include "../include/GlueNG.h"
 
 void initialize() {
 	// Initialize attacks for "jumping" pieces

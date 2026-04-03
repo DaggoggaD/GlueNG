@@ -1,4 +1,4 @@
-#include "Debug.h"
+#include "../include/Debug.h"
 
 void debug_select_string_from_piece(const PieceId piece, char* str)
 {

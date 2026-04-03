@@ -1,4 +1,4 @@
-#include "TranspTables.h"
+#include "../include/TranspTables.h"
 // RKISS from chessprogramming.org, see https://www.chessprogramming.org/Bob_Jenkins#RKISS
 TranspEntry* TT = NULL;
 int current_age = 0;

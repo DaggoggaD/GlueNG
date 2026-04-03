@@ -1,4 +1,4 @@
-#include "PseudoMovesCalc.h"
+#include "../include/PseudoMovesCalc.h"
 
 const U64 rank1 = 0x00000000000000FFULL;
 const U64 rank2 = 0x000000000000FF00ULL;
@@ -685,9 +685,6 @@ bool is_square_attacked(Board* board, int square, SelectionColor attackingSide) 
 	U64 knights = board->pieceBitboards[attackingSide][KNIGHT];
 	if (knightAttackSquares[square] & knights) return true;
 
-	U64 king = board->pieceBitboards[attackingSide][KING];
-	if (kingAttackSquares[square] & king) return true;
-
 	U64 bishopQueens = board->pieceBitboards[attackingSide][BISHOP] | board->pieceBitboards[attackingSide][QUEEN];
 	if (bishopQueens && (get_bishop_pseudo_moves(square, board->occupiedBitboards[BOTH], board->occupiedBitboards[defending])
 		& bishopQueens)) return true;
@@ -695,6 +692,9 @@ bool is_square_attacked(Board* board, int square, SelectionColor attackingSide) 
 	U64 rookQueens = board->pieceBitboards[attackingSide][ROOK] | board->pieceBitboards[attackingSide][QUEEN];
 	if (rookQueens && (get_rook_pseudo_moves(square, board->occupiedBitboards[BOTH], board->occupiedBitboards[defending])
 		& rookQueens)) return true;
+
+	U64 king = board->pieceBitboards[attackingSide][KING];
+	if (kingAttackSquares[square] & king) return true;
 
 	return false;
 }

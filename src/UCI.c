@@ -73,12 +73,18 @@ void uci_parse_pos(char* cmd, Board* board) {
 		moves_ptr += 6;
 		char* move_string = strtok(moves_ptr, " ");
 
+		board->gamePly = 0;
+
 		while (move_string != NULL) {
 			int move = parse_move_string(board, move_string);
 
 			if (move == 0) {
 				break;
 			}
+
+			board->hashKey = get_zobrist_code(board);
+			board->gameHistory[board->gamePly] = board->hashKey;
+			board->gamePly ++;
 
 			make_move(board, move, board->sideToMove, 0);
 

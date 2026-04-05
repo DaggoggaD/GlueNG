@@ -18,6 +18,8 @@ void initialize() {
 	init_random_keys();
 	init_tt(STANDARD_HASH_SIZE_MB);
 
+	init_lmr_table();
+
 }
 
 #pragma warning(suppress : 6262)

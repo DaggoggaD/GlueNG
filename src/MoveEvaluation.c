@@ -103,6 +103,9 @@ const int opponentKingEndValueTable[64] = {
 	50, 40, 30, 20, 20, 30, 40, 50
 };
 
+// Late move reductions
+int lmrTable[64][256];
+
 
 
 // --- Move evaluation ---
@@ -281,6 +284,17 @@ int evaluate(Board* board) {
 // it's better not to merge them as they have different purposes,
 // and merging them would present more edge cases, making the code less readable.
 
+void init_lmr_table() {
+	for (int d = 0; d < 64; d++) {
+		for (int m = 0; m < 256; m++) {
+			lmrTable[d][m] = 0;
+			if (d >= 3 && m >= 3) {
+				lmrTable[d][m] = (int)(0.99 + log(d) * log(m) / 3.14);
+			}
+		}
+	}
+}
+
 void make_null_move(Board* board, int currDepth) {
 	board->history[currDepth].castlingPerms = board->castlingPerms;
 	board->history[currDepth].enPassant = board->enPassant;
@@ -314,14 +328,30 @@ bool is_heavy_board(Board* board) {
 
 
 bool is_repetition(Board* board, int ply) {
-	int limit = ply - board->halfMoves;
-	if (limit < 0) limit = 0;
+	int searchLimit = ply - board->halfMoves;
+	if (searchLimit < 0) searchLimit = 0;
 
-	for (int i = ply - 2; i >= limit; i -= 2) {
+	for (int i = ply - 2; i >= searchLimit; i -= 2) {
 		if (board->history[i].hashKey == board->hashKey) {
 			return true;
 		}
 	}
+
+	
+	if (board->halfMoves > ply) {
+		int halfMovesInGame = board->halfMoves - ply;
+		int gameLimit = board->gamePly - halfMovesInGame;
+		if (gameLimit < 0) gameLimit = 0;
+
+		int startIndex = board->gamePly - ((ply % 2) == 0 ? 2 : 1);
+
+		for (int i = startIndex; i >= gameLimit; i -= 2) {
+			if (i >= 0 && board->gameHistory[i] == board->hashKey) {
+				return true;
+			}
+		}
+	}
+
 	return false;
 }
 
@@ -458,7 +488,7 @@ int nega_max(Board* board, int depth, int alpha, int beta, int extension, int pl
 		}
 	}
 
-	if (ply > 0 && is_repetition(board, ply)) {
+	if (ply > 0 && is_repetition(board,ply)) {
 		return 0;
 	}
 
@@ -501,6 +531,8 @@ int nega_max(Board* board, int depth, int alpha, int beta, int extension, int pl
 		if (timeOut) return 0;
 		if (eval >= beta) return eval;
 	}
+	
+
 
 	// --- Actual negamax search ---
 	int best = -INF;
@@ -518,14 +550,19 @@ int nega_max(Board* board, int depth, int alpha, int beta, int extension, int pl
 
 	for (int i = 0; i < list.count; i++) {
 		int move = list.moves[i];
+		int nextDepth = depth - 1;
 		SelectionColor sideMoved = board->sideToMove;
+		bool isQuiet = (board->pieceOnSquare[GET_MOVE_TARGET(move)] == NONE) && (GET_PROMOTION_PIECE(move) == 0) && (GET_MOVE_EN_PASSANT(move) == 0);
+
+
+
 
 		make_move(board, move, sideMoved, ply);
-		U64 realKey = get_zobrist_code(board);
+		bool isAttacked = is_square_attacked(board, board->kingSq[sideMoved], board->sideToMove);
 		
 		// Check if square is attacked. The opponent is now board->sideToMove,
 		// since make_move changes opponent side.
-		if (is_square_attacked(board, board->kingSq[sideMoved], board->sideToMove)) {
+		if (isAttacked) {
 
 			// The move is illegal: unmake move, without increasing the counter.
 			unmake_move(board, move, ply);
@@ -533,13 +570,35 @@ int nega_max(Board* board, int depth, int alpha, int beta, int extension, int pl
 		}
 		legalMoves++;
 
+		// Late move reduction: if it's not one of the first (ordered) moves,
+		// the depth is reduced.
+		bool isCheckOpponent = is_square_attacked(board, board->kingSq[board->sideToMove], sideMoved);
+
+		if (depth >= 3 && legalMoves > 2 && isQuiet && !isCheckOpponent) {
+			int safeDepth = depth > 63 ? 63 : depth;
+			int safeMoves = list.count > 255 ? 255 : list.count;
+
+			nextDepth = depth - lmrTable[safeDepth][safeMoves];
+
+			if (nextDepth < 1) nextDepth = 1;
+		}
+
+
 		// Move extension if in check (added in V0.4)
 		int currentExtension = extension < EXTENSION_DEEPNESS &&
 			is_square_attacked(board, board->kingSq[board->sideToMove], sideMoved) ? 1 : 0;
 
 		// From our point of view, the lower depth is in the opponent
 		// reference: an high score for him is a terrible score for us.
-		int score = -nega_max(board, depth - 1 + currentExtension, -beta, -alpha, extension + currentExtension, ply + 1, true);
+		int score = -nega_max(board, nextDepth + currentExtension, -beta, -alpha, extension + currentExtension, ply + 1, true);
+
+		// Re-search if LMR was applied and the move was still good enough
+		if (isQuiet && nextDepth < depth - 1 && score > alpha) {
+			score = -nega_max(board, depth - 1 + currentExtension, -beta, -alpha, extension + currentExtension, ply + 1, true);
+		}
+
+
+
 		unmake_move(board, move, ply);
 
 		if (timeOut) return 0;

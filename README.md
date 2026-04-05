@@ -1,6 +1,7 @@
 # GlueNG
 
 GlueNG is a C-based chess engine developed for educational purposes to explore the classic architectures and algorithms of chess programming. It implements the UCI (Universal Chess Interface) protocol, making it compatible with major GUIs (e.g., Cutechess, Arena, MATE).
+
 *Note: better real human written documentation is available in docs/. This readme file is just a temporary "presentation" of the project.*
 
 ## Architecture and Representation

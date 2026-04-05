@@ -189,4 +189,5 @@ void load_fen_board(const char* fen, Board* board)
 
 	set_piece_on_square(board);
 
+	board->gamePly = 0;
 }

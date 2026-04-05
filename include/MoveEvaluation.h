@@ -4,7 +4,7 @@
 
 #include "Headers.h"
 
-
+extern int lmrTable[64][256];
 
 // --- Move evaluation ---
 
@@ -35,6 +35,16 @@ int evaluate(Board* board);
 
 
 // --- Move search ---
+
+//Initializes the late move reduction table, to avoid log calculations
+// at runtime. The reduction alghorithm is based on
+// the obsidian implementation: 
+// https://www.chessprogramming.org/Late_Move_Reductions#Reduction_Depth
+void init_lmr_table();
+
+// Checks if the current position has already been reached in the game, 
+// by checking history of positions.
+bool is_repetition(Board* board, int ply);
 
 // Helps massively alpha-beta pruning, by ordering the moves 
 // according to their scores. (MVV - LVA + promotion bonus)

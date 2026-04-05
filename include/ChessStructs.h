@@ -31,6 +31,7 @@ typedef struct {
 	int enPassant; // -1 if no en passant square, otherwise the index
 
 	// Move state information
+	int gamePly;
 	int halfMoves;
 	short fiftyMoveCounter;
 	short repetitionCount;
@@ -40,6 +41,9 @@ typedef struct {
 	int kingSq[2];
 
 	U64 hashKey;
+	
+	// for draw detection;
+	U64 gameHistory[1024];
 
 } Board;
 

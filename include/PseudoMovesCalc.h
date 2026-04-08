@@ -24,11 +24,11 @@ U64 get_knight_pseudo_moves(int square, U64 ownPieces);
 
 U64 get_king_pseudo_moves(int square, U64 ownPieces);
 
-inline static U64 get_rook_pseudo_moves(int square, U64 blockers, U64 ownPieces);
+inline U64 get_rook_pseudo_moves(int square, U64 blockers, U64 ownPieces);
 
-inline static U64 get_bishop_pseudo_moves(int square, U64 blockers, U64 ownPieces);
+inline U64 get_bishop_pseudo_moves(int square, U64 blockers, U64 ownPieces);
 
-inline static U64 get_queen_pseudo_moves(int square, U64 blockers, U64 ownPieces);
+inline U64 get_queen_pseudo_moves(int square, U64 blockers, U64 ownPieces);
 
 
 // Bit packing to save space:

@@ -13,11 +13,15 @@ void initialize() {
 	// Initialize "magic" bitboards for sliding pieces
 	initialize_magic_bitboards();
 
+	// Initialize evaluation masks
+	init_evaluation_masks();
+
 	// Initialize random number generator for transposition tables.
 	ran_init(&rng, 1070322ULL);	
 	init_random_keys();
 	init_tt(STANDARD_HASH_SIZE_MB);
 
+	// Initialize late move reduction table
 	init_lmr_table();
 
 }

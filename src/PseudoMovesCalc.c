@@ -35,7 +35,7 @@ U64 get_king_pseudo_moves(int square, U64 ownPieces) {
 	return kingAttackSquares[square] & ~ownPieces;
 }
 
-inline static U64 get_rook_pseudo_moves(int square, U64 blockers, U64 ownPieces) {
+inline U64 get_rook_pseudo_moves(int square, U64 blockers, U64 ownPieces) {
 	assert(square >= 0 && square <= 63);
 	int magicIndex = get_magic_index(blockers, &RookMagics[square]);
 	U64 attacks = RookMoves[square][magicIndex];
@@ -43,7 +43,7 @@ inline static U64 get_rook_pseudo_moves(int square, U64 blockers, U64 ownPieces)
 	return attacks & ~ownPieces;
 }
 
-inline static U64 get_bishop_pseudo_moves(int square, U64 blockers, U64 ownPieces) {
+inline U64 get_bishop_pseudo_moves(int square, U64 blockers, U64 ownPieces) {
 	assert(square >= 0 && square <= 63);
 	int magicIndex = get_magic_index(blockers, &BishopMagics[square]);
 	U64 attacks = BishopMoves[square][magicIndex];
@@ -54,7 +54,7 @@ inline static U64 get_bishop_pseudo_moves(int square, U64 blockers, U64 ownPiece
 	return attacks & ~ownPieces;
 }
 
-inline static U64 get_queen_pseudo_moves(int square, U64 blockers, U64 ownPieces) {
+inline U64 get_queen_pseudo_moves(int square, U64 blockers, U64 ownPieces) {
 	assert(square >= 0 && square <= 63);
 	return get_rook_pseudo_moves(square, blockers, ownPieces) | get_bishop_pseudo_moves(square, blockers, ownPieces);
 }

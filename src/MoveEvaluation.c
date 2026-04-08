@@ -103,12 +103,31 @@ const int opponentKingEndValueTable[64] = {
 	50, 40, 30, 20, 20, 30, 40, 50
 };
 
+// Bitmaksk for pawn evaluation
+U64 fileMasks[8];
+U64 rowMasks[8];
+U64 adjacentFileMasks[8];
+
 // Late move reductions
 int lmrTable[64][256];
 
-
+// Killer moves
+int killerMoves[MAX_TURNS][2];
 
 // --- Move evaluation ---
+
+void init_evaluation_masks() {
+	for (int i = 0; i < 8; i++) {
+		fileMasks[i] = 0x0101010101010101ULL << i;
+		rowMasks[i] = 0xFFULL << (i * 8);
+	}
+
+	for (int i = 0; i < 8; i++) {
+		adjacentFileMasks[i] = 0;
+		if (i > 0) adjacentFileMasks[i] |= fileMasks[i - 1];
+		if (i < 7) adjacentFileMasks[i] |= fileMasks[i + 1];
+	}
+}
 
 static inline void generate_pseudo_moves(Board* board, MoveList* list) {
 	if (board->sideToMove == WHITE) white_generate_pseudo_moves(board, list);
@@ -148,9 +167,68 @@ static inline bool is_endgame(int noPawnEval) {
 	return (noPawnEval < END_GAME_SCORE) ? true : false;
 }
 
-int pst_evaluation(Board* board, int noPawnEval) {
-	int score = 0;
+int mobility_evaluation(Board* board) {
+		int score = 0;
+		U64 whiteOccupancy = board->occupiedBitboards[WHITE];
+		U64 blackOccupancy = board->occupiedBitboards[BLACK];
+		U64 bothOccupancy = board->occupiedBitboards[BOTH];
 
+		// WHITE SIDE
+
+		U64 knights = board->pieceBitboards[WHITE][KNIGHT];
+		while (knights) {
+			int sq = get_lsb_index(knights);
+			score += (int)__popcnt64(get_knight_pseudo_moves(sq, whiteOccupancy)) * KNIGHT_MOBILITY_BONUS;
+			knights &= knights - 1;
+		}
+
+
+		U64 bishops = board->pieceBitboards[WHITE][BISHOP];
+		while (bishops) {
+			int sq = get_lsb_index(bishops);
+			score += (int)__popcnt64(get_bishop_pseudo_moves(sq, bothOccupancy, whiteOccupancy)) * BISHOP_MOBILITY_BONUS;
+			bishops &= bishops - 1;
+		}
+
+
+		U64 rooks = board->pieceBitboards[WHITE][ROOK];
+		while (rooks) {
+			int sq = get_lsb_index(rooks);
+			score += (int)__popcnt64(get_rook_pseudo_moves(sq, bothOccupancy, whiteOccupancy)) * ROOK_MOBILITY_BONUS;
+			rooks &= rooks - 1;
+		}
+
+		// BLACK SIDE
+
+		U64 bKnights = board->pieceBitboards[BLACK][KNIGHT];
+		while (bKnights) {
+			int sq = get_lsb_index(bKnights);
+			score -= (int)__popcnt64(get_knight_pseudo_moves(sq, blackOccupancy)) * KNIGHT_MOBILITY_BONUS;
+			bKnights &= bKnights - 1;
+		}
+
+		U64 bBishops = board->pieceBitboards[BLACK][BISHOP];
+		while (bBishops) {
+			int sq = get_lsb_index(bBishops);
+			score -= (int)__popcnt64(get_bishop_pseudo_moves(sq, bothOccupancy, blackOccupancy)) * BISHOP_MOBILITY_BONUS;
+			bBishops &= bBishops - 1;
+		}
+
+
+		U64 bRooks = board->pieceBitboards[BLACK][ROOK];
+		while (bRooks) {
+			int sq = get_lsb_index(bRooks);
+			score -= (int)__popcnt64(get_rook_pseudo_moves(sq, bothOccupancy, blackOccupancy)) * ROOK_MOBILITY_BONUS;
+			bRooks &= bRooks - 1;
+		}
+
+
+		return score;
+
+}
+
+int pst_lazy_evaluation(Board* board, int noPawnEval) {
+	int score = 0;
 
 	U64 wKnight = board->pieceBitboards[WHITE][KNIGHT];
 	while (wKnight) {
@@ -200,6 +278,7 @@ int pst_evaluation(Board* board, int noPawnEval) {
 	while (bKnight) {
 		int index = get_lsb_index(bKnight);
 		score -= knightValueTable[mirror_index(index)];
+
 		bKnight &= bKnight - 1;
 	}
 
@@ -207,6 +286,7 @@ int pst_evaluation(Board* board, int noPawnEval) {
 	while (bBishop) {
 		int index = get_lsb_index(bBishop);
 		score -= bishopValueTable[mirror_index(index)];
+
 		bBishop &= bBishop - 1;
 	}
 
@@ -214,6 +294,7 @@ int pst_evaluation(Board* board, int noPawnEval) {
 	while (bRook) {
 		int index = get_lsb_index(bRook);
 		score -= rooksValueTable[mirror_index(index)];
+
 		bRook &= bRook - 1;
 	}
 
@@ -221,6 +302,7 @@ int pst_evaluation(Board* board, int noPawnEval) {
 	while (bQueen) {
 		int index = get_lsb_index(bQueen);
 		score -= queenValueTable[mirror_index(index)];
+
 		bQueen &= bQueen - 1;
 	}
 
@@ -252,13 +334,48 @@ int pst_evaluation(Board* board, int noPawnEval) {
 	return score;
 }
 
-int evaluate(Board* board) {
+int pawn_evaluation(Board* board) {
+	int score = 0;
+	
+	U64 wPawn = board->pieceBitboards[WHITE][PAWN];
+	U64 bPawn = board->pieceBitboards[BLACK][PAWN];
+
+	for (int i = 0; i < 8; i++)
+	{
+		int wPop = (int)__popcnt64(wPawn & fileMasks[i]);
+		int bPop = (int)__popcnt64(bPawn & fileMasks[i]);
+
+		if (wPop > 0) {
+
+			if (wPop > 1) score -= (wPop - 1) * DOUBLED_PAWN_PENALTY;
+
+			if (!(wPawn & adjacentFileMasks[i])) score -= wPop * ISOLATED_PAWN_PENALTY;
+			
+			if (!(bPawn & adjacentFileMasks[i]) && bPop == 0) {
+				score += wPop * PASSED_PAWN_BONUS;
+			}
+		}
+
+		if (bPop > 0) {
+
+			if (bPop > 1) score += (bPop - 1) * DOUBLED_PAWN_PENALTY;
+
+			if (!(bPawn & adjacentFileMasks[i])) score += bPop * ISOLATED_PAWN_PENALTY;
+
+			if (!(wPawn & adjacentFileMasks[i]) && wPop == 0) score -= bPop * PASSED_PAWN_BONUS;
+
+		}
+	}
+
+	return score;
+}
+
+int evaluate(Board* board, int alpha, int beta) {
 	int score = 0;
 	int noPawnEval = 0;
 
 	score += material_evaluation(board, WHITE, &noPawnEval);
-	score += pst_evaluation(board, noPawnEval);
-
+	score += pst_lazy_evaluation(board, noPawnEval);
 
 	if (is_endgame(noPawnEval)) {
 		int distance = manhattan_distance(board->kingSq[WHITE], board->kingSq[BLACK]);
@@ -276,6 +393,17 @@ int evaluate(Board* board) {
 			score -= bonus;
 		}
 	}
+
+	int lazyScore = (board->sideToMove == WHITE) ? score: -score;
+
+	if (lazyScore + LAZY_EVAL_MARGIN <= alpha || lazyScore - LAZY_EVAL_MARGIN >= beta) {
+		return lazyScore;
+	}
+
+	score += pawn_evaluation(board);
+
+	score += mobility_evaluation(board);
+
 	return (board->sideToMove == WHITE) ? score : -score;
 }
 
@@ -326,7 +454,6 @@ bool is_heavy_board(Board* board) {
 		board->pieceBitboards[board->sideToMove][QUEEN]) > 0;
 }
 
-
 bool is_repetition(Board* board, int ply) {
 	int searchLimit = ply - board->halfMoves;
 	if (searchLimit < 0) searchLimit = 0;
@@ -355,7 +482,7 @@ bool is_repetition(Board* board, int ply) {
 	return false;
 }
 
-void order_moves(Board* board, MoveList* list, int ttMove) {
+void order_moves(Board* board, MoveList* list, int ttMove, int ply) {
 
 	// Optimization for later: add both white and black attack squares bitboard,
 	// to penalize moving into an attacked square
@@ -367,6 +494,16 @@ void order_moves(Board* board, MoveList* list, int ttMove) {
 		if (ttMove == move) {
 			list->scores[i] = 10000000;
 			continue;
+		}
+
+		
+		if (move == killerMoves[ply][0]) {
+			moveScore += 800;
+
+		}
+		else if (move == killerMoves[ply][1]) {
+			moveScore += 700;
+
 		}
 
 		// Unpack move
@@ -419,7 +556,7 @@ void order_moves(Board* board, MoveList* list, int ttMove) {
 }
 
 int quiescence_search(Board* board, int alpha, int beta, int ply) {
-	if (ply > MAX_PLY - 1) return evaluate(board);
+	if (ply > MAX_PLY - 1) return evaluate(board, alpha, beta);
 
 	nodesCalculated++;
 	if ((nodesCalculated & 2047) == 0) {
@@ -429,7 +566,7 @@ int quiescence_search(Board* board, int alpha, int beta, int ply) {
 	}
 	if (timeOut) return 0;
 
-	int standPat = evaluate(board);
+	int standPat = evaluate(board, alpha, beta);
 	int bestVal = standPat;
 
 	// If current player skips it's turn and the evaluation is
@@ -442,7 +579,7 @@ int quiescence_search(Board* board, int alpha, int beta, int ply) {
 	MoveList list = { 0 };
 	generate_pseudo_moves(board, &list);
 
-	order_moves(board, &list, 0);
+	order_moves(board, &list, 0, ply);
 
 	// Standard move iteration, checking only capture moves
 	for (int i = 1; i < list.count; i++)
@@ -544,18 +681,15 @@ int nega_max(Board* board, int depth, int alpha, int beta, int extension, int pl
 	int bestMoveInPosition = 0;
 	
 	generate_pseudo_moves(board, &list);
-
+	
 	// Add priority to bestMove from the TT, to improve alpha-beta pruning.
-	order_moves(board, &list, ttMove);
+	order_moves(board, &list, ttMove, ply);
 
 	for (int i = 0; i < list.count; i++) {
 		int move = list.moves[i];
 		int nextDepth = depth - 1;
 		SelectionColor sideMoved = board->sideToMove;
 		bool isQuiet = (board->pieceOnSquare[GET_MOVE_TARGET(move)] == NONE) && (GET_PROMOTION_PIECE(move) == 0) && (GET_MOVE_EN_PASSANT(move) == 0);
-
-
-
 
 		make_move(board, move, sideMoved, ply);
 		bool isAttacked = is_square_attacked(board, board->kingSq[sideMoved], board->sideToMove);
@@ -573,8 +707,9 @@ int nega_max(Board* board, int depth, int alpha, int beta, int extension, int pl
 		// Late move reduction: if it's not one of the first (ordered) moves,
 		// the depth is reduced.
 		bool isCheckOpponent = is_square_attacked(board, board->kingSq[board->sideToMove], sideMoved);
+		bool isKiller = (move == killerMoves[ply][0] || move == killerMoves[ply][1]);
 
-		if (depth >= 3 && legalMoves > 2 && isQuiet && !isCheckOpponent) {
+		if (depth >= 3 && legalMoves > 2 && isQuiet && !isCheckOpponent && !isKiller) {
 			int safeDepth = depth > 63 ? 63 : depth;
 			int safeMoves = list.count > 255 ? 255 : list.count;
 
@@ -602,6 +737,11 @@ int nega_max(Board* board, int depth, int alpha, int beta, int extension, int pl
 		unmake_move(board, move, ply);
 
 		if (timeOut) return 0;
+
+		if (score >= beta && isQuiet) {
+			killerMoves[ply][1] = killerMoves[ply][0];
+			killerMoves[ply][0] = move;
+		}
 
 		// Save score
 		if (score > best) {
@@ -664,7 +804,7 @@ int best_move(Board* board, int depth, int currBest, int* outScore) {
 
 	// Generate pseudo legal moves
 	generate_pseudo_moves(board, &list);
-	order_moves(board, &list, currBest);
+	order_moves(board, &list, currBest, 0);
 
 	for (int i = 0; i < list.count; i++) {
 		int move = list.moves[i];
@@ -718,6 +858,8 @@ int best_move_iterative_deepening(Board* board, int maxTime, int maxDepth) {
 	clock_t startTime = clock();
 	clock_t maxTicks = ((clock_t)maxTime * CLOCKS_PER_SEC) / 1000;
 	targetTime = startTime + maxTicks;
+
+	memset(killerMoves, 0, sizeof(killerMoves));
 
 	for (int i = 1; i < maxDepth; i++)
 	{

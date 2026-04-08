@@ -161,8 +161,22 @@ void uci_protocol_handler() {
 		}
 		else if (strncmp(cmd, "d", 1) == 0) {
 			debug_board_visualizer(&board);
+			printf("Hash key: %lld\n", board.hashKey);
 		}
-
+		else if (strncmp(cmd, "eval", 4) == 0) {
+			int score = evaluate(&board, -INF, INF);
+			printf("Current evaluation: %d\n", score);
+			int lazyScore = pst_lazy_evaluation(&board, 0);
+			printf("Lazy evaluation: %d\n", lazyScore);
+		}
+		else if (strncmp(cmd, "perft", 5) == 0) {
+			int depth = atoi(cmd + 6);
+			clock_t startTime = clock();
+			U64 nodes = perft(&board, depth);
+			clock_t endTime = clock();
+			int timeElapsedMs = (int)((endTime - startTime) * 1000 / CLOCKS_PER_SEC);
+			printf("Perft %d: %lld nodes in %d ms\n", depth, nodes, timeElapsedMs);
+		}
 	}
 
 }

@@ -14,6 +14,8 @@ const int pieceValues[] = {
 	10000  // KING
 };
 
+const int passedPawnBonus[8] = { 0, 10, 20, 40, 70, 120, 200, 0 };
+
 // Standard Piece-square Tables from https://www.chessprogramming.org/Simplified_Evaluation_Function
 const int pawnValueTable[64] = {
 	0,  0,  0,  0,  0,  0,  0,  0,
@@ -113,6 +115,7 @@ int lmrTable[64][256];
 
 // Killer moves
 int killerMoves[MAX_TURNS][2];
+int historyCutTable[2][64][64];
 
 // --- Move evaluation ---
 
@@ -352,7 +355,22 @@ int pawn_evaluation(Board* board) {
 			if (!(wPawn & adjacentFileMasks[i])) score -= wPop * ISOLATED_PAWN_PENALTY;
 			
 			if (!(bPawn & adjacentFileMasks[i]) && bPop == 0) {
-				score += wPop * PASSED_PAWN_BONUS;
+
+				U64 passedPawns = wPawn & fileMasks[i];
+				while (passedPawns) {
+					int sq = get_lsb_index(passedPawns);
+					int rank = sq / 8;
+
+					U64 forwardMask = ~((1ULL << ((rank + 1) * 8)) - 1);
+					U64 blockingPawns = bPawn & (fileMasks[i] | adjacentFileMasks[i]) & forwardMask;
+
+					if (blockingPawns == 0) {
+						score += passedPawnBonus[rank];
+					}
+					passedPawns &= passedPawns - 1;
+
+					passedPawns &= passedPawns - 1;
+				}
 			}
 		}
 
@@ -362,9 +380,60 @@ int pawn_evaluation(Board* board) {
 
 			if (!(bPawn & adjacentFileMasks[i])) score += bPop * ISOLATED_PAWN_PENALTY;
 
-			if (!(wPawn & adjacentFileMasks[i]) && wPop == 0) score -= bPop * PASSED_PAWN_BONUS;
+			if (!(wPawn & adjacentFileMasks[i]) && wPop == 0) {
+				U64 passedPawns = bPawn & fileMasks[i];
+				while (passedPawns) {
+					int sq = get_lsb_index(passedPawns);
+					int rank = mirror_index(sq) / 8;
+
+					U64 forwardMask = (1ULL << (rank * 8)) - 1;
+					U64 blockingPawns = wPawn & (fileMasks[i] | adjacentFileMasks[i]) & forwardMask;
+
+
+					if (blockingPawns == 0) {
+						score -= passedPawnBonus[mirror_index(sq) / 8];
+					}
+					passedPawns &= passedPawns - 1;
+				}
+			}
 
 		}
+	}
+
+	return score;
+}
+
+int king_safety_evaluation(Board* board) {
+	int score = 0;
+
+	int wKingSq = get_lsb_index(board->pieceBitboards[WHITE][KING]);
+	int bKingSq = get_lsb_index(board->pieceBitboards[BLACK][KING]);
+
+	int wKingFile = wKingSq % 8;
+	int bKingFile = bKingSq % 8;
+
+	U64 wPawns = board->pieceBitboards[WHITE][PAWN];
+
+	if ((wPawns & fileMasks[wKingFile]) == 0) {
+		score -= KING_FILE_OPEN_PENALTY;
+	}
+	if (wKingFile > 0 && (wPawns & fileMasks[wKingFile - 1]) == 0) {
+		score -= KING_ADJ_OPEN_PENALTY;
+	}
+	if (wKingFile < 7 && (wPawns & fileMasks[wKingFile + 1]) == 0) {
+		score -= KING_ADJ_OPEN_PENALTY;
+	}
+
+	U64 bPawns = board->pieceBitboards[BLACK][PAWN];
+
+	if ((bPawns & fileMasks[bKingFile]) == 0) {
+		score += KING_FILE_OPEN_PENALTY;
+	}
+	if (bKingFile > 0 && (bPawns & fileMasks[bKingFile - 1]) == 0) {
+		score += KING_ADJ_OPEN_PENALTY;
+	}
+	if (bKingFile < 7 && (bPawns & fileMasks[bKingFile + 1]) == 0) {
+		score += KING_ADJ_OPEN_PENALTY;
 	}
 
 	return score;
@@ -392,6 +461,9 @@ int evaluate(Board* board, int alpha, int beta) {
 			bonus += opponentToBorder;
 			score -= bonus;
 		}
+	}
+	else {
+		score += king_safety_evaluation(board);
 	}
 
 	int lazyScore = (board->sideToMove == WHITE) ? score: -score;
@@ -487,26 +559,26 @@ void order_moves(Board* board, MoveList* list, int ttMove, int ply) {
 	// Optimization for later: add both white and black attack squares bitboard,
 	// to penalize moving into an attacked square
 
+	const ttMoveScore =			10000000;
+	const captureBonus =		100000;
+	const promotionBonus =		100000;
+	const killerMove1Score =	80000;
+	const killerMove2Score =	70000;
+	const historyBonus =		60000;
+
+
 	for (int i = 0; i < list->count; i++) {
 		int move = list->moves[i];
 		int moveScore = 0;
 
 		if (ttMove == move) {
-			list->scores[i] = 10000000;
+			list->scores[i] = ttMoveScore;
 			continue;
 		}
 
-		
-		if (move == killerMoves[ply][0]) {
-			moveScore += 800;
-
-		}
-		else if (move == killerMoves[ply][1]) {
-			moveScore += 700;
-
-		}
-
 		// Unpack move
+		
+		int fromSq = GET_MOVE_SOURCE(move);
 		int toSq = GET_MOVE_TARGET(move);
 		PieceType piece = GET_MOVE_PIECE(move);
 		PieceType captured = board->pieceOnSquare[toSq];
@@ -518,13 +590,40 @@ void order_moves(Board* board, MoveList* list, int ttMove, int ply) {
 
 		// Positive feedback for capturing an opponent's piece
 		if (captured != NONE) {
-			moveScore += 10 * pieceValues[captured] - pieceValues[piece];
+			moveScore += captureBonus + (10 * pieceValues[captured] - pieceValues[piece]);
+		}
+		else if (GET_MOVE_EN_PASSANT(move)) {
+			// L'en-passant è un pedone che mangia un pedone
+			moveScore += captureBonus + (10 * pieceValues[0] - pieceValues[0]);
 		}
 
 		// A promotion notably increases the value
 		if (promoted != 0) {
-			moveScore += pieceValues[promoted];
+			moveScore += promotionBonus + pieceValues[promoted];
 		}
+
+		// Killer moves and History heuristic
+		if (moveScore == 0) {
+			if (move == killerMoves[ply][0]) {
+				moveScore += killerMove1Score;
+
+			}
+			else if (move == killerMoves[ply][1]) {
+				moveScore += killerMove2Score;
+
+			}
+			else {
+				int hScore = historyCutTable[board->sideToMove][fromSq][toSq];
+
+				if (hScore > historyBonus) hScore = historyBonus;
+
+				moveScore += hScore;
+			}
+
+ 
+		}
+
+
 
 		// Penalize for moving into occupied square
 		// See optimization above.
@@ -723,24 +822,39 @@ int nega_max(Board* board, int depth, int alpha, int beta, int extension, int pl
 		int currentExtension = extension < EXTENSION_DEEPNESS &&
 			is_square_attacked(board, board->kingSq[board->sideToMove], sideMoved) ? 1 : 0;
 
-		// From our point of view, the lower depth is in the opponent
-		// reference: an high score for him is a terrible score for us.
-		int score = -nega_max(board, nextDepth + currentExtension, -beta, -alpha, extension + currentExtension, ply + 1, true);
+		
+		// PVS search (nagaScout).
+		int score;
+		bool needsFullSearch = (legalMoves == 1) ? true : false;
+		
+		
+		if (!needsFullSearch) {
 
-		// Re-search if LMR was applied and the move was still good enough
-		if (isQuiet && nextDepth < depth - 1 && score > alpha) {
+			// PVS Search
+			score = -nega_max(board, nextDepth + currentExtension, -alpha - 1, -alpha, extension + currentExtension, ply + 1, true);
+
+			
+			if (score > alpha && (nextDepth < depth - 1 || score < beta) ) {
+					needsFullSearch = true;
+			}
+		}
+		
+		if (needsFullSearch) {
 			score = -nega_max(board, depth - 1 + currentExtension, -beta, -alpha, extension + currentExtension, ply + 1, true);
 		}
 
-
+		
 
 		unmake_move(board, move, ply);
 
 		if (timeOut) return 0;
 
 		if (score >= beta && isQuiet) {
-			killerMoves[ply][1] = killerMoves[ply][0];
-			killerMoves[ply][0] = move;
+			if (move != killerMoves[ply][0]) {
+				killerMoves[ply][1] = killerMoves[ply][0];
+				killerMoves[ply][0] = move;
+			}
+			historyCutTable[board->sideToMove][GET_MOVE_SOURCE(move)][GET_MOVE_TARGET(move)] += depth*depth;
 		}
 
 		// Save score
@@ -827,7 +941,19 @@ int best_move(Board* board, int depth, int currBest, int* outScore) {
 
 		// From our point of view, the lower depth is in the opponent
 		// reference: an high score for him is a terrible score for us.
-		int score = -nega_max(board, depth - 1 + extension, -beta, -alpha, extension, 1, true);
+
+		int score;
+		if (legalMoves == 1) {
+			score = -nega_max(board, depth - 1 + extension, -beta, -alpha, extension, 1, true);
+		}
+		else {
+			score = -nega_max(board, depth - 1 + extension, -alpha - 1, -alpha, extension, 1, true);
+
+			if (score > alpha && score < beta) {
+				score = -nega_max(board, depth - 1 + extension, -beta, -alpha, extension, 1, true);
+			}
+		}
+
 		unmake_move(board, move, 0);
 
 		if (timeOut) break;
@@ -860,6 +986,7 @@ int best_move_iterative_deepening(Board* board, int maxTime, int maxDepth) {
 	targetTime = startTime + maxTicks;
 
 	memset(killerMoves, 0, sizeof(killerMoves));
+	memset(historyCutTable, 0, sizeof(historyCutTable));
 
 	for (int i = 1; i < maxDepth; i++)
 	{

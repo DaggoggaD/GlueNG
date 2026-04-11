@@ -21,6 +21,9 @@
 #define KNIGHT_MOBILITY_BONUS 4
 #define BISHOP_MOBILITY_BONUS 3
 #define ROOK_MOBILITY_BONUS 1
+#define KING_FILE_OPEN_PENALTY 50;
+#define KING_ADJ_OPEN_PENALTY 30;
+
 
 #include "ChessDefinitions.h"
 #include "ChessStructs.h"

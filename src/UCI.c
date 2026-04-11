@@ -131,7 +131,7 @@ void uci_protocol_handler() {
 			int myTime = (board.sideToMove == WHITE) ? wTime : bTime;
 			int myInc = (board.sideToMove == WHITE) ? wInc : bInc;
 
-			int timeLimit = 10000;
+			int timeLimit = 15000;
 
 			if (myTime != -1) {
 				timeLimit = myTime / 30;

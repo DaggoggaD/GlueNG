@@ -68,6 +68,9 @@
     <ClInclude Include="include\UCI.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="include\PestoTables.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CalcFunctions.c">
@@ -101,6 +104,9 @@
       <Filter>File di risorse</Filter>
     </ClCompile>
     <ClCompile Include="src\UCI.c">
+      <Filter>File di risorse</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PestoTables.c">
       <Filter>File di risorse</Filter>
     </ClCompile>
   </ItemGroup>

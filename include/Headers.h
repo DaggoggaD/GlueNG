@@ -11,6 +11,7 @@
 #define BRD_SIZE 64
 
 // Evaluation constants
+#define MAX_MATERIAL 6200
 #define END_GAME_SCORE 2000
 #define LAZY_EVAL_MARGIN 150
 #define KING_BIAS_SCORE 200
@@ -36,6 +37,7 @@
 #include "GlueNG.h"
 #include "MoveGeneration.h"
 #include "MoveEvaluation.h"
+#include "PestoTables.h"
 #include "TranspTables.h"
 #include "UCI.h"
 

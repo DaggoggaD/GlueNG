@@ -230,7 +230,8 @@ int mobility_evaluation(Board* board) {
 
 }
 
-int pst_lazy_evaluation(Board* board, int noPawnEval) {
+// OLD
+int pst_lazy_evaluation(Board* board, int phase) {
 	int score = 0;
 
 	U64 wKnight = board->pieceBitboards[WHITE][KNIGHT];
@@ -316,25 +317,56 @@ int pst_lazy_evaluation(Board* board, int noPawnEval) {
 		bPawn &= bPawn - 1;
 	}
 
-	// If material is low, use endgame king tables.
-	bool endgamePhase = is_endgame(noPawnEval);
 
 
 	// Kings evaluations
 	U64 bKing = board->pieceBitboards[BLACK][KING];
 	int index = get_lsb_index(bKing);
 
-	if (endgamePhase) score -= kingEndValueTable[mirror_index(index)];
-	else score -= kingStartValueTable[mirror_index(index)];
+	int bKingEndGame = kingEndValueTable[mirror_index(index)];
+	int bKingMidGame = kingStartValueTable[mirror_index(index)];
 
+	score -= (bKingEndGame * phase + bKingMidGame * (6200 - phase)) / 6200;
 
 	U64 wKing = board->pieceBitboards[WHITE][KING];
 	index = get_lsb_index(wKing);
 
-	if (endgamePhase) score += kingEndValueTable[index];
-	else score += kingStartValueTable[index];
+	int wKingEndGame = kingEndValueTable[index];
+	int wKingMidGame = kingStartValueTable[index];
+
+	score += (wKingEndGame * phase + wKingMidGame * (6200 - phase)) / 6200;
 
 	return score;
+}
+
+int pesto_evaluation(Board* board, int phase) {
+	int mgTotal = 0;
+	int egTotal = 0;
+
+	for (int piece = PAWN; piece <= KING; piece++) {
+		U64 bitboardW = board->pieceBitboards[WHITE][piece];
+		while (bitboardW) {
+			int sq = mirror_index(get_lsb_index(bitboardW));
+
+			mgTotal += mg_pesto_table[piece][sq];
+			egTotal += eg_pesto_table[piece][sq];
+
+			bitboardW &= bitboardW - 1;
+		}
+
+		U64 bitboardB = board->pieceBitboards[BLACK][piece];
+		while (bitboardB) {
+			int sq = get_lsb_index(bitboardB);
+
+			mgTotal -= mg_pesto_table[piece][sq];
+			egTotal -= eg_pesto_table[piece][sq];
+
+			bitboardB &= bitboardB - 1;
+		}
+	}
+
+	int finalScore = (mgTotal * phase + egTotal * (6200 - phase)) / 6200;
+	return finalScore;
 }
 
 int pawn_evaluation(Board* board) {
@@ -367,8 +399,6 @@ int pawn_evaluation(Board* board) {
 					if (blockingPawns == 0) {
 						score += passedPawnBonus[rank];
 					}
-					passedPawns &= passedPawns - 1;
-
 					passedPawns &= passedPawns - 1;
 				}
 			}
@@ -443,34 +473,41 @@ int evaluate(Board* board, int alpha, int beta) {
 	int score = 0;
 	int noPawnEval = 0;
 
+	//score += material_evaluation(board, WHITE, &noPawnEval); 
+	//score += pst_lazy_evaluation(board, noPawnEval);
 	score += material_evaluation(board, WHITE, &noPawnEval);
-	score += pst_lazy_evaluation(board, noPawnEval);
 
-	if (is_endgame(noPawnEval)) {
-		int distance = manhattan_distance(board->kingSq[WHITE], board->kingSq[BLACK]);
-		int bonus = (14 - distance) * KING_CLOSENESS_BIAS;
+	int phase = noPawnEval;
+	if (phase > 6200) phase = 6200;
+	if (phase < 0) phase = 0;
+	int extra = 0;
+	
+	score += pesto_evaluation(board, phase);
 
-		if (score > KING_BIAS_SCORE) {
-			int opponentToBorder = opponentKingEndValueTable[board->kingSq[BLACK]];
-			bonus += opponentToBorder;
+	int distance = manhattan_distance(board->kingSq[WHITE], board->kingSq[BLACK]);
+	int bonus = (14 - distance) * KING_CLOSENESS_BIAS;
 
-			score += bonus;
-		}
-		else if (score < -KING_BIAS_SCORE) {
-			int opponentToBorder = opponentKingEndValueTable[board->kingSq[WHITE]];
-			bonus += opponentToBorder;
-			score -= bonus;
-		}
+	if (score > KING_BIAS_SCORE) {
+		int opponentToBorder = opponentKingEndValueTable[board->kingSq[BLACK]];
+		bonus += opponentToBorder;
+
+		extra += bonus * (6200 - phase);
 	}
-	else {
-		score += king_safety_evaluation(board);
+	else if (score < -KING_BIAS_SCORE) {
+		int opponentToBorder = opponentKingEndValueTable[board->kingSq[WHITE]];
+		bonus += opponentToBorder;
+		extra -= bonus * (6200 - phase);
 	}
 
+	extra += king_safety_evaluation(board) * phase;
+	score += extra / 6200;
+
+	/*
 	int lazyScore = (board->sideToMove == WHITE) ? score: -score;
 
 	if (lazyScore + LAZY_EVAL_MARGIN <= alpha || lazyScore - LAZY_EVAL_MARGIN >= beta) {
 		return lazyScore;
-	}
+	}*/
 
 	score += pawn_evaluation(board);
 
@@ -665,15 +702,16 @@ int quiescence_search(Board* board, int alpha, int beta, int ply) {
 	}
 	if (timeOut) return 0;
 
-	int standPat = evaluate(board, alpha, beta);
+	int standPat = -INF;
+	int attacked = is_square_attacked(board, board->kingSq[board->sideToMove], 1 - board->sideToMove);
+
+	if (!attacked) {
+		standPat = evaluate(board, alpha, beta);
+		if (standPat >= beta) return beta;
+		if (alpha < standPat) alpha = standPat;
+	}
+
 	int bestVal = standPat;
-
-	// If current player skips it's turn and the evaluation is
-	// still very good, return immediatly.
-	if (bestVal >= beta) return bestVal;
-
-	// Otherwise, switch alpha
-	if (bestVal > alpha) alpha = bestVal;
 
 	MoveList list = { 0 };
 	generate_pseudo_moves(board, &list);
@@ -681,7 +719,7 @@ int quiescence_search(Board* board, int alpha, int beta, int ply) {
 	order_moves(board, &list, 0, ply);
 
 	// Standard move iteration, checking only capture moves
-	for (int i = 1; i < list.count; i++)
+	for (int i = 0; i < list.count; i++)
 	{
 		int move = list.moves[i];
 
@@ -689,7 +727,7 @@ int quiescence_search(Board* board, int alpha, int beta, int ply) {
 		PieceType captured = board->pieceOnSquare[toSq];
 
 		// Skip if not a capture/promotion
-		if (captured == NONE && GET_MOVE_EN_PASSANT(move) == 0 && GET_PROMOTION_PIECE(move) == 0) continue;
+		if (captured == NONE && GET_MOVE_EN_PASSANT(move) == 0 && GET_PROMOTION_PIECE(move) == 0 && !attacked) continue;
 
 		SelectionColor sideMoved = board->sideToMove;
 

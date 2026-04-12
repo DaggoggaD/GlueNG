@@ -30,6 +30,7 @@
     <ClInclude Include="include\MagicBitboards.h" />
     <ClInclude Include="include\MoveEvaluation.h" />
     <ClInclude Include="include\MoveGeneration.h" />
+    <ClInclude Include="include\PestoTables.h" />
     <ClInclude Include="include\PseudoMovesCalc.h" />
     <ClInclude Include="include\TranspTables.h" />
     <ClInclude Include="include\UCI.h" />
@@ -43,6 +44,7 @@
     <ClCompile Include="src\MagicBitboards.c" />
     <ClCompile Include="src\MoveEvaluation.c" />
     <ClCompile Include="src\MoveGeneration.c" />
+    <ClCompile Include="src\PestoTables.c" />
     <ClCompile Include="src\PseudoMovesCalc.c" />
     <ClCompile Include="src\TranspTables.c" />
     <ClCompile Include="src\UCI.c" />

@@ -13,7 +13,6 @@ const int pieceValues[] = {
 	1000,  // QUEEN
 	10000  // KING
 };
-
 const int passedPawnBonus[8] = { 0, 10, 20, 40, 70, 120, 200, 0 };
 
 // Standard Piece-square Tables from https://www.chessprogramming.org/Simplified_Evaluation_Function
@@ -224,7 +223,6 @@ int mobility_evaluation(Board* board) {
 		return score;
 }
 
-// OLD
 int pst_lazy_evaluation(Board* board, int phase) {
 	int score = 0;
 
@@ -363,8 +361,6 @@ int pesto_evaluation(Board* board, int phase) {
 	return finalScore;
 }
 
-// NEW FUNCTIONS---
-
 void evaluate_white_passed_pawns(U64 wPawn, U64 bPawn, int file, int *score) {
 	U64 passedPawns = wPawn & fileMasks[file];
 	while (passedPawns) {
@@ -471,8 +467,6 @@ int king_safety_evaluation(Board* board) {
 	return score;
 }
 
-
-// --- New Functions ---
 int king_distance_evaluation(Board* board, int score, int phase) {
 	int extra = 0;
 	int distance = manhattan_distance(board->kingSq[WHITE], board->kingSq[BLACK]);
@@ -493,8 +487,8 @@ int king_distance_evaluation(Board* board, int score, int phase) {
 	return extra;
 }
 
-// Helper function for evaluate().
 static inline int get_phase(int noPawnEval) {
+	// Helper function for evaluate().
 	// This is a standard phase taper, can be improved
 	// with more specific endgame detectos. Still more than capable
 	// of carrying out to 2400-2500 ELO.
@@ -523,9 +517,6 @@ int evaluate(Board* board, int alpha, int beta) {
 }
 
 // --- Move search ---
-// Despite many of the functions below containig similar code,
-// it's better not to merge them as they have different purposes,
-// and merging them would present more edge cases, making the code less readable.
 
 static inline bool check_timing(){
 	nodesCalculated++;
@@ -738,9 +729,7 @@ int quiescence_search(Board* board, int alpha, int beta, int ply) {
 	return bestVal;
 }
 
-// --- New Functions ---
-
-static inline bool probe_tt(Board* board, TranspEntry* entry, int depth, int alpha, int beta, int* outScore) {
+bool probe_tt(Board* board, TranspEntry* entry, int depth, int alpha, int beta, int* outScore) {
 	if (entry->key == board->hashKey) {
 		// This ensures some sort of "only if higher precision",
 		// despite depth is not the only determining factor.
@@ -762,7 +751,7 @@ static inline bool probe_tt(Board* board, TranspEntry* entry, int depth, int alp
 	return false;
 }
 
-static inline bool do_null_move_pruning(Board* board, TranspEntry* entry, int depth, int beta, int extension, int ply, int* outScore) {
+bool do_null_move_pruning(Board* board, TranspEntry* entry, int depth, int beta, int extension, int ply, int* outScore) {
 	// Null move pruning
 	bool ttFailsLow = false;
 	if (entry->key == board->hashKey && entry->eval < beta) {
@@ -788,7 +777,7 @@ static inline bool do_null_move_pruning(Board* board, TranspEntry* entry, int de
 	return false;
 }
 
-static inline int evaluate_move(Board* board, int move, SearchState* state, int* legalMoves, MoveList* list) {
+int evaluate_move(Board* board, int move, SearchState* state, int* legalMoves, MoveList* list) {
 	int nextDepth = state->depth - 1;
 	SelectionColor sideMoved = board->sideToMove;
 	bool isQuiet = (board->pieceOnSquare[GET_MOVE_TARGET(move)] == NONE) && (GET_PROMOTION_PIECE(move) == 0) && (GET_MOVE_EN_PASSANT(move) == 0);
@@ -940,198 +929,6 @@ int nega_max(Board* board, int depth, int alpha, int beta, int extension, int pl
 	store_tt_entry(board->hashKey, depth, best, flag, bestMoveInPosition);
 	return best;
 }
-
-/*typedef struct {
-	int depth;
-	int alpha;
-	int beta;
-	int extension;
-	int ply;
-	bool allowNull;
-} SearchState;
-
-int nega_max(Board* board, int depth, int alpha, int beta, int extension, int ply, bool allowNull) {
-	// Heavily commented by design, since all functions 
-	// below contain similar logic and calls.
-
-	check_timing();
-	if (ply > 0 && is_repetition(board,ply)) return 0;
-
-	// Transp table checking: if we have already explored this position,
-	// and the stored depth is higher than the current one, 
-	// we can return the stored evaluation.
-	int originalAlpha = alpha;
-	TranspEntry* entry = &TT[get_hash_index(board->hashKey)];
-	int ttMove = 0;
-
-	if (entry->key == board->hashKey) {
-		ttMove = entry->bestMove;
-
-		// This ensures some sort of "only if higher precision",
-		// despite depth is not the only determining factor.
-		if (entry->depth >= depth) {
-			if (entry->flag == EXACT) return entry->eval;
-			if (entry->flag == ALPHA && entry->eval <= alpha) return entry->eval;
-			if (entry->flag == BETA && entry->eval >= beta) return entry->eval;
-		}
-	}
-
-	if (timeOut) return 0;
-	if (depth <= 0) return quiescence_search(board, alpha, beta, ply);
-
-	// Null move pruning
-	bool ttFailsLow = false;
-	if (entry->key == board->hashKey && entry->eval < beta) {
-		ttFailsLow = true;
-	}
-
-	if (!ttFailsLow && !is_square_attacked(board, board->kingSq[board->sideToMove], 1 - board->sideToMove) && is_heavy_board(board)) {
-		int reduction = 4;
-
-		make_null_move(board, ply);
-		int eval = -nega_max(board, depth - reduction, -beta, -beta + 1, extension, ply + 1, false);
-		unmake_null_move(board, ply);
-
-		if (timeOut) return 0;
-		if (eval >= beta) return eval;
-	}
-
-
-
-	// --- Actual negamax search ---
-	int best = -INF;
-	int legalMoves = 0;
-	MoveList list = { 0 };
-
-	// Used to update the best position in this scenario, for the transposition table.
-	// If beta cut happens, it will be ignored, since the opponent will never pick it.
-	int bestMoveInPosition = 0;
-	generate_pseudo_moves(board, &list);
-	
-	// Add priority to bestMove from the TT, to improve alpha-beta pruning.
-	order_moves(board, &list, ttMove, ply);
-
-	for (int i = 0; i < list.count; i++) {
-		int move = list.moves[i];
-		int nextDepth = depth - 1;
-		SelectionColor sideMoved = board->sideToMove;
-		bool isQuiet = (board->pieceOnSquare[GET_MOVE_TARGET(move)] == NONE) && (GET_PROMOTION_PIECE(move) == 0) && (GET_MOVE_EN_PASSANT(move) == 0);
-
-		make_move(board, move, sideMoved, ply);
-		bool isAttacked = is_square_attacked(board, board->kingSq[sideMoved], board->sideToMove);
-		
-		// Check if square is attacked. The opponent is now board->sideToMove,
-		// since make_move changes opponent side.
-		if (isAttacked) {
-
-			// The move is illegal: unmake move, without increasing the counter.
-			unmake_move(board, move, ply);
-			continue;
-		}
-		legalMoves++;
-
-		// Late move reduction: if it's not one of the first (ordered) moves,
-		// the depth is reduced.
-		bool isCheckOpponent = is_square_attacked(board, board->kingSq[board->sideToMove], sideMoved);
-		bool isKiller = (move == killerMoves[ply][0] || move == killerMoves[ply][1]);
-
-		if (depth >= 3 && legalMoves > 2 && isQuiet && !isCheckOpponent && !isKiller) {
-			int safeDepth = depth > 63 ? 63 : depth;
-			int safeMoves = list.count > 255 ? 255 : list.count;
-
-			nextDepth = depth - lmrTable[safeDepth][safeMoves];
-
-			if (nextDepth < 1) nextDepth = 1;
-		}
-
-
-		// Move extension if in check (added in V0.4)
-		int currentExtension = extension < EXTENSION_DEEPNESS &&
-			is_square_attacked(board, board->kingSq[board->sideToMove], sideMoved) ? 1 : 0;
-
-		
-		// PVS search (nagaScout).
-		int score;
-		bool needsFullSearch = (legalMoves == 1) ? true : false;
-		
-		
-		if (!needsFullSearch) {
-
-			// PVS Search
-			score = -nega_max(board, nextDepth + currentExtension, -alpha - 1, -alpha, extension + currentExtension, ply + 1, true);
-
-			
-			if (score > alpha && (nextDepth < depth - 1 || score < beta) ) {
-					needsFullSearch = true;
-			}
-		}
-		
-		if (needsFullSearch) {
-			score = -nega_max(board, depth - 1 + currentExtension, -beta, -alpha, extension + currentExtension, ply + 1, true);
-		}
-
-		
-
-		unmake_move(board, move, ply);
-
-		if (timeOut) return 0;
-
-		if (score >= beta && isQuiet) {
-			if (move != killerMoves[ply][0]) {
-				killerMoves[ply][1] = killerMoves[ply][0];
-				killerMoves[ply][0] = move;
-			}
-			historyCutTable[board->sideToMove][GET_MOVE_SOURCE(move)][GET_MOVE_TARGET(move)] += depth*depth;
-		}
-
-		// Save score
-		if (score > best) {
-			best = score;
-			bestMoveInPosition = move;
-		}
-
-		// Alpha-beta pruning
-
-		// Better move found, store new alpha
-		if (best > alpha) {
-			alpha = best;
-		}
-
-		// Move too good, opponent would pick any previous branch.
-		if (alpha >= beta) {
-			store_tt_entry(board->hashKey, depth, best, BETA, bestMoveInPosition);
-			return best;
-		}
-
-	}
-
-	// If we didn't find any legal moves, it's either a checkmate (-infinity)
-	// or a draw.
-	if (legalMoves == 0) {
-		SelectionColor otherSide = 1 - board->sideToMove;
-
-		if (is_square_attacked(board, board->kingSq[board->sideToMove], otherSide)) {
-			return -INF - depth;
-		}
-		else {
-			return 0;
-		}
-	}
-
-	if (timeOut) return 0;
-
-	HashFlag flag;
-	if (best <= originalAlpha) {
-		flag = ALPHA;
-	}
-	else {
-		flag = EXACT;
-	}
-
-	store_tt_entry(board->hashKey, depth, best, flag, bestMoveInPosition);
-	return best;
-}
-*/
 
 int best_move(Board* board, int depth, int currBest, int* outScore) {
 	// Here, for alpha-beta pruning, alpha represents our worst (pickable) scenario,

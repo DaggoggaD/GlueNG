@@ -22,7 +22,7 @@ typedef enum {
 	BETA
 } HashFlag;
 
-typedef struct {
+typedef struct TranspEntry {
 	U64 key;
 	int depth;
 	int eval;

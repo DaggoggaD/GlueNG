@@ -18,6 +18,8 @@ typedef struct {
 	bool allowNull;
 } SearchState;
 
+typedef struct TranspEntry TranspEntry;
+
 // --- Move evaluation ---
 
 // Initializes the fileMasks and adjacentFileMasks, used for pawn evaluation
@@ -48,10 +50,34 @@ int mobility_evaluation(Board* board, SelectionColor side, int* noPawnEval);
 // Old, replaced with PeSTO evaluation.
 int pst_lazy_evaluation(Board* board, int noPawnEval);
 
+// Evaluates current position based on piece position, 
+// using the PeSTO evaluation tables, which take into account a more precise
+// evaluation (const tables taken from Chess Programming Wiki) and endgame phase.
+int pesto_evaluation(Board* board, int phase);
+
+// Evaluates white pawns (passed, doubled, isolated), by checking the file and adjacent files.
+// Helper function for pawn_evaluation.
+void evaluate_white_passed_pawns(U64 wPawn, U64 bPawn, int file, int* score);
+
+// Evaluates black pawns (passed, doubled, isolated), by checking the file and adjacent files.
+// Helper function for pawn_evaluation.
+void evaluate_black_passed_pawns(U64 wPawn, U64 bPawn, int file, int* score);
+
+// Evaluates the pawn structure, by checking each file for doubled, isolated and passed pawns.
+void search_pawn_file(Board* board, int i, int* score, U64 wPawn, U64 bPawn);
 
 // Evaluates the position based on the pawn structure, 
 // using file and row masks
 int pawn_evaluation(Board* board);
+
+// Evaluates the position based on the position of nearby pawns, 
+// shielding the king, or exposing it. Tapered with game phase
+// in evaluate().
+int king_safety_evaluation(Board* board);
+
+// Moves the king closer in the endgame, making them a valuable attack
+// piece. Adds a bonus for pushing the opponent king to the border. 
+int king_distance_evaluation(Board* board, int score, int phase);
 
 // Evaluates the current position, by summing material 
 // and piece-square tables evaluations. Also adds a bonus 
@@ -92,9 +118,21 @@ void order_moves(Board* board, MoveList* list, int ttMove, int ply);
 // captures/promotions/enpassants.
 int quiescence_search(Board* board, int alpha, int beta, int ply);
 
+// Checks if the current position is already stored in the transposition table,
+bool probe_tt(Board* board, TranspEntry* entry, int depth, int alpha, int beta, int* outScore);
+
+// If the position is not in the transp table, we apply a null move (skipping our turn).
+// If the position is still in our favor (score >= beta), we can prune this branch.
+bool do_null_move_pruning(Board* board, TranspEntry* entry, int depth, int beta, int extension, int ply, int* outScore);
+
+// Evaluates a specific move, considering the current board state, 
+// search state, legal moves, and move list.
+int evaluate_move(Board* board, int move, SearchState* state, int* legalMoves, MoveList* list);
+
 // Explores the moves tree, searching for the best eval.
 // Returns (int) best score.
 int nega_max(Board* board, int depth, int alpha, int beta, int extension, int ply, bool allowNull);
+
 // Explores the moves tree, with negamax. NOTE:
 // it returns the (int) best move, NOT score.
 int best_move(Board* board, int depth, int currBest, int extension);

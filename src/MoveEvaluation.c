@@ -185,14 +185,12 @@ int mobility_evaluation(Board* board) {
 			knights &= knights - 1;
 		}
 
-
 		U64 bishops = board->pieceBitboards[WHITE][BISHOP];
 		while (bishops) {
 			int sq = get_lsb_index(bishops);
 			score += (int)__popcnt64(get_bishop_pseudo_moves(sq, bothOccupancy, whiteOccupancy)) * BISHOP_MOBILITY_BONUS;
 			bishops &= bishops - 1;
 		}
-
 
 		U64 rooks = board->pieceBitboards[WHITE][ROOK];
 		while (rooks) {
@@ -202,7 +200,6 @@ int mobility_evaluation(Board* board) {
 		}
 
 		// BLACK SIDE
-
 		U64 bKnights = board->pieceBitboards[BLACK][KNIGHT];
 		while (bKnights) {
 			int sq = get_lsb_index(bKnights);
@@ -217,7 +214,6 @@ int mobility_evaluation(Board* board) {
 			bBishops &= bBishops - 1;
 		}
 
-
 		U64 bRooks = board->pieceBitboards[BLACK][ROOK];
 		while (bRooks) {
 			int sq = get_lsb_index(bRooks);
@@ -225,9 +221,7 @@ int mobility_evaluation(Board* board) {
 			bRooks &= bRooks - 1;
 		}
 
-
 		return score;
-
 }
 
 // OLD
@@ -369,65 +363,73 @@ int pesto_evaluation(Board* board, int phase) {
 	return finalScore;
 }
 
+// NEW FUNCTIONS---
+
+void evaluate_white_passed_pawns(U64 wPawn, U64 bPawn, int file, int *score) {
+	U64 passedPawns = wPawn & fileMasks[file];
+	while (passedPawns) {
+		int sq = get_lsb_index(passedPawns);
+		int rank = sq / 8;
+
+		U64 forwardMask = ~((1ULL << ((rank + 1) * 8)) - 1);
+		U64 blockingPawns = bPawn & (fileMasks[file] | adjacentFileMasks[file]) & forwardMask;
+
+		if (blockingPawns == 0) {
+			*score += passedPawnBonus[rank];
+		}
+		passedPawns &= passedPawns - 1;
+	}
+}
+
+void evaluate_black_passed_pawns(U64 wPawn, U64 bPawn, int file, int* score) {
+	U64 passedPawns = bPawn & fileMasks[file];
+	while (passedPawns) {
+		int sq = get_lsb_index(passedPawns);
+		int rank = mirror_index(sq) / 8;
+
+		U64 forwardMask = (1ULL << (rank * 8)) - 1;
+		U64 blockingPawns = wPawn & (fileMasks[file] | adjacentFileMasks[file]) & forwardMask;
+
+		if (blockingPawns == 0) {
+			*score -= passedPawnBonus[mirror_index(sq) / 8];
+		}
+		passedPawns &= passedPawns - 1;
+	}
+
+}
+
+void search_pawn_file(Board* board, int i, int* score, U64 wPawn, U64 bPawn) {
+	int wPop = (int)__popcnt64(wPawn & fileMasks[i]);
+	int bPop = (int)__popcnt64(bPawn & fileMasks[i]);
+
+	if (wPop > 0) {
+		if (wPop > 1) *score -= (wPop - 1) * DOUBLED_PAWN_PENALTY;
+		if (!(wPawn & adjacentFileMasks[i])) *score -= wPop * ISOLATED_PAWN_PENALTY;
+
+		if (!(bPawn & adjacentFileMasks[i]) && bPop == 0) {
+			evaluate_white_passed_pawns(wPawn, bPawn, i, score);
+		}
+	}
+
+	if (bPop > 0) {
+		if (bPop > 1) *score += (bPop - 1) * DOUBLED_PAWN_PENALTY;
+		if (!(bPawn & adjacentFileMasks[i])) *score += bPop * ISOLATED_PAWN_PENALTY;
+
+		if (!(wPawn & adjacentFileMasks[i]) && wPop == 0) {
+			evaluate_black_passed_pawns(wPawn, bPawn, i, score);
+		}
+
+	}
+}
+
 int pawn_evaluation(Board* board) {
 	int score = 0;
-	
 	U64 wPawn = board->pieceBitboards[WHITE][PAWN];
 	U64 bPawn = board->pieceBitboards[BLACK][PAWN];
 
 	for (int i = 0; i < 8; i++)
 	{
-		int wPop = (int)__popcnt64(wPawn & fileMasks[i]);
-		int bPop = (int)__popcnt64(bPawn & fileMasks[i]);
-
-		if (wPop > 0) {
-
-			if (wPop > 1) score -= (wPop - 1) * DOUBLED_PAWN_PENALTY;
-
-			if (!(wPawn & adjacentFileMasks[i])) score -= wPop * ISOLATED_PAWN_PENALTY;
-			
-			if (!(bPawn & adjacentFileMasks[i]) && bPop == 0) {
-
-				U64 passedPawns = wPawn & fileMasks[i];
-				while (passedPawns) {
-					int sq = get_lsb_index(passedPawns);
-					int rank = sq / 8;
-
-					U64 forwardMask = ~((1ULL << ((rank + 1) * 8)) - 1);
-					U64 blockingPawns = bPawn & (fileMasks[i] | adjacentFileMasks[i]) & forwardMask;
-
-					if (blockingPawns == 0) {
-						score += passedPawnBonus[rank];
-					}
-					passedPawns &= passedPawns - 1;
-				}
-			}
-		}
-
-		if (bPop > 0) {
-
-			if (bPop > 1) score += (bPop - 1) * DOUBLED_PAWN_PENALTY;
-
-			if (!(bPawn & adjacentFileMasks[i])) score += bPop * ISOLATED_PAWN_PENALTY;
-
-			if (!(wPawn & adjacentFileMasks[i]) && wPop == 0) {
-				U64 passedPawns = bPawn & fileMasks[i];
-				while (passedPawns) {
-					int sq = get_lsb_index(passedPawns);
-					int rank = mirror_index(sq) / 8;
-
-					U64 forwardMask = (1ULL << (rank * 8)) - 1;
-					U64 blockingPawns = wPawn & (fileMasks[i] | adjacentFileMasks[i]) & forwardMask;
-
-
-					if (blockingPawns == 0) {
-						score -= passedPawnBonus[mirror_index(sq) / 8];
-					}
-					passedPawns &= passedPawns - 1;
-				}
-			}
-
-		}
+		search_pawn_file(board, i, &score, wPawn, bPawn);
 	}
 
 	return score;
@@ -469,21 +471,10 @@ int king_safety_evaluation(Board* board) {
 	return score;
 }
 
-int evaluate(Board* board, int alpha, int beta) {
-	int score = 0;
-	int noPawnEval = 0;
 
-	//score += material_evaluation(board, WHITE, &noPawnEval); 
-	//score += pst_lazy_evaluation(board, noPawnEval);
-	score += material_evaluation(board, WHITE, &noPawnEval);
-
-	int phase = noPawnEval;
-	if (phase > 6200) phase = 6200;
-	if (phase < 0) phase = 0;
+// --- New Functions ---
+int king_distance_evaluation(Board* board, int score, int phase) {
 	int extra = 0;
-	
-	score += pesto_evaluation(board, phase);
-
 	int distance = manhattan_distance(board->kingSq[WHITE], board->kingSq[BLACK]);
 	int bonus = (14 - distance) * KING_CLOSENESS_BIAS;
 
@@ -499,19 +490,34 @@ int evaluate(Board* board, int alpha, int beta) {
 		extra -= bonus * (6200 - phase);
 	}
 
+	return extra;
+}
+
+// Helper function for evaluate().
+static inline int get_phase(int noPawnEval) {
+	// This is a standard phase taper, can be improved
+	// with more specific endgame detectos. Still more than capable
+	// of carrying out to 2400-2500 ELO.
+
+	int phase = noPawnEval;
+	if (phase > 6200) phase = 6200;
+	if (phase < 0) phase = 0;
+	return phase;
+}
+
+int evaluate(Board* board, int alpha, int beta) {
+	int score = 0, extra = 0, noPawnEval = 0;
+
+	score += material_evaluation(board, WHITE, &noPawnEval);
+	int phase = get_phase(noPawnEval);
+	
+	score += pesto_evaluation(board, phase);
+	score += pawn_evaluation(board);
+	score += mobility_evaluation(board);
+
+	extra += king_distance_evaluation(board, score, phase);
 	extra += king_safety_evaluation(board) * phase;
 	score += extra / 6200;
-
-	/*
-	int lazyScore = (board->sideToMove == WHITE) ? score: -score;
-
-	if (lazyScore + LAZY_EVAL_MARGIN <= alpha || lazyScore - LAZY_EVAL_MARGIN >= beta) {
-		return lazyScore;
-	}*/
-
-	score += pawn_evaluation(board);
-
-	score += mobility_evaluation(board);
 
 	return (board->sideToMove == WHITE) ? score : -score;
 }
@@ -520,6 +526,17 @@ int evaluate(Board* board, int alpha, int beta) {
 // Despite many of the functions below containig similar code,
 // it's better not to merge them as they have different purposes,
 // and merging them would present more edge cases, making the code less readable.
+
+static inline bool check_timing(){
+	nodesCalculated++;
+	if ((nodesCalculated & 2047) == 0) {
+		if (clock() > targetTime) {
+			timeOut = true;
+			return true;
+		}
+	}
+	return false;
+}
 
 void init_lmr_table() {
 	for (int d = 0; d < 64; d++) {
@@ -592,17 +609,12 @@ bool is_repetition(Board* board, int ply) {
 }
 
 void order_moves(Board* board, MoveList* list, int ttMove, int ply) {
-
-	// Optimization for later: add both white and black attack squares bitboard,
-	// to penalize moving into an attacked square
-
 	const ttMoveScore =			10000000;
 	const captureBonus =		100000;
 	const promotionBonus =		100000;
 	const killerMove1Score =	80000;
 	const killerMove2Score =	70000;
 	const historyBonus =		60000;
-
 
 	for (int i = 0; i < list->count; i++) {
 		int move = list->moves[i];
@@ -614,7 +626,6 @@ void order_moves(Board* board, MoveList* list, int ttMove, int ply) {
 		}
 
 		// Unpack move
-		
 		int fromSq = GET_MOVE_SOURCE(move);
 		int toSq = GET_MOVE_TARGET(move);
 		PieceType piece = GET_MOVE_PIECE(move);
@@ -630,7 +641,6 @@ void order_moves(Board* board, MoveList* list, int ttMove, int ply) {
 			moveScore += captureBonus + (10 * pieceValues[captured] - pieceValues[piece]);
 		}
 		else if (GET_MOVE_EN_PASSANT(move)) {
-			// L'en-passant è un pedone che mangia un pedone
 			moveScore += captureBonus + (10 * pieceValues[0] - pieceValues[0]);
 		}
 
@@ -656,18 +666,7 @@ void order_moves(Board* board, MoveList* list, int ttMove, int ply) {
 
 				moveScore += hScore;
 			}
-
- 
 		}
-
-
-
-		// Penalize for moving into occupied square
-		// See optimization above.
-		/*if (is_square_attacked(board, toSq, 1 - board->sideToMove)) {
-			moveScore -= pieceValues[piece];
-		}*/
-
 		list->scores[i] = moveScore;
 	}
 
@@ -693,14 +692,7 @@ void order_moves(Board* board, MoveList* list, int ttMove, int ply) {
 
 int quiescence_search(Board* board, int alpha, int beta, int ply) {
 	if (ply > MAX_PLY - 1) return evaluate(board, alpha, beta);
-
-	nodesCalculated++;
-	if ((nodesCalculated & 2047) == 0) {
-		if (clock() > targetTime) {
-			timeOut = true;
-		}
-	}
-	if (timeOut) return 0;
+	if (timeOut || check_timing()) return 0;
 
 	int standPat = -INF;
 	int attacked = is_square_attacked(board, board->kingSq[board->sideToMove], 1 - board->sideToMove);
@@ -715,21 +707,18 @@ int quiescence_search(Board* board, int alpha, int beta, int ply) {
 
 	MoveList list = { 0 };
 	generate_pseudo_moves(board, &list);
-
 	order_moves(board, &list, 0, ply);
 
 	// Standard move iteration, checking only capture moves
 	for (int i = 0; i < list.count; i++)
 	{
 		int move = list.moves[i];
-
 		int toSq = GET_MOVE_TARGET(move);
 		PieceType captured = board->pieceOnSquare[toSq];
+		SelectionColor sideMoved = board->sideToMove;
 
 		// Skip if not a capture/promotion
 		if (captured == NONE && GET_MOVE_EN_PASSANT(move) == 0 && GET_PROMOTION_PIECE(move) == 0 && !attacked) continue;
-
-		SelectionColor sideMoved = board->sideToMove;
 
 		make_move(board, move, sideMoved, ply);
 
@@ -745,26 +734,228 @@ int quiescence_search(Board* board, int alpha, int beta, int ply) {
 		if (score >= beta) return score;
 		if (score > bestVal) bestVal = score;
 		if (score > alpha) alpha = score;
-
 	}
-
 	return bestVal;
 }
+
+// --- New Functions ---
+
+static inline bool probe_tt(Board* board, TranspEntry* entry, int depth, int alpha, int beta, int* outScore) {
+	if (entry->key == board->hashKey) {
+		// This ensures some sort of "only if higher precision",
+		// despite depth is not the only determining factor.
+		if (entry->depth >= depth) {
+			if (entry->flag == EXACT) {
+				*outScore = entry->eval;
+				return true;
+			}
+			if (entry->flag == ALPHA && entry->eval <= alpha) {
+				*outScore = entry->eval;
+				return true;
+			}
+			if (entry->flag == BETA && entry->eval >= beta) {
+				*outScore = entry->eval;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+static inline bool do_null_move_pruning(Board* board, TranspEntry* entry, int depth, int beta, int extension, int ply, int* outScore) {
+	// Null move pruning
+	bool ttFailsLow = false;
+	if (entry->key == board->hashKey && entry->eval < beta) {
+		ttFailsLow = true;
+	}
+
+	if (!ttFailsLow && !is_square_attacked(board, board->kingSq[board->sideToMove], 1 - board->sideToMove) && is_heavy_board(board)) {
+		int reduction = 4;
+
+		make_null_move(board, ply);
+		int eval = -nega_max(board, depth - reduction, -beta, -beta + 1, extension, ply + 1, false);
+		unmake_null_move(board, ply);
+
+		if (timeOut) {
+			*outScore = 0;
+			return true;
+		}
+		if (eval >= beta) {
+			*outScore = eval;
+			return true;
+		}
+	}
+	return false;
+}
+
+static inline int evaluate_move(Board* board, int move, SearchState* state, int* legalMoves, MoveList* list) {
+	int nextDepth = state->depth - 1;
+	SelectionColor sideMoved = board->sideToMove;
+	bool isQuiet = (board->pieceOnSquare[GET_MOVE_TARGET(move)] == NONE) && (GET_PROMOTION_PIECE(move) == 0) && (GET_MOVE_EN_PASSANT(move) == 0);
+
+	make_move(board, move, sideMoved, state->ply);
+
+	// Check if the move is illegal; Return if it is.
+	if (is_square_attacked(board, board->kingSq[sideMoved], board->sideToMove)) {
+		unmake_move(board, move, state->ply);
+		return -INF - 1;
+	}
+	(*legalMoves)++;
+
+	// --- Late move reductions ---
+	// if it's not one of the first (ordered) moves, the depth is reduced.
+	bool isCheckOpponent = is_square_attacked(board, board->kingSq[board->sideToMove], sideMoved);
+	bool isKiller = (move == killerMoves[state->ply][0] || move == killerMoves[state->ply][1]);
+
+	if (state->depth >= 3 && *legalMoves > 2 && isQuiet && !isCheckOpponent && !isKiller) {
+		int safeDepth = state->depth > 63 ? 63 : state->depth;
+		int safeMoves = list->count > 255 ? 255 : list->count;
+		nextDepth = state->depth - lmrTable[safeDepth][safeMoves];
+		if (nextDepth < 1) nextDepth = 1;
+	}
+
+	// --- Move extension ---
+	int currentExtension = state->extension < EXTENSION_DEEPNESS &&
+		is_square_attacked(board, board->kingSq[board->sideToMove], sideMoved) ? 1 : 0;
+
+	// --- PVS search (nagaScout) ---
+	int score;
+	bool needsFullSearch = (*legalMoves == 1) ? true : false;
+
+	if (!needsFullSearch) {
+		// PVS
+		score = -nega_max(board, nextDepth + currentExtension, -state->alpha - 1, -state->alpha, state->extension + currentExtension, state->ply + 1, true);
+		if (score > state->alpha && (nextDepth < state->depth - 1 || score < state->beta)) {
+			needsFullSearch = true;
+		}
+	}
+	if (needsFullSearch) {
+		// Fallback to full window search
+		score = -nega_max(board, state->depth - 1 + currentExtension, -state->beta, -state->alpha, state->extension + currentExtension, state->ply + 1, true);
+	}
+
+	unmake_move(board, move, state->ply);
+	if (timeOut) return 0;
+
+	// Update killer moves and history table.
+	if (score >= state->beta && isQuiet) {
+		if (move != killerMoves[state->ply][0]) {
+			killerMoves[state->ply][1] = killerMoves[state->ply][0];
+			killerMoves[state->ply][0] = move;
+		}
+		historyCutTable[board->sideToMove][GET_MOVE_SOURCE(move)][GET_MOVE_TARGET(move)] += state->depth * state->depth;
+	}
+
+	return score;
+}
+
+int nega_max(Board* board, int depth, int alpha, int beta, int extension, int ply, bool allowNull) {
+	check_timing();
+	if (ply > 0 && is_repetition(board, ply)) return 0;
+
+	// Transp table checking: if we have already explored this position,
+	// and the stored depth is higher than the current one, 
+	// we can return the stored evaluation.
+	int originalAlpha = alpha;
+	TranspEntry* entry = &TT[get_hash_index(board->hashKey)];
+	int ttMove = 0;
+
+	if (entry->key == board->hashKey) {
+		ttMove = entry->bestMove;
+	}
+
+	int ttScore;
+	if (probe_tt(board, entry, depth, alpha, beta, &ttScore)) return ttScore;
+	if (timeOut) return 0;
+	if (depth <= 0) return quiescence_search(board, alpha, beta, ply);
+
+
+	// --- Null move pruning ---
+	int nmpScore;
+	if (do_null_move_pruning(board, entry, depth, beta, extension, ply, &nmpScore)) {
+		return nmpScore;
+	}
+
+	// --- Actual negamax search ---
+	int best = -INF;
+	int legalMoves = 0;
+	MoveList list = { 0 };
+	int bestMoveInPosition = 0;
+
+	// Add priority to bestMove from the TT, to improve alpha-beta pruning.
+	generate_pseudo_moves(board, &list);
+	order_moves(board, &list, ttMove, ply);
+	SearchState state = { depth, alpha, beta, extension, ply, allowNull };
+
+	for (int i = 0; i < list.count; i++) {
+		int move = list.moves[i];
+		int score = evaluate_move(board, move, &state, &legalMoves, &list);
+
+		// Move was illegal, skip to the next one.
+		if (score == -INF - 1) continue;
+		if (timeOut) return 0;
+
+		// Save score
+		if (score > best) {
+			best = score;
+			bestMoveInPosition = move;
+		}
+
+		// --- Alpha-beta pruning ---
+		if (best > alpha) {
+			// Better move found, store new alpha
+			alpha = best;
+			state.alpha = alpha;
+		}
+		if (alpha >= beta) {
+			// Move too good, opponent would pick any previous branch.
+			store_tt_entry(board->hashKey, depth, best, BETA, bestMoveInPosition);
+			return best;
+		}
+	}
+
+	if (legalMoves == 0) {
+		// If we didn't find any legal moves, it's either a checkmate (-infinity)
+		// or a draw.
+		SelectionColor otherSide = 1 - board->sideToMove;
+
+		if (is_square_attacked(board, board->kingSq[board->sideToMove], otherSide)) {
+			return -INF - depth;
+		}
+		else {
+			return 0;
+		}
+	}
+	if (timeOut) return 0;
+
+	// Store the result in the transposition table before returning.
+	HashFlag flag;
+	if (best <= originalAlpha) {
+		flag = ALPHA;
+	}
+	else {
+		flag = EXACT;
+	}
+
+	store_tt_entry(board->hashKey, depth, best, flag, bestMoveInPosition);
+	return best;
+}
+
+/*typedef struct {
+	int depth;
+	int alpha;
+	int beta;
+	int extension;
+	int ply;
+	bool allowNull;
+} SearchState;
 
 int nega_max(Board* board, int depth, int alpha, int beta, int extension, int ply, bool allowNull) {
 	// Heavily commented by design, since all functions 
 	// below contain similar logic and calls.
 
-	nodesCalculated++;
-	if ((nodesCalculated & 2047) == 0) {
-		if (clock() > targetTime) {
-			timeOut = true;
-		}
-	}
-
-	if (ply > 0 && is_repetition(board,ply)) {
-		return 0;
-	}
+	check_timing();
+	if (ply > 0 && is_repetition(board,ply)) return 0;
 
 	// Transp table checking: if we have already explored this position,
 	// and the stored depth is higher than the current one, 
@@ -788,7 +979,6 @@ int nega_max(Board* board, int depth, int alpha, int beta, int extension, int pl
 	if (timeOut) return 0;
 	if (depth <= 0) return quiescence_search(board, alpha, beta, ply);
 
-
 	// Null move pruning
 	bool ttFailsLow = false;
 	if (entry->key == board->hashKey && entry->eval < beta) {
@@ -805,7 +995,7 @@ int nega_max(Board* board, int depth, int alpha, int beta, int extension, int pl
 		if (timeOut) return 0;
 		if (eval >= beta) return eval;
 	}
-	
+
 
 
 	// --- Actual negamax search ---
@@ -816,7 +1006,6 @@ int nega_max(Board* board, int depth, int alpha, int beta, int extension, int pl
 	// Used to update the best position in this scenario, for the transposition table.
 	// If beta cut happens, it will be ignored, since the opponent will never pick it.
 	int bestMoveInPosition = 0;
-	
 	generate_pseudo_moves(board, &list);
 	
 	// Add priority to bestMove from the TT, to improve alpha-beta pruning.
@@ -942,11 +1131,11 @@ int nega_max(Board* board, int depth, int alpha, int beta, int extension, int pl
 	store_tt_entry(board->hashKey, depth, best, flag, bestMoveInPosition);
 	return best;
 }
+*/
 
 int best_move(Board* board, int depth, int currBest, int* outScore) {
-
 	// Here, for alpha-beta pruning, alpha represents our worst (pickable) scenario,
-	// bete the best one the opponent would give us.
+	// beta the best one the opponent would give us.
 	int alpha = -INF;
 	int beta = INF;
 	int best = -INF;
@@ -968,7 +1157,6 @@ int best_move(Board* board, int depth, int currBest, int* outScore) {
 		// Check if square is attacked. The opponent is now board->sideToMove,
 		// since make_move changes opponent side.
 		if (is_square_attacked(board, board->kingSq[sideMoved], board->sideToMove)) {
-
 			// The move is illegal: unmake move, without increasing the counter.
 			unmake_move(board, move, 0);
 			continue;
@@ -976,10 +1164,6 @@ int best_move(Board* board, int depth, int currBest, int* outScore) {
 
 		legalMoves++;
 		int extension = is_square_attacked(board, board->kingSq[board->sideToMove], sideMoved) ? 1 : 0;
-
-		// From our point of view, the lower depth is in the opponent
-		// reference: an high score for him is a terrible score for us.
-
 		int score;
 		if (legalMoves == 1) {
 			score = -nega_max(board, depth - 1 + extension, -beta, -alpha, extension, 1, true);
@@ -993,7 +1177,6 @@ int best_move(Board* board, int depth, int currBest, int* outScore) {
 		}
 
 		unmake_move(board, move, 0);
-
 		if (timeOut) break;
 
 		// Save score
@@ -1023,6 +1206,7 @@ int best_move_iterative_deepening(Board* board, int maxTime, int maxDepth) {
 	clock_t maxTicks = ((clock_t)maxTime * CLOCKS_PER_SEC) / 1000;
 	targetTime = startTime + maxTicks;
 
+	// Reset killer moves and history table before starting the search
 	memset(killerMoves, 0, sizeof(killerMoves));
 	memset(historyCutTable, 0, sizeof(historyCutTable));
 

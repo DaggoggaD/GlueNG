@@ -9,6 +9,15 @@ extern U64 fileMasks[8];
 extern U64 adjacentFileMasks[8];
 extern U64 rowMasks[8];
 
+typedef struct {
+	int depth;
+	int alpha;
+	int beta;
+	int extension;
+	int ply;
+	bool allowNull;
+} SearchState;
+
 // --- Move evaluation ---
 
 // Initializes the fileMasks and adjacentFileMasks, used for pawn evaluation
@@ -36,11 +45,12 @@ int mobility_evaluation(Board* board, SelectionColor side, int* noPawnEval);
 // From white's perspective. 
 // Does not consider mobility scores, as they are heavier, so it's done only if
 // the position is close to beta.
+// Old, replaced with PeSTO evaluation.
 int pst_lazy_evaluation(Board* board, int noPawnEval);
 
 
 // Evaluates the position based on the pawn structure, 
-// using file and row masks.
+// using file and row masks
 int pawn_evaluation(Board* board);
 
 // Evaluates the current position, by summing material 
@@ -84,8 +94,7 @@ int quiescence_search(Board* board, int alpha, int beta, int ply);
 
 // Explores the moves tree, searching for the best eval.
 // Returns (int) best score.
-int nega_max(Board* board, int depth, int alpha, int beta, int extension, bool allowNull);
-
+int nega_max(Board* board, int depth, int alpha, int beta, int extension, int ply, bool allowNull);
 // Explores the moves tree, with negamax. NOTE:
 // it returns the (int) best move, NOT score.
 int best_move(Board* board, int depth, int currBest, int extension);

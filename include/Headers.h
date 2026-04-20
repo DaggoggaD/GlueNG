@@ -1,16 +1,30 @@
+/**
+ * @file Headers.h
+ * @brief Centralized header file containing game constants, evaluation weights and includes.
+ */
 #ifndef HEADERS_H
 #define HEADERS_H
 #define _CRT_SECURE_NO_WARNINGS
 
-// Game constants
+ /**
+  * @name Game Constants
+  * @brief Core limits and configuration parameters for the engine's search and hash tables.
+  * @{
+  */
 #define INF 1000000
 #define EXTENSION_DEEPNESS 16
-#define MAX_PLY 50 // For quiescence search, not the main search. The main search is limited by MAX_TURNS.
+#define MAX_PLY 50 /**< For quiescence search, not the main search. The main search is limited by MAX_TURNS. */
 #define MAX_TURNS 100
 #define STANDARD_HASH_SIZE_MB 64
 #define BRD_SIZE 64
+#define ASP_WINDOW 50
+  /** @} */
 
-// Evaluation constants
+/**
+ * @name Evaluation Constants
+ * @brief Weights and parameters used in the static evaluation function.
+ * @{
+ */
 #define MAX_MATERIAL 6200
 #define END_GAME_SCORE 2000
 #define LAZY_EVAL_MARGIN 150
@@ -22,9 +36,9 @@
 #define KNIGHT_MOBILITY_BONUS 4
 #define BISHOP_MOBILITY_BONUS 3
 #define ROOK_MOBILITY_BONUS 1
-#define KING_FILE_OPEN_PENALTY 50;
-#define KING_ADJ_OPEN_PENALTY 30;
-
+#define KING_FILE_OPEN_PENALTY 50
+#define KING_ADJ_OPEN_PENALTY 30
+ /** @} */
 
 #include "ChessDefinitions.h"
 #include "ChessStructs.h"

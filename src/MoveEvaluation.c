@@ -930,11 +930,9 @@ int nega_max(Board* board, int depth, int alpha, int beta, int extension, int pl
 	return best;
 }
 
-int best_move(Board* board, int depth, int currBest, int* outScore) {
+int best_move(Board* board, int depth, int alpha, int beta, int currBest, int* outScore) {
 	// Here, for alpha-beta pruning, alpha represents our worst (pickable) scenario,
 	// beta the best one the opponent would give us.
-	int alpha = -INF;
-	int beta = INF;
 	int best = -INF;
 	int bestMove = 0;
 	int legalMoves = 0;
@@ -997,6 +995,8 @@ int best_move_iterative_deepening(Board* board, int maxTime, int maxDepth) {
 	timeOut = false;
 	nodesCalculated = 0;
 
+	int alpha = -INF;
+	int beta = INF;
 	int bestMove = 0;
 	int searchedScore = -INF;
 	clock_t startTime = clock();
@@ -1010,13 +1010,34 @@ int best_move_iterative_deepening(Board* board, int maxTime, int maxDepth) {
 	for (int i = 1; i < maxDepth; i++)
 	{
 		int currBestScore = -INF - 1;
-		int currBest = best_move(board, i, bestMove, &currBestScore);
+		int currBestMove = 0;
+		if (i > 1) {
+			alpha = searchedScore - ASP_WINDOW;
+			beta = searchedScore + ASP_WINDOW;
+		}
 
-		if (timeOut) {
-			if (bestMove == 0) bestMove = currBest;
+
+		while (true) {
+			currBestMove = best_move(board, i, alpha, beta, bestMove, &currBestScore);
+			if (timeOut) break;
+
+			if (currBestScore <= alpha) {
+				alpha -= ASP_WINDOW;
+				continue;
+			}
+			else if (currBestScore >= beta) {
+				beta += ASP_WINDOW;
+				continue;
+			}
+
 			break;
 		}
-		bestMove = currBest;
+
+		if (timeOut) {
+			if (bestMove == 0) bestMove = currBestMove;
+			break;
+		}
+		bestMove = currBestMove;
 		searchedScore = currBestScore;
 
 

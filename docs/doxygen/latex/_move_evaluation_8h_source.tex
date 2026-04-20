@@ -1,0 +1,98 @@
+\doxysection{Move\+Evaluation.\+h}
+\hypertarget{_move_evaluation_8h_source}{}\label{_move_evaluation_8h_source}\index{include/MoveEvaluation.h@{include/MoveEvaluation.h}}
+\doxymbox{\hyperlink{_move_evaluation_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ MOVE\_EVALUATION\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ MOVE\_EVALUATION\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_headers_8h}{Headers.h}}"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_move_evaluation_8h_ad5e1afedde35056c3e2efd800bb837d4}{lmrTable}}[64][256];}
+\DoxyCodeLine{00013\ \textcolor{keyword}{extern}\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_move_evaluation_8h_a4b9b946422d12741fc4387a1be0fb5ce}{fileMasks}}[8];}
+\DoxyCodeLine{00015\ \textcolor{keyword}{extern}\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_move_evaluation_8h_ae06a1340c63878966907ee5494b645ed}{adjacentFileMasks}}[8];}
+\DoxyCodeLine{00017\ \textcolor{keyword}{extern}\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_move_evaluation_8h_ac1e6614eeb6fadbaaacd4140eb0ea5db}{rowMasks}}[8];}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_search_state_a2e4bc26e5cf7065f8c396f8f2148949b}{depth}};\ \ \ \ \ \ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_search_state_a165a7b96a9abc0eda3b3909ff03a27b3}{alpha}};\ \ \ \ \ \ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_search_state_a8b3f00254d130bc3c0f5bea1532167db}{beta}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_search_state_ab6c9113b078b69f37673468dc35b408e}{extension}};\ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_search_state_ac5e6771b87deb1dcbb142a6a1840c7ce}{ply}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_search_state_accec8e26a37b24c924b2896aeeca909e}{allowNull}};\ }
+\DoxyCodeLine{00027\ \}\ \doxymbox{\hyperlink{struct_search_state}{SearchState}};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_transp_entry}{TranspEntry}}\ \doxymbox{\hyperlink{struct_transp_entry}{TranspEntry}};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{comment}{//\ ==============================================================================}}
+\DoxyCodeLine{00032\ \textcolor{comment}{//\ MOVE\ EVALUATION}}
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ ==============================================================================}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00038\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_move_evaluation_8h_a072b860fc3324d4b3cc57f492853567f}{init\_evaluation\_masks}}();}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ generate\_pseudo\_moves(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \doxymbox{\hyperlink{struct_move_list}{MoveList}}*\ list);}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00053\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ mirror\_index(\textcolor{keywordtype}{int}\ index);}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00064\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_move_evaluation_8h_af975d71787c61860ddae88da7fe832e4}{material\_evaluation}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{SelectionColor}}\ side,\ \textcolor{keywordtype}{int}*\ noPawnEval);}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00071\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ is\_endgame(\textcolor{keywordtype}{int}\ noPawnEval);}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00080\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_move_evaluation_8h_a9ac63be42f0f4a0bb503887629832add}{mobility\_evaluation}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{SelectionColor}}\ side,\ \textcolor{keywordtype}{int}*\ noPawnEval);}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00091\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_move_evaluation_8h_aee9fec042f3a4711d11f995cbcca8f6d}{pst\_lazy\_evaluation}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ noPawnEval);}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00101\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_move_evaluation_8h_a658b193713752b409bc9acf32368f2cf}{pesto\_evaluation}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ phase);}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00111\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_move_evaluation_8h_a59a1fbff388b49fd2f1518bcc6c49269}{evaluate\_white\_passed\_pawns}}(\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ wPawn,\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ bPawn,\ \textcolor{keywordtype}{int}\ file,\ \textcolor{keywordtype}{int}*\ score);}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00121\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_move_evaluation_8h_a00e889e9d762bcfbca1a0a9aa0acf89b}{evaluate\_black\_passed\_pawns}}(\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ wPawn,\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ bPawn,\ \textcolor{keywordtype}{int}\ file,\ \textcolor{keywordtype}{int}*\ score);}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00131\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_move_evaluation_8h_a5182780a1a3a81cc238d31ec637dae73}{search\_pawn\_file}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}*\ score,\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ wPawn,\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ bPawn);}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00138\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_move_evaluation_8h_a01e1bdc885c55ab54202c778015c5d33}{pawn\_evaluation}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board);}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_move_evaluation_8h_a4e56639f353c69c6eeffb9b590463578}{king\_safety\_evaluation}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board);}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00157\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_move_evaluation_8h_a4cc5d24f5631c88114d82eef18c636f9}{king\_distance\_evaluation}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ score,\ \textcolor{keywordtype}{int}\ phase);}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00168\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_move_evaluation_8h_a3e67c53ebf0cea1b0dfc9b3025faa9e1}{evaluate}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ alpha,\ \textcolor{keywordtype}{int}\ beta);}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \textcolor{comment}{//\ ==============================================================================}}
+\DoxyCodeLine{00172\ \textcolor{comment}{//\ Move\ search}}
+\DoxyCodeLine{00173\ \textcolor{comment}{//\ ==============================================================================}}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00180\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_move_evaluation_8h_acfc8d847de43af53a46b28e1fc831724}{init\_lmr\_table}}();}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00188\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_move_evaluation_8h_ab4a492c379cff5b70d9a451d678a59e6}{make\_null\_move}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ currDepth);}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00195\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_move_evaluation_8h_a03c49c498aede5147f6df9d1cbba1b5c}{unmake\_null\_move}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ currDepth);}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00203\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_move_evaluation_8h_a319d9932d8315417632f7871bc9f2bb8}{is\_heavy\_board}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board);}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00211\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_move_evaluation_8h_aabecb5b651c828814147c7b5b93d6c3b}{is\_repetition}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ ply);}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00221\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_move_evaluation_8h_a83ee11eda68721881f5b76ccd3778cd0}{order\_moves}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \doxymbox{\hyperlink{struct_move_list}{MoveList}}*\ list,\ \textcolor{keywordtype}{int}\ ttMove,\ \textcolor{keywordtype}{int}\ ply);}
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00231\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_move_evaluation_8h_aecb7f90847f260f8de3890db173acb5d}{quiescence\_search}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ alpha,\ \textcolor{keywordtype}{int}\ beta,\ \textcolor{keywordtype}{int}\ ply);}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00243\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_move_evaluation_8h_a77ad50dc36b0caea031bd2ca985a40ab}{probe\_tt}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \doxymbox{\hyperlink{struct_transp_entry}{TranspEntry}}*\ entry,\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_transp_entry_a875103f004230ce4a3c468e22cb87233}{depth}},\ \textcolor{keywordtype}{int}\ alpha,\ \textcolor{keywordtype}{int}\ beta,\ \textcolor{keywordtype}{int}*\ outScore);}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00257\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_move_evaluation_8h_ad04ba9371abdbc16785212cc96fa3c78}{do\_null\_move\_pruning}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \doxymbox{\hyperlink{struct_transp_entry}{TranspEntry}}*\ entry,\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_transp_entry_a875103f004230ce4a3c468e22cb87233}{depth}},\ \textcolor{keywordtype}{int}\ beta,\ \textcolor{keywordtype}{int}\ extension,\ \textcolor{keywordtype}{int}\ ply,\ \textcolor{keywordtype}{int}*\ outScore);}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00268\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_move_evaluation_8h_a74bc9c4cc3d4455640ec5abcc5ffbef9}{evaluate\_move}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ move,\ \doxymbox{\hyperlink{struct_search_state}{SearchState}}*\ state,\ \textcolor{keywordtype}{int}*\ legalMoves,\ \doxymbox{\hyperlink{struct_move_list}{MoveList}}*\ list);}
+\DoxyCodeLine{00269\ }
+\DoxyCodeLine{00281\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_move_evaluation_8h_afa9eee72485e6d573141631f7b0e5204}{nega\_max}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_transp_entry_a875103f004230ce4a3c468e22cb87233}{depth}},\ \textcolor{keywordtype}{int}\ alpha,\ \textcolor{keywordtype}{int}\ beta,\ \textcolor{keywordtype}{int}\ extension,\ \textcolor{keywordtype}{int}\ ply,\ \textcolor{keywordtype}{bool}\ allowNull);}
+\DoxyCodeLine{00282\ }
+\DoxyCodeLine{00291\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_move_evaluation_8h_a44532335688d7eef99d7ffa0ac83405a}{best\_move}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_transp_entry_a875103f004230ce4a3c468e22cb87233}{depth}},\ \textcolor{keywordtype}{int}\ currBest,\ \textcolor{keywordtype}{int}\ extension);}
+\DoxyCodeLine{00292\ }
+\DoxyCodeLine{00300\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_move_evaluation_8h_a368f43cfb09ef1667284db312d0bae03}{best\_move\_iterative\_deepening}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ maxTime,\ \textcolor{keywordtype}{int}\ maxDepth);}
+\DoxyCodeLine{00301\ }
+\DoxyCodeLine{00302\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ !MOVE\_EVALUATION\_H}}
+
+\end{DoxyCode}

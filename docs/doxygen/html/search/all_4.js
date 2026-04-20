@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['d_0',['d',['../structranctx.html#adaf2c01b7e10017c3894aec769b47c77',1,'ranctx']]],
+  ['d1_1',['D1',['../_chess_definitions_8h.html#a2509d1192220c764ec65cccc5bd9766fa29b8ecb29049f38cbf752d95f479bff7',1,'ChessDefinitions.h']]],
+  ['d2_2',['D2',['../_chess_definitions_8h.html#a2509d1192220c764ec65cccc5bd9766fa86c69dc8849d17673b52b9a8d94d8b9f',1,'ChessDefinitions.h']]],
+  ['d3_3',['D3',['../_chess_definitions_8h.html#a2509d1192220c764ec65cccc5bd9766fade8ef7573c5fa770f07ac7616cbf5d34',1,'ChessDefinitions.h']]],
+  ['d4_4',['D4',['../_chess_definitions_8h.html#a2509d1192220c764ec65cccc5bd9766fa12761dd9f3b74590b720d87d6ca9fbcf',1,'ChessDefinitions.h']]],
+  ['d5_5',['D5',['../_chess_definitions_8h.html#a2509d1192220c764ec65cccc5bd9766fa9bfc9615ce2836fe43fe37e0eda2a68a',1,'ChessDefinitions.h']]],
+  ['d6_6',['D6',['../_chess_definitions_8h.html#a2509d1192220c764ec65cccc5bd9766fab6e74cb404ad3a7370b6cbb05f004fcb',1,'ChessDefinitions.h']]],
+  ['d7_7',['D7',['../_chess_definitions_8h.html#a2509d1192220c764ec65cccc5bd9766fa0701f86c777d8dde5be3a916a510cdfa',1,'ChessDefinitions.h']]],
+  ['d8_8',['D8',['../_chess_definitions_8h.html#a2509d1192220c764ec65cccc5bd9766faea0726597b1f1d4e1fbe5bc51978a5e1',1,'ChessDefinitions.h']]],
+  ['debug_2ec_9',['Debug.c',['../_debug_8c.html',1,'']]],
+  ['debug_2eh_10',['Debug.h',['../_debug_8h.html',1,'']]],
+  ['debug_5fbitmask_5fvisualizer_11',['debug_bitmask_visualizer',['../_debug_8h.html#aad80a00f027ff181406693112bc7f76a',1,'debug_bitmask_visualizer(U64 bitmask):&#160;Debug.c'],['../_debug_8c.html#aad80a00f027ff181406693112bc7f76a',1,'debug_bitmask_visualizer(U64 bitmask):&#160;Debug.c']]],
+  ['debug_5fboard_5fvisualizer_12',['debug_board_visualizer',['../_debug_8h.html#a92b8f5f31b7f1915c9c4c02cc9b78401',1,'debug_board_visualizer(Board *board):&#160;Debug.c'],['../_debug_8c.html#a92b8f5f31b7f1915c9c4c02cc9b78401',1,'debug_board_visualizer(Board *board):&#160;Debug.c']]],
+  ['debug_5fmove_13',['debug_move',['../_debug_8h.html#a179f0fe1e7512620780ec2696e196503',1,'debug_move(int move):&#160;Debug.c'],['../_debug_8c.html#a179f0fe1e7512620780ec2696e196503',1,'debug_move(int move):&#160;Debug.c']]],
+  ['debug_5fmove_5flist_14',['debug_move_list',['../_debug_8h.html#a734145ab12873b721806c2dbe1ce4d9d',1,'debug_move_list(MoveList *list):&#160;Debug.c'],['../_debug_8c.html#a734145ab12873b721806c2dbe1ce4d9d',1,'debug_move_list(MoveList *list):&#160;Debug.c']]],
+  ['debug_5fprecomputed_5fattack_5fvisualizer_15',['debug_precomputed_attack_visualizer',['../_debug_8h.html#ae2d101c15ab9abfced9ff066bb0ec8e3',1,'debug_precomputed_attack_visualizer(int square, PieceType type):&#160;Debug.c'],['../_debug_8c.html#ae2d101c15ab9abfced9ff066bb0ec8e3',1,'debug_precomputed_attack_visualizer(int square, PieceType type):&#160;Debug.c']]],
+  ['debug_5fselect_5fstring_5ffrom_5fpiece_16',['debug_select_string_from_piece',['../_debug_8h.html#a58e67d7b9d0a95977964104760904ab4',1,'debug_select_string_from_piece(const PieceId piece, char *str):&#160;Debug.c'],['../_debug_8c.html#a58e67d7b9d0a95977964104760904ab4',1,'debug_select_string_from_piece(const PieceId piece, char *str):&#160;Debug.c']]],
+  ['depth_17',['depth',['../struct_search_state.html#a2e4bc26e5cf7065f8c396f8f2148949b',1,'SearchState::depth'],['../struct_transp_entry.html#a875103f004230ce4a3c468e22cb87233',1,'TranspEntry::depth']]],
+  ['do_5fnull_5fmove_5fpruning_18',['do_null_move_pruning',['../_move_evaluation_8h.html#ad04ba9371abdbc16785212cc96fa3c78',1,'do_null_move_pruning(Board *board, TranspEntry *entry, int depth, int beta, int extension, int ply, int *outScore):&#160;MoveEvaluation.c'],['../_move_evaluation_8c.html#ad04ba9371abdbc16785212cc96fa3c78',1,'do_null_move_pruning(Board *board, TranspEntry *entry, int depth, int beta, int extension, int ply, int *outScore):&#160;MoveEvaluation.c']]],
+  ['double_5fblack_5fpawn_5fpushes_19',['double_black_pawn_pushes',['../_pseudo_moves_calc_8c.html#a1de298080340b3f8b88dcd930545f16a',1,'PseudoMovesCalc.c']]],
+  ['double_5fwhite_5fpawn_5fpushes_20',['double_white_pawn_pushes',['../_pseudo_moves_calc_8c.html#a74f3f4041a1ff4c55152aa1e44880c38',1,'PseudoMovesCalc.c']]],
+  ['doubled_5fpawn_5fpenalty_21',['DOUBLED_PAWN_PENALTY',['../_headers_8h.html#a84136bfe6f8a397aab90fcbd118851f6',1,'Headers.h']]]
+];

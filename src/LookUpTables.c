@@ -1,5 +1,11 @@
 #include "../include/LookUpTables.h"
 
+U64 knightAttackSquares[64];
+U64 kingAttackSquares[64];
+U64 pawnSingleAttacks[PlayerN][64];
+U64 rookOccupanciesMasks[64];
+U64 bishopOccupanciesMasks[64];
+
 // Knight/king moves and constants (from https://www.chessprogramming.org/Knight_Pattern)
 const U64 notAFile = 0xfefefefefefefefeULL; // ~0x0101010101010101
 const U64 notHFile = 0x7f7f7f7f7f7f7f7fULL; // ~0x8080808080808080

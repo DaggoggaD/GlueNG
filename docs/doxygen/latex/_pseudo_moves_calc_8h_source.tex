@@ -1,0 +1,54 @@
+\doxysection{Pseudo\+Moves\+Calc.\+h}
+\hypertarget{_pseudo_moves_calc_8h_source}{}\label{_pseudo_moves_calc_8h_source}\index{include/PseudoMovesCalc.h@{include/PseudoMovesCalc.h}}
+\doxymbox{\hyperlink{_pseudo_moves_calc_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifndef\ PSEUDO\_MOVES\_CALC\_H}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ PSEUDO\_MOVES\_CALC\_H}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_headers_8h}{Headers.h}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <assert.h>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ GET\_MOVE\_SOURCE(move)\ ((move)\ \&\ 0x3F)}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ GET\_MOVE\_TARGET(move)\ (((move)\ >>\ 6)\ \&\ 0x3F)}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ GET\_MOVE\_PIECE(move)\ \ (((move)\ >>\ 12)\ \&\ 0xF)}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ GET\_PROMOTION\_PIECE(move)\ \ (((move)\ >>\ 16)\ \&\ 0xF)}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ GET\_MOVE\_EN\_PASSANT(move)\ \ (((move)\ >>\ 20)\ \&\ 0x1)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_move_list}{MoveList}}\{}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_move_list_aa84a98391442c41972450c133f8ad786}{moves}}[256];\ \ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_move_list_a7d2bc7c30f36be9d3ed43503c545e9e2}{scores}}[256];\ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_move_list_aa75152e60bc223de3e86c19d2435fc57}{count}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00040\ \}\ \doxymbox{\hyperlink{struct_move_list}{MoveList}};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00049\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_pseudo_moves_calc_8h_ae1dfe7affa869ee9fae37f523c89f2c3}{get\_knight\_pseudo\_moves}}(\textcolor{keywordtype}{int}\ square,\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ ownPieces);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00057\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_pseudo_moves_calc_8h_a6f18116b3524eac612c1e649fb0816c0}{get\_king\_pseudo\_moves}}(\textcolor{keywordtype}{int}\ square,\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ ownPieces);}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00066\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_pseudo_moves_calc_8h_ae8629c204b57fa4ee09d9f360f431f7e}{get\_rook\_pseudo\_moves}}(\textcolor{keywordtype}{int}\ square,\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ blockers,\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ ownPieces);}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00075\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_pseudo_moves_calc_8h_a4fd2e8db3e249a1d3ef94ee668faaba4}{get\_bishop\_pseudo\_moves}}(\textcolor{keywordtype}{int}\ square,\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ blockers,\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ ownPieces);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00084\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_pseudo_moves_calc_8h_ae319ddb02ce55e3a81f192ba48289779}{get\_queen\_pseudo\_moves}}(\textcolor{keywordtype}{int}\ square,\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ blockers,\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ ownPieces);}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00096\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_pseudo_moves_calc_8h_aff972910d92dcfbc5d4c3d44236a0950}{add\_move\_to\_list}}(\doxymbox{\hyperlink{struct_move_list}{MoveList}}*\ list,\ \textcolor{keywordtype}{int}\ fromSquare,\ \textcolor{keywordtype}{int}\ toSquare,\ \doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{PieceType}}\ piece,\ \doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{PieceType}}\ promoted\_to,\ \textcolor{keywordtype}{bool}\ enPassant);}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00103\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_pseudo_moves_calc_8h_a1cd6ffe0a549f1320ec06855c0a1a88e}{white\_generate\_pseudo\_moves}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \doxymbox{\hyperlink{struct_move_list}{MoveList}}*\ list);}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00110\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_pseudo_moves_calc_8h_a2bcfbddaf13e19204e03684f1d087fb4}{black\_generate\_pseudo\_moves}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \doxymbox{\hyperlink{struct_move_list}{MoveList}}*\ list);}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00118\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ get\_lsb\_index(\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ b)\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ index;}
+\DoxyCodeLine{00120\ \ \ \ \ \_BitScanForward64(\&index,\ b);}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordflow}{return}\ index;}
+\DoxyCodeLine{00122\ \}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00131\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_pseudo_moves_calc_8h_ac88614793dbd01f7a75feb8fa278c6e2}{is\_square\_attacked}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ square,\ \doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{SelectionColor}}\ attackingSide);}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ !PSEUDO\_MOVES\_CALC\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,67 @@
+\doxysection{Undo\+History Struct Reference}
+\hypertarget{struct_undo_history}{}\label{struct_undo_history}\index{UndoHistory@{UndoHistory}}
+
+
+Stores irreversible information necessary to completely unmake a move.  
+
+
+
+
+{\ttfamily \+\#include $<$Chess\+Structs.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{struct_undo_history_ad32eb5cc546296fb3e5e01675ef71880}{castling\+Perms}}
+\item 
+int \doxymbox{\hyperlink{struct_undo_history_a33be055647bc694207e0117382caf115}{en\+Passant}}
+\item 
+int \doxymbox{\hyperlink{struct_undo_history_a627e92d5c8c9753224bd2c3a2e2cd5ef}{half\+Moves}}
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type}} \doxymbox{\hyperlink{struct_undo_history_a188302d4233b4bc296e4e1df8a726050}{captured\+Piece}}
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{struct_undo_history_a69337cbe68c604afc5ace198c18e8477}{hash\+Key}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Stores irreversible information necessary to completely unmake a move. 
+
+\label{doc-variable-members}
+\Hypertarget{struct_undo_history_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{struct_undo_history_a188302d4233b4bc296e4e1df8a726050}\index{UndoHistory@{UndoHistory}!capturedPiece@{capturedPiece}}
+\index{capturedPiece@{capturedPiece}!UndoHistory@{UndoHistory}}
+\doxysubsubsection{\texorpdfstring{capturedPiece}{capturedPiece}}
+{\footnotesize\ttfamily \label{struct_undo_history_a188302d4233b4bc296e4e1df8a726050} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type}} Undo\+History::\+captured\+Piece}
+
+\Hypertarget{struct_undo_history_ad32eb5cc546296fb3e5e01675ef71880}\index{UndoHistory@{UndoHistory}!castlingPerms@{castlingPerms}}
+\index{castlingPerms@{castlingPerms}!UndoHistory@{UndoHistory}}
+\doxysubsubsection{\texorpdfstring{castlingPerms}{castlingPerms}}
+{\footnotesize\ttfamily \label{struct_undo_history_ad32eb5cc546296fb3e5e01675ef71880} 
+int Undo\+History::\+castling\+Perms}
+
+\Hypertarget{struct_undo_history_a33be055647bc694207e0117382caf115}\index{UndoHistory@{UndoHistory}!enPassant@{enPassant}}
+\index{enPassant@{enPassant}!UndoHistory@{UndoHistory}}
+\doxysubsubsection{\texorpdfstring{enPassant}{enPassant}}
+{\footnotesize\ttfamily \label{struct_undo_history_a33be055647bc694207e0117382caf115} 
+int Undo\+History::\+en\+Passant}
+
+\Hypertarget{struct_undo_history_a627e92d5c8c9753224bd2c3a2e2cd5ef}\index{UndoHistory@{UndoHistory}!halfMoves@{halfMoves}}
+\index{halfMoves@{halfMoves}!UndoHistory@{UndoHistory}}
+\doxysubsubsection{\texorpdfstring{halfMoves}{halfMoves}}
+{\footnotesize\ttfamily \label{struct_undo_history_a627e92d5c8c9753224bd2c3a2e2cd5ef} 
+int Undo\+History::\+half\+Moves}
+
+\Hypertarget{struct_undo_history_a69337cbe68c604afc5ace198c18e8477}\index{UndoHistory@{UndoHistory}!hashKey@{hashKey}}
+\index{hashKey@{hashKey}!UndoHistory@{UndoHistory}}
+\doxysubsubsection{\texorpdfstring{hashKey}{hashKey}}
+{\footnotesize\ttfamily \label{struct_undo_history_a69337cbe68c604afc5ace198c18e8477} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} Undo\+History::\+hash\+Key}
+
+
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+include/\+\doxymbox{\hyperlink{_chess_structs_8h}{Chess\+Structs.\+h}}\end{DoxyCompactItemize}

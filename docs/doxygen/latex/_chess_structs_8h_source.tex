@@ -1,0 +1,54 @@
+\doxysection{Chess\+Structs.\+h}
+\hypertarget{_chess_structs_8h_source}{}\label{_chess_structs_8h_source}\index{include/ChessStructs.h@{include/ChessStructs.h}}
+\doxymbox{\hyperlink{_chess_structs_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ CHESS\_STRUCTS\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ CHESS\_STRUCTS\_H}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ PieceTypeN\ 6}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ PlayerN\ 2}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_headers_8h}{Headers.h}}"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_undo_history}{UndoHistory}}\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_undo_history_ad32eb5cc546296fb3e5e01675ef71880}{castlingPerms}};}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_undo_history_a33be055647bc694207e0117382caf115}{enPassant}};}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_undo_history_a627e92d5c8c9753224bd2c3a2e2cd5ef}{halfMoves}};}
+\DoxyCodeLine{00020\ \ \ \ \ \doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{PieceType}}\ \doxymbox{\hyperlink{struct_undo_history_a188302d4233b4bc296e4e1df8a726050}{capturedPiece}};}
+\DoxyCodeLine{00021\ \ \ \ \ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{struct_undo_history_a69337cbe68c604afc5ace198c18e8477}{hashKey}};}
+\DoxyCodeLine{00022\ \}\ \doxymbox{\hyperlink{struct_undo_history}{UndoHistory}};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00029\ \ \ \ \ \doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{SelectionColor}}\ \doxymbox{\hyperlink{struct_board_a71a13696a7c9e530578d8ff372a0137c}{sideToMove}};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00032\ \ \ \ \ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{struct_board_a0879695443cf7ee5857ecf813ade8957}{pieceBitboards}}[\doxymbox{\hyperlink{_chess_structs_8h_acb6e5a3cb3d650efcbb4dff01b8dc597}{PlayerN}}][\doxymbox{\hyperlink{_chess_structs_8h_ac3e55d2faad46193d05229ed8cd236cc}{PieceTypeN}}];}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00035\ \ \ \ \ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{struct_board_a1e51ffb7b470e6604bd84488f296d91a}{occupiedBitboards}}[3];}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00038\ \ \ \ \ \doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{PieceType}}\ \doxymbox{\hyperlink{struct_board_aa3f05f8e9abf7abf93c6da221e613540}{pieceOnSquare}}[64];}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_board_a753550bdb0d038e4cc7ec7d6a3701140}{castlingPerms}};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_board_afcd8f7bfc0fe262222383bb572c89b3e}{enPassant}};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_board_a6609e9595b6a1b35a193f06eb17921ef}{gamePly}};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_board_a619df20d025ef40f3e2c92d740eb66d2}{halfMoves}};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{short}\ \doxymbox{\hyperlink{struct_board_ac8a6f7b63533052b3f7d98a54d683fca}{fiftyMoveCounter}};}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{short}\ \doxymbox{\hyperlink{struct_board_a36a20b21fc998ed1beb4a3451594e350}{repetitionCount}};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00056\ \ \ \ \ \doxymbox{\hyperlink{struct_undo_history}{UndoHistory}}\ \doxymbox{\hyperlink{struct_board_a53d678c18ff87e6df4093f346fdaf511}{history}}[1024];}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_board_a1bb250a16677decd09d6c3b497d6b83e}{kingSq}}[2];}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00062\ \ \ \ \ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{struct_board_a18be1617e4f26c0afba9616a93073e78}{hashKey}};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00065\ \ \ \ \ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{struct_board_a3d73720dfbcc1fd54b979e709d9016d9}{gameHistory}}[1024];}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \}\ \doxymbox{\hyperlink{struct_board}{Board}};}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ !CHESS\_STRUCTS\_H}}
+
+\end{DoxyCode}

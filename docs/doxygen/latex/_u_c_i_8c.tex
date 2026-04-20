@@ -1,0 +1,39 @@
+\doxysection{src/\+\+UCI.c File Reference}
+\hypertarget{_u_c_i_8c}{}\label{_u_c_i_8c}\index{src/UCI.c@{src/UCI.c}}
+{\ttfamily \+\#include "{}../\+include/\+\+UCI.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{_u_c_i_8c_a629e1f8e06066470ddbabfdf946251bd}{parse\+\_\+move\+\_\+string}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, char \texorpdfstring{$\ast$}{*}move\+\_\+string)
+\item 
+void \doxymbox{\hyperlink{_u_c_i_8c_a0d3b3b6d39ca32eba9468499e18f849e}{uci\+\_\+parse\+\_\+pos}} (char \texorpdfstring{$\ast$}{*}cmd, \doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board)
+\item 
+void \doxymbox{\hyperlink{_u_c_i_8c_af328a8946554da96c22ae183ff7dba9a}{uci\+\_\+protocol\+\_\+handler}} ()
+\begin{DoxyCompactList}\small\item\em Handles the UCI (Universal Chess Interface) protocol, allowing communication with a GUI. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{_u_c_i_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_u_c_i_8c_a629e1f8e06066470ddbabfdf946251bd}\index{UCI.c@{UCI.c}!parse\_move\_string@{parse\_move\_string}}
+\index{parse\_move\_string@{parse\_move\_string}!UCI.c@{UCI.c}}
+\doxysubsubsection{\texorpdfstring{parse\_move\_string()}{parse\_move\_string()}}
+{\footnotesize\ttfamily \label{_u_c_i_8c_a629e1f8e06066470ddbabfdf946251bd} 
+int parse\+\_\+move\+\_\+string (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{move\+\_\+string}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_u_c_i_8c_a0d3b3b6d39ca32eba9468499e18f849e}\index{UCI.c@{UCI.c}!uci\_parse\_pos@{uci\_parse\_pos}}
+\index{uci\_parse\_pos@{uci\_parse\_pos}!UCI.c@{UCI.c}}
+\doxysubsubsection{\texorpdfstring{uci\_parse\_pos()}{uci\_parse\_pos()}}
+{\footnotesize\ttfamily \label{_u_c_i_8c_a0d3b3b6d39ca32eba9468499e18f849e} 
+void uci\+\_\+parse\+\_\+pos (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{cmd}{, }\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_u_c_i_8c_af328a8946554da96c22ae183ff7dba9a}\index{UCI.c@{UCI.c}!uci\_protocol\_handler@{uci\_protocol\_handler}}
+\index{uci\_protocol\_handler@{uci\_protocol\_handler}!UCI.c@{UCI.c}}
+\doxysubsubsection{\texorpdfstring{uci\_protocol\_handler()}{uci\_protocol\_handler()}}
+{\footnotesize\ttfamily \label{_u_c_i_8c_af328a8946554da96c22ae183ff7dba9a} 
+void uci\+\_\+protocol\+\_\+handler (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Handles the UCI (Universal Chess Interface) protocol, allowing communication with a GUI. 
+

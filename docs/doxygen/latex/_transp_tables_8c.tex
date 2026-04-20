@@ -1,0 +1,205 @@
+\doxysection{src/\+\+Transp\+Tables.c File Reference}
+\hypertarget{_transp_tables_8c}{}\label{_transp_tables_8c}\index{src/TranspTables.c@{src/TranspTables.c}}
+{\ttfamily \+\#include "{}../\+include/\+\+Transp\+Tables.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_transp_tables_8c_aa969fd87a1f4b121adf8678e6e525608}{ran\+\_\+val}} (\doxymbox{\hyperlink{structranctx}{ranctx}} \texorpdfstring{$\ast$}{*}x)
+\begin{DoxyCompactList}\small\item\em Returns a random 64-\/bit value, used for Zobrist hashing. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_transp_tables_8c_aab39112e3fac8dc74ee4ea80d6bec24c}{ran\+\_\+init}} (\doxymbox{\hyperlink{structranctx}{ranctx}} \texorpdfstring{$\ast$}{*}x, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} seed)
+\begin{DoxyCompactList}\small\item\em Initializes the RNG. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_transp_tables_8c_a496dfd318013aaea43d571577334d381}{init\+\_\+random\+\_\+keys}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the pieces, side, castle, and en\+Passant random keys. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_transp_tables_8c_a0304fdc8e0250a9e481333c2532ac169}{get\+\_\+zobrist\+\_\+code}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board)
+\begin{DoxyCompactList}\small\item\em Calculates the Zobrist code for a given board position. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_transp_tables_8c_ad474a21825794504a2ba8f497aeddee2}{init\+\_\+tt}} (int size\+MB)
+\begin{DoxyCompactList}\small\item\em Initializes the transposition table. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_transp_tables_8c_add461942646de2b1dbe655c126030cb7}{store\+\_\+tt\+\_\+entry}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} key, int depth, int eval, \doxymbox{\hyperlink{_transp_tables_8h_a0a7b134a0db7b1d02a89e89191ceddf2}{Hash\+Flag}} flag, int best\+Move)
+\begin{DoxyCompactList}\small\item\em Stores an entry in the transposition table. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_transp_tables_8c_a6cee1dd2a9cb9b8eac2544afbef2bd7c}{piece\+Keys}} \+[2]\+\+[6]\+\+[64]\+
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_transp_tables_8c_a0d722099edd4bb49986a788839e38450}{side\+Key}}
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_transp_tables_8c_a312e65f50fc2f078a7edbb2a13398fd6}{castle\+Keys}} \+[16]\+
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_transp_tables_8c_a69b382c5d68b6604b92fc1c56f68a8a2}{en\+Passant\+Keys}} \+[8]\+
+\item 
+\doxymbox{\hyperlink{structranctx}{ranctx}} \doxymbox{\hyperlink{_transp_tables_8c_a13f93fc73cbcd9bc026e0112997bb00d}{rng}}
+\item 
+\doxymbox{\hyperlink{struct_transp_entry}{Transp\+Entry}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{_transp_tables_8c_a5a00d23c62bf7e6fb04e0f7ffc71b1a5}{TT}} = NULL
+\item 
+int \doxymbox{\hyperlink{_transp_tables_8c_a5c57ca6079f36c381baa0ccf14d84619}{current\+\_\+age}} = 0
+\item 
+int \doxymbox{\hyperlink{_transp_tables_8c_a1ff0b1839327f4b79114d9071f6b50e8}{tt\+Size}} = 0
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{_transp_tables_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_transp_tables_8c_a0304fdc8e0250a9e481333c2532ac169}\index{TranspTables.c@{TranspTables.c}!get\_zobrist\_code@{get\_zobrist\_code}}
+\index{get\_zobrist\_code@{get\_zobrist\_code}!TranspTables.c@{TranspTables.c}}
+\doxysubsubsection{\texorpdfstring{get\_zobrist\_code()}{get\_zobrist\_code()}}
+{\footnotesize\ttfamily \label{_transp_tables_8c_a0304fdc8e0250a9e481333c2532ac169} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} get\+\_\+zobrist\+\_\+code (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{}\end{DoxyParamCaption})}
+
+
+
+Calculates the Zobrist code for a given board position. 
+
+\begin{DoxyNote}{Note}
+This function is not actually used in the search, as it is inherently slow. The actual hash key is updated incrementally in make\+\_\+move/\+unmake\+\_\+move. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The complete Zobrist hash key for the position. 
+\end{DoxyReturn}
+\Hypertarget{_transp_tables_8c_a496dfd318013aaea43d571577334d381}\index{TranspTables.c@{TranspTables.c}!init\_random\_keys@{init\_random\_keys}}
+\index{init\_random\_keys@{init\_random\_keys}!TranspTables.c@{TranspTables.c}}
+\doxysubsubsection{\texorpdfstring{init\_random\_keys()}{init\_random\_keys()}}
+{\footnotesize\ttfamily \label{_transp_tables_8c_a496dfd318013aaea43d571577334d381} 
+void init\+\_\+random\+\_\+keys (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the pieces, side, castle, and en\+Passant random keys. 
+
+\Hypertarget{_transp_tables_8c_ad474a21825794504a2ba8f497aeddee2}\index{TranspTables.c@{TranspTables.c}!init\_tt@{init\_tt}}
+\index{init\_tt@{init\_tt}!TranspTables.c@{TranspTables.c}}
+\doxysubsubsection{\texorpdfstring{init\_tt()}{init\_tt()}}
+{\footnotesize\ttfamily \label{_transp_tables_8c_ad474a21825794504a2ba8f497aeddee2} 
+void init\+\_\+tt (\begin{DoxyParamCaption}\item[{int}]{size\+MB}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the transposition table. 
+
+\begin{DoxyNote}{Note}
+The size is given in MB. It is either passed from the command line or set to a default value (\+\#define). 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em size\+MB} & The desired size of the Transposition Table in megabytes. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_transp_tables_8c_aab39112e3fac8dc74ee4ea80d6bec24c}\index{TranspTables.c@{TranspTables.c}!ran\_init@{ran\_init}}
+\index{ran\_init@{ran\_init}!TranspTables.c@{TranspTables.c}}
+\doxysubsubsection{\texorpdfstring{ran\_init()}{ran\_init()}}
+{\footnotesize\ttfamily \label{_transp_tables_8c_aab39112e3fac8dc74ee4ea80d6bec24c} 
+void ran\+\_\+init (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structranctx}{ranctx}} \texorpdfstring{$\ast$}{*}}]{x}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{seed}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the RNG. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Pointer to the RNG context state. \\
+\hline
+{\em seed} & The starting seed for the random number generator. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_transp_tables_8c_aa969fd87a1f4b121adf8678e6e525608}\index{TranspTables.c@{TranspTables.c}!ran\_val@{ran\_val}}
+\index{ran\_val@{ran\_val}!TranspTables.c@{TranspTables.c}}
+\doxysubsubsection{\texorpdfstring{ran\_val()}{ran\_val()}}
+{\footnotesize\ttfamily \label{_transp_tables_8c_aa969fd87a1f4b121adf8678e6e525608} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} ran\+\_\+val (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structranctx}{ranctx}} \texorpdfstring{$\ast$}{*}}]{x}{}\end{DoxyParamCaption})}
+
+
+
+Returns a random 64-\/bit value, used for Zobrist hashing. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Pointer to the RNG context state. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A random 64-\/bit integer. 
+\end{DoxyReturn}
+\Hypertarget{_transp_tables_8c_add461942646de2b1dbe655c126030cb7}\index{TranspTables.c@{TranspTables.c}!store\_tt\_entry@{store\_tt\_entry}}
+\index{store\_tt\_entry@{store\_tt\_entry}!TranspTables.c@{TranspTables.c}}
+\doxysubsubsection{\texorpdfstring{store\_tt\_entry()}{store\_tt\_entry()}}
+{\footnotesize\ttfamily \label{_transp_tables_8c_add461942646de2b1dbe655c126030cb7} 
+void store\+\_\+tt\+\_\+entry (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{key}{, }\item[{int}]{depth}{, }\item[{int}]{eval}{, }\item[{\doxymbox{\hyperlink{_transp_tables_8h_a0a7b134a0db7b1d02a89e89191ceddf2}{Hash\+Flag}}}]{flag}{, }\item[{int}]{best\+Move}{}\end{DoxyParamCaption})}
+
+
+
+Stores an entry in the transposition table. 
+
+\begin{DoxyNote}{Note}
+It does so if the entry is empty, from a different age, or if the new entry has a higher depth than the existing one. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The Zobrist hash key of the position. \\
+\hline
+{\em depth} & The depth at which the position was searched. \\
+\hline
+{\em eval} & The evaluation score of the position. \\
+\hline
+{\em flag} & The node type flag (EXACT, ALPHA, or BETA). \\
+\hline
+{\em best\+Move} & The best move found for this position. \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-var-members}
+\Hypertarget{_transp_tables_8c_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{_transp_tables_8c_a312e65f50fc2f078a7edbb2a13398fd6}\index{TranspTables.c@{TranspTables.c}!castleKeys@{castleKeys}}
+\index{castleKeys@{castleKeys}!TranspTables.c@{TranspTables.c}}
+\doxysubsubsection{\texorpdfstring{castleKeys}{castleKeys}}
+{\footnotesize\ttfamily \label{_transp_tables_8c_a312e65f50fc2f078a7edbb2a13398fd6} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} castle\+Keys\+[16]\+}
+
+16 = 2\texorpdfstring{$^\wedge$}{\string^}4 (all castle combinations) \Hypertarget{_transp_tables_8c_a5c57ca6079f36c381baa0ccf14d84619}\index{TranspTables.c@{TranspTables.c}!current\_age@{current\_age}}
+\index{current\_age@{current\_age}!TranspTables.c@{TranspTables.c}}
+\doxysubsubsection{\texorpdfstring{current\_age}{current\_age}}
+{\footnotesize\ttfamily \label{_transp_tables_8c_a5c57ca6079f36c381baa0ccf14d84619} 
+int current\+\_\+age = 0}
+
+\Hypertarget{_transp_tables_8c_a69b382c5d68b6604b92fc1c56f68a8a2}\index{TranspTables.c@{TranspTables.c}!enPassantKeys@{enPassantKeys}}
+\index{enPassantKeys@{enPassantKeys}!TranspTables.c@{TranspTables.c}}
+\doxysubsubsection{\texorpdfstring{enPassantKeys}{enPassantKeys}}
+{\footnotesize\ttfamily \label{_transp_tables_8c_a69b382c5d68b6604b92fc1c56f68a8a2} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} en\+Passant\+Keys\+[8]\+}
+
+en\+Passant for each file \Hypertarget{_transp_tables_8c_a6cee1dd2a9cb9b8eac2544afbef2bd7c}\index{TranspTables.c@{TranspTables.c}!pieceKeys@{pieceKeys}}
+\index{pieceKeys@{pieceKeys}!TranspTables.c@{TranspTables.c}}
+\doxysubsubsection{\texorpdfstring{pieceKeys}{pieceKeys}}
+{\footnotesize\ttfamily \label{_transp_tables_8c_a6cee1dd2a9cb9b8eac2544afbef2bd7c} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} piece\+Keys\+[2]\+\+[6]\+\+[64]\+}
+
+\+[color]\+\+[piece]\+\+[square]\+ \Hypertarget{_transp_tables_8c_a13f93fc73cbcd9bc026e0112997bb00d}\index{TranspTables.c@{TranspTables.c}!rng@{rng}}
+\index{rng@{rng}!TranspTables.c@{TranspTables.c}}
+\doxysubsubsection{\texorpdfstring{rng}{rng}}
+{\footnotesize\ttfamily \label{_transp_tables_8c_a13f93fc73cbcd9bc026e0112997bb00d} 
+\doxymbox{\hyperlink{structranctx}{ranctx}} rng}
+
+\Hypertarget{_transp_tables_8c_a0d722099edd4bb49986a788839e38450}\index{TranspTables.c@{TranspTables.c}!sideKey@{sideKey}}
+\index{sideKey@{sideKey}!TranspTables.c@{TranspTables.c}}
+\doxysubsubsection{\texorpdfstring{sideKey}{sideKey}}
+{\footnotesize\ttfamily \label{_transp_tables_8c_a0d722099edd4bb49986a788839e38450} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} side\+Key}
+
+Side\+To\+Move info \Hypertarget{_transp_tables_8c_a5a00d23c62bf7e6fb04e0f7ffc71b1a5}\index{TranspTables.c@{TranspTables.c}!TT@{TT}}
+\index{TT@{TT}!TranspTables.c@{TranspTables.c}}
+\doxysubsubsection{\texorpdfstring{TT}{TT}}
+{\footnotesize\ttfamily \label{_transp_tables_8c_a5a00d23c62bf7e6fb04e0f7ffc71b1a5} 
+\doxymbox{\hyperlink{struct_transp_entry}{Transp\+Entry}}\texorpdfstring{$\ast$}{*} TT = NULL}
+
+\Hypertarget{_transp_tables_8c_a1ff0b1839327f4b79114d9071f6b50e8}\index{TranspTables.c@{TranspTables.c}!ttSize@{ttSize}}
+\index{ttSize@{ttSize}!TranspTables.c@{TranspTables.c}}
+\doxysubsubsection{\texorpdfstring{ttSize}{ttSize}}
+{\footnotesize\ttfamily \label{_transp_tables_8c_a1ff0b1839327f4b79114d9071f6b50e8} 
+int tt\+Size = 0}
+

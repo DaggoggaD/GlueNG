@@ -3,6 +3,11 @@
 // MAGIC NUMBERS: used directly from 
 // https://github.com/maksimKorzh/bbc/blob/master/src/bbc_nnue/bbc.c
 
+MagicEntry RookMagics[BRD_SIZE];
+MagicEntry BishopMagics[BRD_SIZE];
+U64 RookMoves[BRD_SIZE][4096];
+U64 BishopMoves[BRD_SIZE][512];
+
 U64 RookMmagicNumbers[64] = {
     0x8a80104000800020ULL,
     0x140002000100040ULL,

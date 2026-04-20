@@ -1,0 +1,75 @@
+\doxysection{Search\+State Struct Reference}
+\hypertarget{struct_search_state}{}\label{struct_search_state}\index{SearchState@{SearchState}}
+
+
+struct to represent the state of the search.  
+
+
+
+
+{\ttfamily \+\#include $<$Move\+Evaluation.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{struct_search_state_a2e4bc26e5cf7065f8c396f8f2148949b}{depth}}
+\item 
+int \doxymbox{\hyperlink{struct_search_state_a165a7b96a9abc0eda3b3909ff03a27b3}{alpha}}
+\item 
+int \doxymbox{\hyperlink{struct_search_state_a8b3f00254d130bc3c0f5bea1532167db}{beta}}
+\item 
+int \doxymbox{\hyperlink{struct_search_state_ab6c9113b078b69f37673468dc35b408e}{extension}}
+\item 
+int \doxymbox{\hyperlink{struct_search_state_ac5e6771b87deb1dcbb142a6a1840c7ce}{ply}}
+\item 
+bool \doxymbox{\hyperlink{struct_search_state_accec8e26a37b24c924b2896aeeca909e}{allow\+Null}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+struct to represent the state of the search. 
+
+\label{doc-variable-members}
+\Hypertarget{struct_search_state_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{struct_search_state_accec8e26a37b24c924b2896aeeca909e}\index{SearchState@{SearchState}!allowNull@{allowNull}}
+\index{allowNull@{allowNull}!SearchState@{SearchState}}
+\doxysubsubsection{\texorpdfstring{allowNull}{allowNull}}
+{\footnotesize\ttfamily \label{struct_search_state_accec8e26a37b24c924b2896aeeca909e} 
+bool Search\+State::\+allow\+Null}
+
+Flag to stop nested Null Moves Heuristics. \Hypertarget{struct_search_state_a165a7b96a9abc0eda3b3909ff03a27b3}\index{SearchState@{SearchState}!alpha@{alpha}}
+\index{alpha@{alpha}!SearchState@{SearchState}}
+\doxysubsubsection{\texorpdfstring{alpha}{alpha}}
+{\footnotesize\ttfamily \label{struct_search_state_a165a7b96a9abc0eda3b3909ff03a27b3} 
+int Search\+State::\+alpha}
+
+Lower search bound. \Hypertarget{struct_search_state_a8b3f00254d130bc3c0f5bea1532167db}\index{SearchState@{SearchState}!beta@{beta}}
+\index{beta@{beta}!SearchState@{SearchState}}
+\doxysubsubsection{\texorpdfstring{beta}{beta}}
+{\footnotesize\ttfamily \label{struct_search_state_a8b3f00254d130bc3c0f5bea1532167db} 
+int Search\+State::\+beta}
+
+Upper search bound. \Hypertarget{struct_search_state_a2e4bc26e5cf7065f8c396f8f2148949b}\index{SearchState@{SearchState}!depth@{depth}}
+\index{depth@{depth}!SearchState@{SearchState}}
+\doxysubsubsection{\texorpdfstring{depth}{depth}}
+{\footnotesize\ttfamily \label{struct_search_state_a2e4bc26e5cf7065f8c396f8f2148949b} 
+int Search\+State::\+depth}
+
+Remaining depth. \Hypertarget{struct_search_state_ab6c9113b078b69f37673468dc35b408e}\index{SearchState@{SearchState}!extension@{extension}}
+\index{extension@{extension}!SearchState@{SearchState}}
+\doxysubsubsection{\texorpdfstring{extension}{extension}}
+{\footnotesize\ttfamily \label{struct_search_state_ab6c9113b078b69f37673468dc35b408e} 
+int Search\+State::\+extension}
+
+Search extension (when in check). \Hypertarget{struct_search_state_ac5e6771b87deb1dcbb142a6a1840c7ce}\index{SearchState@{SearchState}!ply@{ply}}
+\index{ply@{ply}!SearchState@{SearchState}}
+\doxysubsubsection{\texorpdfstring{ply}{ply}}
+{\footnotesize\ttfamily \label{struct_search_state_ac5e6771b87deb1dcbb142a6a1840c7ce} 
+int Search\+State::\+ply}
+
+Current half moves from search root. 
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+include/\+\doxymbox{\hyperlink{_move_evaluation_8h}{Move\+Evaluation.\+h}}\end{DoxyCompactItemize}

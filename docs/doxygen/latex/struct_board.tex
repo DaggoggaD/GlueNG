@@ -1,0 +1,183 @@
+\doxysection{Board Struct Reference}
+\hypertarget{struct_board}{}\label{struct_board}\index{Board@{Board}}
+
+
+Represents the complete state of a chess game.  
+
+
+
+
+{\ttfamily \+\#include $<$Chess\+Structs.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color}} \doxymbox{\hyperlink{struct_board_a71a13696a7c9e530578d8ff372a0137c}{side\+To\+Move}}
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{struct_board_a0879695443cf7ee5857ecf813ade8957}{piece\+Bitboards}} \+[\doxymbox{\hyperlink{_chess_structs_8h_acb6e5a3cb3d650efcbb4dff01b8dc597}{PlayerN}}]\+\+[\doxymbox{\hyperlink{_chess_structs_8h_ac3e55d2faad46193d05229ed8cd236cc}{Piece\+TypeN}}]\+
+\begin{DoxyCompactList}\small\item\em Pieces bitboards:\+ \+[\doxylink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color} White -\/ Black]\+\+[PAWN /\+ ROOK /\+ ...]\+. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{struct_board_a1e51ffb7b470e6604bd84488f296d91a}{occupied\+Bitboards}} \+[3]\+
+\begin{DoxyCompactList}\small\item\em Occupancy bitboards:\+ \+[\doxylink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color} White -\/ Black -\/ Both]\+. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type}} \doxymbox{\hyperlink{struct_board_aa3f05f8e9abf7abf93c6da221e613540}{piece\+On\+Square}} \+[64]\+
+\begin{DoxyCompactList}\small\item\em Bigger, slower array used only to check piece type on a specific square. NONE on empty squares. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{struct_board_a753550bdb0d038e4cc7ec7d6a3701140}{castling\+Perms}}
+\begin{DoxyCompactList}\small\item\em Special moves information. Castling permissions using bit flags. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{struct_board_afcd8f7bfc0fe262222383bb572c89b3e}{en\+Passant}}
+\begin{DoxyCompactList}\small\item\em -\/1 if no en passant square, otherwise the index. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{struct_board_a6609e9595b6a1b35a193f06eb17921ef}{game\+Ply}}
+\begin{DoxyCompactList}\small\item\em Move state information. Number of half-\/moves played in the current game. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{struct_board_a619df20d025ef40f3e2c92d740eb66d2}{half\+Moves}}
+\begin{DoxyCompactList}\small\item\em Half-\/moves since the last capture or pawn advance (for the 50-\/move rule). \end{DoxyCompactList}\item 
+short \doxymbox{\hyperlink{struct_board_ac8a6f7b63533052b3f7d98a54d683fca}{fifty\+Move\+Counter}}
+\item 
+short \doxymbox{\hyperlink{struct_board_a36a20b21fc998ed1beb4a3451594e350}{repetition\+Count}}
+\item 
+\doxymbox{\hyperlink{struct_undo_history}{Undo\+History}} \doxymbox{\hyperlink{struct_board_a53d678c18ff87e6df4093f346fdaf511}{history}} \+[1024]\+
+\begin{DoxyCompactList}\small\item\em History array to restore previous states during unmake\+\_\+move. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{struct_board_a1bb250a16677decd09d6c3b497d6b83e}{king\+Sq}} \+[2]\+
+\begin{DoxyCompactList}\small\item\em Evaluation helper stats. Tracks king positions for quick distance evaluations. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{struct_board_a18be1617e4f26c0afba9616a93073e78}{hash\+Key}}
+\begin{DoxyCompactList}\small\item\em Zobrist hash key of the current position. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{struct_board_a3d73720dfbcc1fd54b979e709d9016d9}{game\+History}} \+[1024]\+
+\begin{DoxyCompactList}\small\item\em Used for draw detection (3-\/fold repetition). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents the complete state of a chess game. 
+
+\label{doc-variable-members}
+\Hypertarget{struct_board_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{struct_board_a753550bdb0d038e4cc7ec7d6a3701140}\index{Board@{Board}!castlingPerms@{castlingPerms}}
+\index{castlingPerms@{castlingPerms}!Board@{Board}}
+\doxysubsubsection{\texorpdfstring{castlingPerms}{castlingPerms}}
+{\footnotesize\ttfamily \label{struct_board_a753550bdb0d038e4cc7ec7d6a3701140} 
+int Board::\+castling\+Perms}
+
+
+
+Special moves information. Castling permissions using bit flags. 
+
+\Hypertarget{struct_board_afcd8f7bfc0fe262222383bb572c89b3e}\index{Board@{Board}!enPassant@{enPassant}}
+\index{enPassant@{enPassant}!Board@{Board}}
+\doxysubsubsection{\texorpdfstring{enPassant}{enPassant}}
+{\footnotesize\ttfamily \label{struct_board_afcd8f7bfc0fe262222383bb572c89b3e} 
+int Board::\+en\+Passant}
+
+
+
+-\/1 if no en passant square, otherwise the index. 
+
+\Hypertarget{struct_board_ac8a6f7b63533052b3f7d98a54d683fca}\index{Board@{Board}!fiftyMoveCounter@{fiftyMoveCounter}}
+\index{fiftyMoveCounter@{fiftyMoveCounter}!Board@{Board}}
+\doxysubsubsection{\texorpdfstring{fiftyMoveCounter}{fiftyMoveCounter}}
+{\footnotesize\ttfamily \label{struct_board_ac8a6f7b63533052b3f7d98a54d683fca} 
+short Board::\+fifty\+Move\+Counter}
+
+\Hypertarget{struct_board_a3d73720dfbcc1fd54b979e709d9016d9}\index{Board@{Board}!gameHistory@{gameHistory}}
+\index{gameHistory@{gameHistory}!Board@{Board}}
+\doxysubsubsection{\texorpdfstring{gameHistory}{gameHistory}}
+{\footnotesize\ttfamily \label{struct_board_a3d73720dfbcc1fd54b979e709d9016d9} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} Board::\+game\+History\+[1024]\+}
+
+
+
+Used for draw detection (3-\/fold repetition). 
+
+\Hypertarget{struct_board_a6609e9595b6a1b35a193f06eb17921ef}\index{Board@{Board}!gamePly@{gamePly}}
+\index{gamePly@{gamePly}!Board@{Board}}
+\doxysubsubsection{\texorpdfstring{gamePly}{gamePly}}
+{\footnotesize\ttfamily \label{struct_board_a6609e9595b6a1b35a193f06eb17921ef} 
+int Board::\+game\+Ply}
+
+
+
+Move state information. Number of half-\/moves played in the current game. 
+
+\Hypertarget{struct_board_a619df20d025ef40f3e2c92d740eb66d2}\index{Board@{Board}!halfMoves@{halfMoves}}
+\index{halfMoves@{halfMoves}!Board@{Board}}
+\doxysubsubsection{\texorpdfstring{halfMoves}{halfMoves}}
+{\footnotesize\ttfamily \label{struct_board_a619df20d025ef40f3e2c92d740eb66d2} 
+int Board::\+half\+Moves}
+
+
+
+Half-\/moves since the last capture or pawn advance (for the 50-\/move rule). 
+
+\Hypertarget{struct_board_a18be1617e4f26c0afba9616a93073e78}\index{Board@{Board}!hashKey@{hashKey}}
+\index{hashKey@{hashKey}!Board@{Board}}
+\doxysubsubsection{\texorpdfstring{hashKey}{hashKey}}
+{\footnotesize\ttfamily \label{struct_board_a18be1617e4f26c0afba9616a93073e78} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} Board::\+hash\+Key}
+
+
+
+Zobrist hash key of the current position. 
+
+\Hypertarget{struct_board_a53d678c18ff87e6df4093f346fdaf511}\index{Board@{Board}!history@{history}}
+\index{history@{history}!Board@{Board}}
+\doxysubsubsection{\texorpdfstring{history}{history}}
+{\footnotesize\ttfamily \label{struct_board_a53d678c18ff87e6df4093f346fdaf511} 
+\doxymbox{\hyperlink{struct_undo_history}{Undo\+History}} Board::\+history\+[1024]\+}
+
+
+
+History array to restore previous states during unmake\+\_\+move. 
+
+\Hypertarget{struct_board_a1bb250a16677decd09d6c3b497d6b83e}\index{Board@{Board}!kingSq@{kingSq}}
+\index{kingSq@{kingSq}!Board@{Board}}
+\doxysubsubsection{\texorpdfstring{kingSq}{kingSq}}
+{\footnotesize\ttfamily \label{struct_board_a1bb250a16677decd09d6c3b497d6b83e} 
+int Board::\+king\+Sq\+[2]\+}
+
+
+
+Evaluation helper stats. Tracks king positions for quick distance evaluations. 
+
+\Hypertarget{struct_board_a1e51ffb7b470e6604bd84488f296d91a}\index{Board@{Board}!occupiedBitboards@{occupiedBitboards}}
+\index{occupiedBitboards@{occupiedBitboards}!Board@{Board}}
+\doxysubsubsection{\texorpdfstring{occupiedBitboards}{occupiedBitboards}}
+{\footnotesize\ttfamily \label{struct_board_a1e51ffb7b470e6604bd84488f296d91a} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} Board::\+occupied\+Bitboards\+[3]\+}
+
+
+
+Occupancy bitboards:\+ \+[\doxylink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color} White -\/ Black -\/ Both]\+. 
+
+\Hypertarget{struct_board_a0879695443cf7ee5857ecf813ade8957}\index{Board@{Board}!pieceBitboards@{pieceBitboards}}
+\index{pieceBitboards@{pieceBitboards}!Board@{Board}}
+\doxysubsubsection{\texorpdfstring{pieceBitboards}{pieceBitboards}}
+{\footnotesize\ttfamily \label{struct_board_a0879695443cf7ee5857ecf813ade8957} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} Board::\+piece\+Bitboards\+[\doxymbox{\hyperlink{_chess_structs_8h_acb6e5a3cb3d650efcbb4dff01b8dc597}{PlayerN}}]\+\+[\doxymbox{\hyperlink{_chess_structs_8h_ac3e55d2faad46193d05229ed8cd236cc}{Piece\+TypeN}}]\+}
+
+
+
+Pieces bitboards:\+ \+[\doxylink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color} White -\/ Black]\+\+[PAWN /\+ ROOK /\+ ...]\+. 
+
+\Hypertarget{struct_board_aa3f05f8e9abf7abf93c6da221e613540}\index{Board@{Board}!pieceOnSquare@{pieceOnSquare}}
+\index{pieceOnSquare@{pieceOnSquare}!Board@{Board}}
+\doxysubsubsection{\texorpdfstring{pieceOnSquare}{pieceOnSquare}}
+{\footnotesize\ttfamily \label{struct_board_aa3f05f8e9abf7abf93c6da221e613540} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type}} Board::\+piece\+On\+Square\+[64]\+}
+
+
+
+Bigger, slower array used only to check piece type on a specific square. NONE on empty squares. 
+
+\Hypertarget{struct_board_a36a20b21fc998ed1beb4a3451594e350}\index{Board@{Board}!repetitionCount@{repetitionCount}}
+\index{repetitionCount@{repetitionCount}!Board@{Board}}
+\doxysubsubsection{\texorpdfstring{repetitionCount}{repetitionCount}}
+{\footnotesize\ttfamily \label{struct_board_a36a20b21fc998ed1beb4a3451594e350} 
+short Board::\+repetition\+Count}
+
+\Hypertarget{struct_board_a71a13696a7c9e530578d8ff372a0137c}\index{Board@{Board}!sideToMove@{sideToMove}}
+\index{sideToMove@{sideToMove}!Board@{Board}}
+\doxysubsubsection{\texorpdfstring{sideToMove}{sideToMove}}
+{\footnotesize\ttfamily \label{struct_board_a71a13696a7c9e530578d8ff372a0137c} 
+\doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color}} Board::\+side\+To\+Move}
+
+
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+include/\+\doxymbox{\hyperlink{_chess_structs_8h}{Chess\+Structs.\+h}}\end{DoxyCompactItemize}

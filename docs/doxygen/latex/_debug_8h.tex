@@ -1,0 +1,152 @@
+\doxysection{include/\+\+Debug.h File Reference}
+\hypertarget{_debug_8h}{}\label{_debug_8h}\index{include/Debug.h@{include/Debug.h}}
+
+
+Function declarations for debugging and visualization utilities.  
+
+
+{\ttfamily \+\#include "{}Headers.\+h"{}}\newline
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct Move\+List \doxymbox{\hyperlink{_debug_8h_a99bb1620fba801587287bf41b03d66ee}{Move\+List}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{_debug_8h_a58e67d7b9d0a95977964104760904ab4}{debug\+\_\+select\+\_\+string\+\_\+from\+\_\+piece}} (const \doxymbox{\hyperlink{_chess_definitions_8h_ac7176b069e3697300fd45e6db5899deb}{Piece\+Id}} piece, char \texorpdfstring{$\ast$}{*}str)
+\begin{DoxyCompactList}\small\item\em Used to translate from enum to string to visualize pieces. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_debug_8h_a92b8f5f31b7f1915c9c4c02cc9b78401}{debug\+\_\+board\+\_\+visualizer}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board)
+\begin{DoxyCompactList}\small\item\em Prints current checkerboard pieces, side to move, castling permissions, and halfmove. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_debug_8h_aad80a00f027ff181406693112bc7f76a}{debug\+\_\+bitmask\+\_\+visualizer}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} bitmask)
+\begin{DoxyCompactList}\small\item\em Visualizes any bitmask as an 8x8 grid. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_debug_8h_ae2d101c15ab9abfced9ff066bb0ec8e3}{debug\+\_\+precomputed\+\_\+attack\+\_\+visualizer}} (int square, \doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type}} type)
+\begin{DoxyCompactList}\small\item\em Visualizes precomputed attacks for knights and kings. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_debug_8h_a179f0fe1e7512620780ec2696e196503}{debug\+\_\+move}} (int move)
+\begin{DoxyCompactList}\small\item\em Prints a move in human readable format, e.\+g. e2e4, g7g8q, etc. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_debug_8h_a734145ab12873b721806c2dbe1ce4d9d}{debug\+\_\+move\+\_\+list}} (\doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}list)
+\begin{DoxyCompactList}\small\item\em Prints a list of moves in human-\/readable format. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Function declarations for debugging and visualization utilities. 
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{_debug_8h_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{_debug_8h_a99bb1620fba801587287bf41b03d66ee}\index{Debug.h@{Debug.h}!MoveList@{MoveList}}
+\index{MoveList@{MoveList}!Debug.h@{Debug.h}}
+\doxysubsubsection{\texorpdfstring{MoveList}{MoveList}}
+{\footnotesize\ttfamily \label{_debug_8h_a99bb1620fba801587287bf41b03d66ee} 
+typedef struct Move\+List Move\+List}
+
+
+
+\label{doc-func-members}
+\Hypertarget{_debug_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_debug_8h_aad80a00f027ff181406693112bc7f76a}\index{Debug.h@{Debug.h}!debug\_bitmask\_visualizer@{debug\_bitmask\_visualizer}}
+\index{debug\_bitmask\_visualizer@{debug\_bitmask\_visualizer}!Debug.h@{Debug.h}}
+\doxysubsubsection{\texorpdfstring{debug\_bitmask\_visualizer()}{debug\_bitmask\_visualizer()}}
+{\footnotesize\ttfamily \label{_debug_8h_aad80a00f027ff181406693112bc7f76a} 
+void debug\+\_\+bitmask\+\_\+visualizer (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{bitmask}{}\end{DoxyParamCaption})}
+
+
+
+Visualizes any bitmask as an 8x8 grid. 
+
+\begin{DoxyNote}{Note}
+X:\+ bit is set, . otherwise. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em bitmask} & The 64-\/bit integer (bitboard) to visualize. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_debug_8h_a92b8f5f31b7f1915c9c4c02cc9b78401}\index{Debug.h@{Debug.h}!debug\_board\_visualizer@{debug\_board\_visualizer}}
+\index{debug\_board\_visualizer@{debug\_board\_visualizer}!Debug.h@{Debug.h}}
+\doxysubsubsection{\texorpdfstring{debug\_board\_visualizer()}{debug\_board\_visualizer()}}
+{\footnotesize\ttfamily \label{_debug_8h_a92b8f5f31b7f1915c9c4c02cc9b78401} 
+void debug\+\_\+board\+\_\+visualizer (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{}\end{DoxyParamCaption})}
+
+
+
+Prints current checkerboard pieces, side to move, castling permissions, and halfmove. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board state to visualize. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_debug_8h_a179f0fe1e7512620780ec2696e196503}\index{Debug.h@{Debug.h}!debug\_move@{debug\_move}}
+\index{debug\_move@{debug\_move}!Debug.h@{Debug.h}}
+\doxysubsubsection{\texorpdfstring{debug\_move()}{debug\_move()}}
+{\footnotesize\ttfamily \label{_debug_8h_a179f0fe1e7512620780ec2696e196503} 
+void debug\+\_\+move (\begin{DoxyParamCaption}\item[{int}]{move}{}\end{DoxyParamCaption})}
+
+
+
+Prints a move in human readable format, e.\+g. e2e4, g7g8q, etc. 
+
+\begin{DoxyNote}{Note}
+Does not print annotations. Used in UCI output. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em move} & The packed move to print. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_debug_8h_a734145ab12873b721806c2dbe1ce4d9d}\index{Debug.h@{Debug.h}!debug\_move\_list@{debug\_move\_list}}
+\index{debug\_move\_list@{debug\_move\_list}!Debug.h@{Debug.h}}
+\doxysubsubsection{\texorpdfstring{debug\_move\_list()}{debug\_move\_list()}}
+{\footnotesize\ttfamily \label{_debug_8h_a734145ab12873b721806c2dbe1ce4d9d} 
+void debug\+\_\+move\+\_\+list (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}}]{list}{}\end{DoxyParamCaption})}
+
+
+
+Prints a list of moves in human-\/readable format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & Pointer to the \doxylink{struct_move_list}{Move\+List} to print. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_debug_8h_ae2d101c15ab9abfced9ff066bb0ec8e3}\index{Debug.h@{Debug.h}!debug\_precomputed\_attack\_visualizer@{debug\_precomputed\_attack\_visualizer}}
+\index{debug\_precomputed\_attack\_visualizer@{debug\_precomputed\_attack\_visualizer}!Debug.h@{Debug.h}}
+\doxysubsubsection{\texorpdfstring{debug\_precomputed\_attack\_visualizer()}{debug\_precomputed\_attack\_visualizer()}}
+{\footnotesize\ttfamily \label{_debug_8h_ae2d101c15ab9abfced9ff066bb0ec8e3} 
+void debug\+\_\+precomputed\+\_\+attack\+\_\+visualizer (\begin{DoxyParamCaption}\item[{int}]{square}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type}}}]{type}{}\end{DoxyParamCaption})}
+
+
+
+Visualizes precomputed attacks for knights and kings. 
+
+\begin{DoxyNote}{Note}
+S:\+ square of interest, X:\+ attacked square. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em square} & The square index (0-\/63) of interest. \\
+\hline
+{\em type} & The piece type (Knight or King) to visualize attacks for. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_debug_8h_a58e67d7b9d0a95977964104760904ab4}\index{Debug.h@{Debug.h}!debug\_select\_string\_from\_piece@{debug\_select\_string\_from\_piece}}
+\index{debug\_select\_string\_from\_piece@{debug\_select\_string\_from\_piece}!Debug.h@{Debug.h}}
+\doxysubsubsection{\texorpdfstring{debug\_select\_string\_from\_piece()}{debug\_select\_string\_from\_piece()}}
+{\footnotesize\ttfamily \label{_debug_8h_a58e67d7b9d0a95977964104760904ab4} 
+void debug\+\_\+select\+\_\+string\+\_\+from\+\_\+piece (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{_chess_definitions_8h_ac7176b069e3697300fd45e6db5899deb}{Piece\+Id}}}]{piece}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})}
+
+
+
+Used to translate from enum to string to visualize pieces. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em piece} & The \doxylink{_chess_definitions_8h_ac7176b069e3697300fd45e6db5899deb}{Piece\+Id} enum value to translate. \\
+\hline
+{\em str} & Pointer to a character array where the resulting string will be stored. \\
+\hline
+\end{DoxyParams}

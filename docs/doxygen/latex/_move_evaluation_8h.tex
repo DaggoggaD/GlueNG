@@ -1,0 +1,774 @@
+\doxysection{include/\+\+Move\+Evaluation.h File Reference}
+\hypertarget{_move_evaluation_8h}{}\label{_move_evaluation_8h}\index{include/MoveEvaluation.h@{include/MoveEvaluation.h}}
+
+
+This file contains the function declarations for move evaluation and search in the chess engine.  
+
+
+{\ttfamily \+\#include "{}Headers.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_search_state}{Search\+State}}
+\begin{DoxyCompactList}\small\item\em struct to represent the state of the search. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{_move_evaluation_8h_ab4c4af0c5c2a31dd2bb603adb9f85e97}{MOVE\+\_\+\+EVALUATION\+\_\+H}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct Transp\+Entry \doxymbox{\hyperlink{_move_evaluation_8h_ae19c78ea4255ed7773c16778037e5ea4}{Transp\+Entry}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{_move_evaluation_8h_a072b860fc3324d4b3cc57f492853567f}{init\+\_\+evaluation\+\_\+masks}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the file\+Masks and adjacent\+File\+Masks, used for pawn evaluation. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_move_evaluation_8h_af975d71787c61860ddae88da7fe832e4}{material\+\_\+evaluation}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, \doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color}} side, int \texorpdfstring{$\ast$}{*}no\+Pawn\+Eval)
+\begin{DoxyCompactList}\small\item\em Evaluates current position based on material only. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_move_evaluation_8h_a9ac63be42f0f4a0bb503887629832add}{mobility\+\_\+evaluation}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, \doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color}} side, int \texorpdfstring{$\ast$}{*}no\+Pawn\+Eval)
+\begin{DoxyCompactList}\small\item\em Evaluates the position based on the number of pseudo-\/legal moves for each piece type. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_move_evaluation_8h_aee9fec042f3a4711d11f995cbcca8f6d}{pst\+\_\+lazy\+\_\+evaluation}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int no\+Pawn\+Eval)
+\begin{DoxyCompactList}\small\item\em Evaluates current position based on piece position, using piece-\/square tables. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_move_evaluation_8h_a658b193713752b409bc9acf32368f2cf}{pesto\+\_\+evaluation}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int phase)
+\begin{DoxyCompactList}\small\item\em Evaluates current position based on piece position. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_move_evaluation_8h_a59a1fbff388b49fd2f1518bcc6c49269}{evaluate\+\_\+white\+\_\+passed\+\_\+pawns}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} w\+Pawn, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} b\+Pawn, int file, int \texorpdfstring{$\ast$}{*}score)
+\begin{DoxyCompactList}\small\item\em Evaluates white pawns (passed, doubled, isolated), by checking the file and adjacent files. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_move_evaluation_8h_a00e889e9d762bcfbca1a0a9aa0acf89b}{evaluate\+\_\+black\+\_\+passed\+\_\+pawns}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} w\+Pawn, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} b\+Pawn, int file, int \texorpdfstring{$\ast$}{*}score)
+\begin{DoxyCompactList}\small\item\em Evaluates black pawns (passed, doubled, isolated), by checking the file and adjacent files. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_move_evaluation_8h_a5182780a1a3a81cc238d31ec637dae73}{search\+\_\+pawn\+\_\+file}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int i, int \texorpdfstring{$\ast$}{*}score, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} w\+Pawn, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} b\+Pawn)
+\begin{DoxyCompactList}\small\item\em Evaluates the pawn structure, by checking each file for doubled, isolated and passed pawns. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_move_evaluation_8h_a01e1bdc885c55ab54202c778015c5d33}{pawn\+\_\+evaluation}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board)
+\begin{DoxyCompactList}\small\item\em Evaluates the position based on the pawn structure, using file and row masks. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_move_evaluation_8h_a4e56639f353c69c6eeffb9b590463578}{king\+\_\+safety\+\_\+evaluation}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board)
+\begin{DoxyCompactList}\small\item\em Evaluates the position based on the position of nearby pawns, shielding the king, or exposing it. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_move_evaluation_8h_a4cc5d24f5631c88114d82eef18c636f9}{king\+\_\+distance\+\_\+evaluation}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int score, int phase)
+\begin{DoxyCompactList}\small\item\em Moves the king closer in the endgame, making them a valuable attack piece. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_move_evaluation_8h_a3e67c53ebf0cea1b0dfc9b3025faa9e1}{evaluate}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int alpha, int beta)
+\begin{DoxyCompactList}\small\item\em Evaluates the current position, by summing material and piece-\/square tables evaluations. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_move_evaluation_8h_acfc8d847de43af53a46b28e1fc831724}{init\+\_\+lmr\+\_\+table}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the late move reduction table, to avoid log calculations at runtime. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_move_evaluation_8h_ab4a492c379cff5b70d9a451d678a59e6}{make\+\_\+null\+\_\+move}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int curr\+Depth)
+\begin{DoxyCompactList}\small\item\em Makes a null move, by switching the side to move and increasing the ply. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_move_evaluation_8h_a03c49c498aede5147f6df9d1cbba1b5c}{unmake\+\_\+null\+\_\+move}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int curr\+Depth)
+\begin{DoxyCompactList}\small\item\em Resets the board to the state before the null move, by switching back the side to move and decreasing the ply. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_move_evaluation_8h_a319d9932d8315417632f7871bc9f2bb8}{is\+\_\+heavy\+\_\+board}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board)
+\begin{DoxyCompactList}\small\item\em Checks if the position is "{}heavy"{}, meaning that it has a lot of pieces on the board. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_move_evaluation_8h_aabecb5b651c828814147c7b5b93d6c3b}{is\+\_\+repetition}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int ply)
+\begin{DoxyCompactList}\small\item\em Checks if the current position has already been reached in the game, by checking history of positions. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_move_evaluation_8h_a83ee11eda68721881f5b76ccd3778cd0}{order\+\_\+moves}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, \doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}list, int tt\+Move, int ply)
+\begin{DoxyCompactList}\small\item\em Helps massively alpha-\/beta pruning, by ordering the moves according to their scores. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_move_evaluation_8h_aecb7f90847f260f8de3890db173acb5d}{quiescence\+\_\+search}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int alpha, int beta, int ply)
+\begin{DoxyCompactList}\small\item\em At the end of the main search, it runs a deeper one until there are no more captures/\+promotions/\+enpassants. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_move_evaluation_8h_a77ad50dc36b0caea031bd2ca985a40ab}{probe\+\_\+tt}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, \doxymbox{\hyperlink{struct_transp_entry}{Transp\+Entry}} \texorpdfstring{$\ast$}{*}entry, int depth, int alpha, int beta, int \texorpdfstring{$\ast$}{*}out\+Score)
+\begin{DoxyCompactList}\small\item\em Checks if the current position is already stored in the transposition table. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_move_evaluation_8h_ad04ba9371abdbc16785212cc96fa3c78}{do\+\_\+null\+\_\+move\+\_\+pruning}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, \doxymbox{\hyperlink{struct_transp_entry}{Transp\+Entry}} \texorpdfstring{$\ast$}{*}entry, int depth, int beta, int extension, int ply, int \texorpdfstring{$\ast$}{*}out\+Score)
+\begin{DoxyCompactList}\small\item\em If the position is not in the transp table, we apply a null move (skipping our turn). \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_move_evaluation_8h_a74bc9c4cc3d4455640ec5abcc5ffbef9}{evaluate\+\_\+move}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int move, \doxymbox{\hyperlink{struct_search_state}{Search\+State}} \texorpdfstring{$\ast$}{*}state, int \texorpdfstring{$\ast$}{*}legal\+Moves, \doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}list)
+\begin{DoxyCompactList}\small\item\em Evaluates a specific move, considering the current board state, search state, legal moves, and move list. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_move_evaluation_8h_afa9eee72485e6d573141631f7b0e5204}{nega\+\_\+max}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int depth, int alpha, int beta, int extension, int ply, bool allow\+Null)
+\begin{DoxyCompactList}\small\item\em Explores the moves tree, searching for the best eval. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_move_evaluation_8h_a44532335688d7eef99d7ffa0ac83405a}{best\+\_\+move}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int depth, int curr\+Best, int extension)
+\begin{DoxyCompactList}\small\item\em Explores the moves tree, with negamax. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_move_evaluation_8h_a368f43cfb09ef1667284db312d0bae03}{best\+\_\+move\+\_\+iterative\+\_\+deepening}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int max\+Time, int max\+Depth)
+\begin{DoxyCompactList}\small\item\em Instead of running a single fixed depth search, runs at depth 1 ... max depth, or till timeout. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{_move_evaluation_8h_ad5e1afedde35056c3e2efd800bb837d4}{lmr\+Table}} \+[64]\+\+[256]\+
+\begin{DoxyCompactList}\small\item\em Precalculated table for late move reductions, to avoid log calculations at runtime. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_move_evaluation_8h_a4b9b946422d12741fc4387a1be0fb5ce}{file\+Masks}} \+[8]\+
+\begin{DoxyCompactList}\small\item\em Precalculated masks for each file. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_move_evaluation_8h_ae06a1340c63878966907ee5494b645ed}{adjacent\+File\+Masks}} \+[8]\+
+\begin{DoxyCompactList}\small\item\em Precalculated masks for adjacent files of a specific file (for pawn evaluation). \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_move_evaluation_8h_ac1e6614eeb6fadbaaacd4140eb0ea5db}{row\+Masks}} \+[8]\+
+\begin{DoxyCompactList}\small\item\em Precalculated masks for each row. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file contains the function declarations for move evaluation and search in the chess engine. 
+
+
+
+\label{doc-define-members}
+\Hypertarget{_move_evaluation_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_move_evaluation_8h_ab4c4af0c5c2a31dd2bb603adb9f85e97}\index{MoveEvaluation.h@{MoveEvaluation.h}!MOVE\_EVALUATION\_H@{MOVE\_EVALUATION\_H}}
+\index{MOVE\_EVALUATION\_H@{MOVE\_EVALUATION\_H}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{MOVE\_EVALUATION\_H}{MOVE\_EVALUATION\_H}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_ab4c4af0c5c2a31dd2bb603adb9f85e97} 
+\+\#define MOVE\+\_\+\+EVALUATION\+\_\+H}
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{_move_evaluation_8h_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{_move_evaluation_8h_ae19c78ea4255ed7773c16778037e5ea4}\index{MoveEvaluation.h@{MoveEvaluation.h}!TranspEntry@{TranspEntry}}
+\index{TranspEntry@{TranspEntry}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{TranspEntry}{TranspEntry}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_ae19c78ea4255ed7773c16778037e5ea4} 
+typedef struct Transp\+Entry Transp\+Entry}
+
+
+
+\label{doc-func-members}
+\Hypertarget{_move_evaluation_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_move_evaluation_8h_a44532335688d7eef99d7ffa0ac83405a}\index{MoveEvaluation.h@{MoveEvaluation.h}!best\_move@{best\_move}}
+\index{best\_move@{best\_move}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{best\_move()}{best\_move()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a44532335688d7eef99d7ffa0ac83405a} 
+int best\+\_\+move (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{depth}{, }\item[{int}]{curr\+Best}{, }\item[{int}]{extension}{}\end{DoxyParamCaption})}
+
+
+
+Explores the moves tree, with negamax. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board state. \\
+\hline
+{\em depth} & The remaining search depth. \\
+\hline
+{\em curr\+Best} & The current best score. \\
+\hline
+{\em extension} & Current depth extensions accumulated. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The encoded best move as an integer. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_a368f43cfb09ef1667284db312d0bae03}\index{MoveEvaluation.h@{MoveEvaluation.h}!best\_move\_iterative\_deepening@{best\_move\_iterative\_deepening}}
+\index{best\_move\_iterative\_deepening@{best\_move\_iterative\_deepening}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{best\_move\_iterative\_deepening()}{best\_move\_iterative\_deepening()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a368f43cfb09ef1667284db312d0bae03} 
+int best\+\_\+move\+\_\+iterative\+\_\+deepening (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{max\+Time}{, }\item[{int}]{max\+Depth}{}\end{DoxyParamCaption})}
+
+
+
+Instead of running a single fixed depth search, runs at depth 1 ... max depth, or till timeout. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board state. \\
+\hline
+{\em max\+Time} & Maximum allocated time in milliseconds. \\
+\hline
+{\em max\+Depth} & The absolute maximum depth to reach. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The final best move found before timeout. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_ad04ba9371abdbc16785212cc96fa3c78}\index{MoveEvaluation.h@{MoveEvaluation.h}!do\_null\_move\_pruning@{do\_null\_move\_pruning}}
+\index{do\_null\_move\_pruning@{do\_null\_move\_pruning}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{do\_null\_move\_pruning()}{do\_null\_move\_pruning()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_ad04ba9371abdbc16785212cc96fa3c78} 
+bool do\+\_\+null\+\_\+move\+\_\+pruning (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{\doxymbox{\hyperlink{struct_transp_entry}{Transp\+Entry}} \texorpdfstring{$\ast$}{*}}]{entry}{, }\item[{int}]{depth}{, }\item[{int}]{beta}{, }\item[{int}]{extension}{, }\item[{int}]{ply}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{out\+Score}{}\end{DoxyParamCaption})}
+
+
+
+If the position is not in the transp table, we apply a null move (skipping our turn). 
+
+
+\begin{DoxyItemize}
+\item If the position is still in our favor (score \texorpdfstring{$>$}{>}= beta), we can prune this branch.
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em entry} & Pointer to the Transposition Table entry. \\
+\hline
+{\em depth} & The remaining search depth. \\
+\hline
+{\em beta} & Upper bound of the search window. \\
+\hline
+{\em extension} & Current depth extensions accumulated. \\
+\hline
+{\em ply} & The current ply from the root. \\
+\hline
+{\em out\+Score} & Pointer to store the result of the null move search. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if a null move cutoff occurred, false otherwise. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_a3e67c53ebf0cea1b0dfc9b3025faa9e1}\index{MoveEvaluation.h@{MoveEvaluation.h}!evaluate@{evaluate}}
+\index{evaluate@{evaluate}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{evaluate()}{evaluate()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a3e67c53ebf0cea1b0dfc9b3025faa9e1} 
+int evaluate (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{alpha}{, }\item[{int}]{beta}{}\end{DoxyParamCaption})}
+
+
+
+Evaluates the current position, by summing material and piece-\/square tables evaluations. 
+
+
+\begin{DoxyItemize}
+\item Also adds a bonus in endgame phase, based on the distance between the kings and the opponent king distance to the border.
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em alpha} & Lower bound of the search window. \\
+\hline
+{\em beta} & Upper bound of the search window. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The final evaluation score of the board. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_a00e889e9d762bcfbca1a0a9aa0acf89b}\index{MoveEvaluation.h@{MoveEvaluation.h}!evaluate\_black\_passed\_pawns@{evaluate\_black\_passed\_pawns}}
+\index{evaluate\_black\_passed\_pawns@{evaluate\_black\_passed\_pawns}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{evaluate\_black\_passed\_pawns()}{evaluate\_black\_passed\_pawns()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a00e889e9d762bcfbca1a0a9aa0acf89b} 
+void evaluate\+\_\+black\+\_\+passed\+\_\+pawns (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{w\+Pawn}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{b\+Pawn}{, }\item[{int}]{file}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{score}{}\end{DoxyParamCaption})}
+
+
+
+Evaluates black pawns (passed, doubled, isolated), by checking the file and adjacent files. 
+
+
+\begin{DoxyItemize}
+\item Helper function for pawn\+\_\+evaluation.
+\item 
+\begin{DoxyParams}{Parameters}
+{\em w\+Pawn} & Bitboard representing white pawns. \\
+\hline
+{\em b\+Pawn} & Bitboard representing black pawns. \\
+\hline
+{\em file} & The current file (0-\/7) being evaluated. \\
+\hline
+{\em score} & Pointer to the score variable to update. \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_a74bc9c4cc3d4455640ec5abcc5ffbef9}\index{MoveEvaluation.h@{MoveEvaluation.h}!evaluate\_move@{evaluate\_move}}
+\index{evaluate\_move@{evaluate\_move}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{evaluate\_move()}{evaluate\_move()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a74bc9c4cc3d4455640ec5abcc5ffbef9} 
+int evaluate\+\_\+move (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{move}{, }\item[{\doxymbox{\hyperlink{struct_search_state}{Search\+State}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{legal\+Moves}{, }\item[{\doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}}]{list}{}\end{DoxyParamCaption})}
+
+
+
+Evaluates a specific move, considering the current board state, search state, legal moves, and move list. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em move} & The specific move to evaluate. \\
+\hline
+{\em state} & Pointer to the current search state structure. \\
+\hline
+{\em legal\+Moves} & Pointer to the count of legal moves found. \\
+\hline
+{\em list} & Pointer to the current move list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The evaluated score of the move. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_a59a1fbff388b49fd2f1518bcc6c49269}\index{MoveEvaluation.h@{MoveEvaluation.h}!evaluate\_white\_passed\_pawns@{evaluate\_white\_passed\_pawns}}
+\index{evaluate\_white\_passed\_pawns@{evaluate\_white\_passed\_pawns}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{evaluate\_white\_passed\_pawns()}{evaluate\_white\_passed\_pawns()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a59a1fbff388b49fd2f1518bcc6c49269} 
+void evaluate\+\_\+white\+\_\+passed\+\_\+pawns (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{w\+Pawn}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{b\+Pawn}{, }\item[{int}]{file}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{score}{}\end{DoxyParamCaption})}
+
+
+
+Evaluates white pawns (passed, doubled, isolated), by checking the file and adjacent files. 
+
+
+\begin{DoxyItemize}
+\item Helper function for pawn\+\_\+evaluation.
+\item 
+\begin{DoxyParams}{Parameters}
+{\em w\+Pawn} & Bitboard representing white pawns. \\
+\hline
+{\em b\+Pawn} & Bitboard representing black pawns. \\
+\hline
+{\em file} & The current file (0-\/7) being evaluated. \\
+\hline
+{\em score} & Pointer to the score variable to update. \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_a072b860fc3324d4b3cc57f492853567f}\index{MoveEvaluation.h@{MoveEvaluation.h}!init\_evaluation\_masks@{init\_evaluation\_masks}}
+\index{init\_evaluation\_masks@{init\_evaluation\_masks}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{init\_evaluation\_masks()}{init\_evaluation\_masks()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a072b860fc3324d4b3cc57f492853567f} 
+void init\+\_\+evaluation\+\_\+masks (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the file\+Masks and adjacent\+File\+Masks, used for pawn evaluation. 
+
+\Hypertarget{_move_evaluation_8h_acfc8d847de43af53a46b28e1fc831724}\index{MoveEvaluation.h@{MoveEvaluation.h}!init\_lmr\_table@{init\_lmr\_table}}
+\index{init\_lmr\_table@{init\_lmr\_table}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{init\_lmr\_table()}{init\_lmr\_table()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_acfc8d847de43af53a46b28e1fc831724} 
+void init\+\_\+lmr\+\_\+table (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the late move reduction table, to avoid log calculations at runtime. 
+
+
+\begin{DoxyItemize}
+\item The reduction algorithm is based on the obsidian implementation:\+ \href{https://www.chessprogramming.org/Late_Move_Reductions\#Reduction_Depth}{\texttt{https:\+/\+/\+www.\+chessprogramming.\+org/\+\+Late\+\_\+\+Move\+\_\+\+Reductions\+\#\+Reduction\+\_\+\+Depth}} 
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_a319d9932d8315417632f7871bc9f2bb8}\index{MoveEvaluation.h@{MoveEvaluation.h}!is\_heavy\_board@{is\_heavy\_board}}
+\index{is\_heavy\_board@{is\_heavy\_board}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{is\_heavy\_board()}{is\_heavy\_board()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a319d9932d8315417632f7871bc9f2bb8} 
+bool is\+\_\+heavy\+\_\+board (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{}\end{DoxyParamCaption})}
+
+
+
+Checks if the position is "{}heavy"{}, meaning that it has a lot of pieces on the board. 
+
+
+\begin{DoxyItemize}
+\item This makes the null move heuristic more effective.
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the board is considered heavy, false otherwise. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_aabecb5b651c828814147c7b5b93d6c3b}\index{MoveEvaluation.h@{MoveEvaluation.h}!is\_repetition@{is\_repetition}}
+\index{is\_repetition@{is\_repetition}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{is\_repetition()}{is\_repetition()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_aabecb5b651c828814147c7b5b93d6c3b} 
+bool is\+\_\+repetition (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{ply}{}\end{DoxyParamCaption})}
+
+
+
+Checks if the current position has already been reached in the game, by checking history of positions. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em ply} & The current ply from the root. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if a repetition is found, false otherwise. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_a4cc5d24f5631c88114d82eef18c636f9}\index{MoveEvaluation.h@{MoveEvaluation.h}!king\_distance\_evaluation@{king\_distance\_evaluation}}
+\index{king\_distance\_evaluation@{king\_distance\_evaluation}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{king\_distance\_evaluation()}{king\_distance\_evaluation()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a4cc5d24f5631c88114d82eef18c636f9} 
+int king\+\_\+distance\+\_\+evaluation (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{score}{, }\item[{int}]{phase}{}\end{DoxyParamCaption})}
+
+
+
+Moves the king closer in the endgame, making them a valuable attack piece. 
+
+
+\begin{DoxyItemize}
+\item Adds a bonus for pushing the opponent king to the border.
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em score} & The current evaluation score. \\
+\hline
+{\em phase} & The current game phase. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The adjusted score including the king distance bonus. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_a4e56639f353c69c6eeffb9b590463578}\index{MoveEvaluation.h@{MoveEvaluation.h}!king\_safety\_evaluation@{king\_safety\_evaluation}}
+\index{king\_safety\_evaluation@{king\_safety\_evaluation}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{king\_safety\_evaluation()}{king\_safety\_evaluation()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a4e56639f353c69c6eeffb9b590463578} 
+int king\+\_\+safety\+\_\+evaluation (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{}\end{DoxyParamCaption})}
+
+
+
+Evaluates the position based on the position of nearby pawns, shielding the king, or exposing it. 
+
+
+\begin{DoxyItemize}
+\item Tapered with game phase in \doxylink{_move_evaluation_8h_a3e67c53ebf0cea1b0dfc9b3025faa9e1}{evaluate()}.
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The king safety evaluation score. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_ab4a492c379cff5b70d9a451d678a59e6}\index{MoveEvaluation.h@{MoveEvaluation.h}!make\_null\_move@{make\_null\_move}}
+\index{make\_null\_move@{make\_null\_move}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{make\_null\_move()}{make\_null\_move()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_ab4a492c379cff5b70d9a451d678a59e6} 
+void make\+\_\+null\+\_\+move (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{curr\+Depth}{}\end{DoxyParamCaption})}
+
+
+
+Makes a null move, by switching the side to move and increasing the ply. 
+
+
+\begin{DoxyItemize}
+\item Used for NMH (Null Move Heuristic) pruning.
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em curr\+Depth} & The current search depth. \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_af975d71787c61860ddae88da7fe832e4}\index{MoveEvaluation.h@{MoveEvaluation.h}!material\_evaluation@{material\_evaluation}}
+\index{material\_evaluation@{material\_evaluation}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{material\_evaluation()}{material\_evaluation()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_af975d71787c61860ddae88da7fe832e4} 
+int material\+\_\+evaluation (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color}}}]{side}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{no\+Pawn\+Eval}{}\end{DoxyParamCaption})}
+
+
+
+Evaluates current position based on material only. 
+
+
+\begin{DoxyItemize}
+\item (Also calculates the no\+Pawn\+Eval, which is used to determine endgame phase).
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current. \\
+\hline
+{\em side} & The color of the side to evaluate. \\
+\hline
+{\em no\+Pawn\+Eval} & Pointer to an integer to store the material evaluation without pawns. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The material evaluation score. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_a9ac63be42f0f4a0bb503887629832add}\index{MoveEvaluation.h@{MoveEvaluation.h}!mobility\_evaluation@{mobility\_evaluation}}
+\index{mobility\_evaluation@{mobility\_evaluation}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{mobility\_evaluation()}{mobility\_evaluation()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a9ac63be42f0f4a0bb503887629832add} 
+int mobility\+\_\+evaluation (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color}}}]{side}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{no\+Pawn\+Eval}{}\end{DoxyParamCaption})}
+
+
+
+Evaluates the position based on the number of pseudo-\/legal moves for each piece type. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em side} & The color of the side to evaluate. \\
+\hline
+{\em no\+Pawn\+Eval} & Pointer to the material evaluation without pawns. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The mobility evaluation score. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_afa9eee72485e6d573141631f7b0e5204}\index{MoveEvaluation.h@{MoveEvaluation.h}!nega\_max@{nega\_max}}
+\index{nega\_max@{nega\_max}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{nega\_max()}{nega\_max()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_afa9eee72485e6d573141631f7b0e5204} 
+int nega\+\_\+max (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{depth}{, }\item[{int}]{alpha}{, }\item[{int}]{beta}{, }\item[{int}]{extension}{, }\item[{int}]{ply}{, }\item[{bool}]{allow\+Null}{}\end{DoxyParamCaption})}
+
+
+
+Explores the moves tree, searching for the best eval. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board state. \\
+\hline
+{\em depth} & The remaining search depth. \\
+\hline
+{\em alpha} & Lower bound of the search window. \\
+\hline
+{\em beta} & Upper bound of the search window. \\
+\hline
+{\em extension} & Current depth extensions accumulated. \\
+\hline
+{\em ply} & The current ply from the root. \\
+\hline
+{\em allow\+Null} & Flag to permit Null Move Heuristic. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The best score found in this branch. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_a83ee11eda68721881f5b76ccd3778cd0}\index{MoveEvaluation.h@{MoveEvaluation.h}!order\_moves@{order\_moves}}
+\index{order\_moves@{order\_moves}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{order\_moves()}{order\_moves()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a83ee11eda68721881f5b76ccd3778cd0} 
+void order\+\_\+moves (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{\doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{int}]{tt\+Move}{, }\item[{int}]{ply}{}\end{DoxyParamCaption})}
+
+
+
+Helps massively alpha-\/beta pruning, by ordering the moves according to their scores. 
+
+
+\begin{DoxyItemize}
+\item (MVV -\/ LVA + promotion bonus)
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em list} & Pointer to the move list to be ordered. \\
+\hline
+{\em tt\+Move} & A transposition table move to be prioritized. \\
+\hline
+{\em ply} & The current ply from the root. \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_a01e1bdc885c55ab54202c778015c5d33}\index{MoveEvaluation.h@{MoveEvaluation.h}!pawn\_evaluation@{pawn\_evaluation}}
+\index{pawn\_evaluation@{pawn\_evaluation}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{pawn\_evaluation()}{pawn\_evaluation()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a01e1bdc885c55ab54202c778015c5d33} 
+int pawn\+\_\+evaluation (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{}\end{DoxyParamCaption})}
+
+
+
+Evaluates the position based on the pawn structure, using file and row masks. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The pawn structure evaluation score. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_a658b193713752b409bc9acf32368f2cf}\index{MoveEvaluation.h@{MoveEvaluation.h}!pesto\_evaluation@{pesto\_evaluation}}
+\index{pesto\_evaluation@{pesto\_evaluation}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{pesto\_evaluation()}{pesto\_evaluation()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a658b193713752b409bc9acf32368f2cf} 
+int pesto\+\_\+evaluation (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{phase}{}\end{DoxyParamCaption})}
+
+
+
+Evaluates current position based on piece position. 
+
+
+\begin{DoxyItemize}
+\item Uses the Pe\+STO evaluation tables, which take into account a more precise evaluation (const tables taken from Chess Programming Wiki) and endgame phase.
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em phase} & The current game phase. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The Pe\+STO evaluation score in centipawns. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_a77ad50dc36b0caea031bd2ca985a40ab}\index{MoveEvaluation.h@{MoveEvaluation.h}!probe\_tt@{probe\_tt}}
+\index{probe\_tt@{probe\_tt}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{probe\_tt()}{probe\_tt()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a77ad50dc36b0caea031bd2ca985a40ab} 
+bool probe\+\_\+tt (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{\doxymbox{\hyperlink{struct_transp_entry}{Transp\+Entry}} \texorpdfstring{$\ast$}{*}}]{entry}{, }\item[{int}]{depth}{, }\item[{int}]{alpha}{, }\item[{int}]{beta}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{out\+Score}{}\end{DoxyParamCaption})}
+
+
+
+Checks if the current position is already stored in the transposition table. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em entry} & Pointer to the Transposition Table entry. \\
+\hline
+{\em depth} & The current search depth. \\
+\hline
+{\em alpha} & Lower bound of the search window. \\
+\hline
+{\em beta} & Upper bound of the search window. \\
+\hline
+{\em out\+Score} & Pointer to store the score retrieved from the table. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if a valid TT entry was found, false otherwise. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_aee9fec042f3a4711d11f995cbcca8f6d}\index{MoveEvaluation.h@{MoveEvaluation.h}!pst\_lazy\_evaluation@{pst\_lazy\_evaluation}}
+\index{pst\_lazy\_evaluation@{pst\_lazy\_evaluation}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{pst\_lazy\_evaluation()}{pst\_lazy\_evaluation()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_aee9fec042f3a4711d11f995cbcca8f6d} 
+int pst\+\_\+lazy\+\_\+evaluation (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{no\+Pawn\+Eval}{}\end{DoxyParamCaption})}
+
+
+
+Evaluates current position based on piece position, using piece-\/square tables. 
+
+
+\begin{DoxyItemize}
+\item Also considers endgame phase for king evaluation. From white\textquotesingle{}s perspective. Does not consider mobility scores, as they are heavier, so it\textquotesingle{}s done only if the position is close to beta. Old, replaced with Pe\+STO evaluation.
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em no\+Pawn\+Eval} & The material evaluation without pawns (used to check endgame phase). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The static piece-\/square evaluation score. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_aecb7f90847f260f8de3890db173acb5d}\index{MoveEvaluation.h@{MoveEvaluation.h}!quiescence\_search@{quiescence\_search}}
+\index{quiescence\_search@{quiescence\_search}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{quiescence\_search()}{quiescence\_search()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_aecb7f90847f260f8de3890db173acb5d} 
+int quiescence\+\_\+search (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{alpha}{, }\item[{int}]{beta}{, }\item[{int}]{ply}{}\end{DoxyParamCaption})}
+
+
+
+At the end of the main search, it runs a deeper one until there are no more captures/\+promotions/\+enpassants. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em alpha} & Lower bound of the search window. \\
+\hline
+{\em beta} & Upper bound of the search window. \\
+\hline
+{\em ply} & The current ply from the root. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The quiescence evaluation score. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_a5182780a1a3a81cc238d31ec637dae73}\index{MoveEvaluation.h@{MoveEvaluation.h}!search\_pawn\_file@{search\_pawn\_file}}
+\index{search\_pawn\_file@{search\_pawn\_file}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{search\_pawn\_file()}{search\_pawn\_file()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a5182780a1a3a81cc238d31ec637dae73} 
+void search\+\_\+pawn\+\_\+file (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{i}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{score}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{w\+Pawn}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{b\+Pawn}{}\end{DoxyParamCaption})}
+
+
+
+Evaluates the pawn structure, by checking each file for doubled, isolated and passed pawns. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em i} & The file index to search (0-\/7). \\
+\hline
+{\em score} & Pointer to the score variable to update. \\
+\hline
+{\em w\+Pawn} & Bitboard representing white pawns. \\
+\hline
+{\em b\+Pawn} & Bitboard representing black pawns. \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}\Hypertarget{_move_evaluation_8h_a03c49c498aede5147f6df9d1cbba1b5c}\index{MoveEvaluation.h@{MoveEvaluation.h}!unmake\_null\_move@{unmake\_null\_move}}
+\index{unmake\_null\_move@{unmake\_null\_move}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{unmake\_null\_move()}{unmake\_null\_move()}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a03c49c498aede5147f6df9d1cbba1b5c} 
+void unmake\+\_\+null\+\_\+move (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{curr\+Depth}{}\end{DoxyParamCaption})}
+
+
+
+Resets the board to the state before the null move, by switching back the side to move and decreasing the ply. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em curr\+Depth} & The current search depth. \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}
+
+\label{doc-var-members}
+\Hypertarget{_move_evaluation_8h_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{_move_evaluation_8h_ae06a1340c63878966907ee5494b645ed}\index{MoveEvaluation.h@{MoveEvaluation.h}!adjacentFileMasks@{adjacentFileMasks}}
+\index{adjacentFileMasks@{adjacentFileMasks}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{adjacentFileMasks}{adjacentFileMasks}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_ae06a1340c63878966907ee5494b645ed} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} adjacent\+File\+Masks\+[8]\+\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Precalculated masks for adjacent files of a specific file (for pawn evaluation). 
+
+\Hypertarget{_move_evaluation_8h_a4b9b946422d12741fc4387a1be0fb5ce}\index{MoveEvaluation.h@{MoveEvaluation.h}!fileMasks@{fileMasks}}
+\index{fileMasks@{fileMasks}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{fileMasks}{fileMasks}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_a4b9b946422d12741fc4387a1be0fb5ce} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} file\+Masks\+[8]\+\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Precalculated masks for each file. 
+
+\Hypertarget{_move_evaluation_8h_ad5e1afedde35056c3e2efd800bb837d4}\index{MoveEvaluation.h@{MoveEvaluation.h}!lmrTable@{lmrTable}}
+\index{lmrTable@{lmrTable}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{lmrTable}{lmrTable}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_ad5e1afedde35056c3e2efd800bb837d4} 
+int lmr\+Table\+[64]\+\+[256]\+\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Precalculated table for late move reductions, to avoid log calculations at runtime. 
+
+\Hypertarget{_move_evaluation_8h_ac1e6614eeb6fadbaaacd4140eb0ea5db}\index{MoveEvaluation.h@{MoveEvaluation.h}!rowMasks@{rowMasks}}
+\index{rowMasks@{rowMasks}!MoveEvaluation.h@{MoveEvaluation.h}}
+\doxysubsubsection{\texorpdfstring{rowMasks}{rowMasks}}
+{\footnotesize\ttfamily \label{_move_evaluation_8h_ac1e6614eeb6fadbaaacd4140eb0ea5db} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} row\+Masks\+[8]\+\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Precalculated masks for each row. 
+

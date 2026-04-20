@@ -1,0 +1,136 @@
+\doxysection{include/\+\+Calc\+Functions.h File Reference}
+\hypertarget{_calc_functions_8h}{}\label{_calc_functions_8h}\index{include/CalcFunctions.h@{include/CalcFunctions.h}}
+
+
+Math utilities and index conversion calculations for the board.  
+
+
+{\ttfamily \+\#include "{}Headers.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{_calc_functions_8h_af2b093b454067e51cff5e6607588f8a5}{index\+\_\+from\+\_\+rank\+\_\+file}} (const int rank, const int file, int \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em LSF (least significant file) translation to index. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_calc_functions_8h_a19e95345edc02b1de7b447def1c4e40f}{rank\+\_\+file\+\_\+from\+\_\+index}} (const int index, int \texorpdfstring{$\ast$}{*}rank, int \texorpdfstring{$\ast$}{*}file)
+\begin{DoxyCompactList}\small\item\em LSF little endian rank and file translation from an index. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_calc_functions_8h_a1eb44e6bd95de17bb5f42816a4c849f1}{add\+\_\+piece\+\_\+to\+\_\+board}} (const \doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type}} piece, const \doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color}} color, int index, \doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board)
+\begin{DoxyCompactList}\small\item\em Adds a piece to ALL relevant bitboards. Checks for valid index input. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_calc_functions_8h_aa8e3a78b29e549dcf2bc863b061b8fa3}{chebyshev\+\_\+distance}} (int square1, int square2)
+\begin{DoxyCompactList}\small\item\em Calculates the Chebyshev distance between two squares. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_calc_functions_8h_ad73e6ead15793d8506b17282c8236164}{manhattan\+\_\+distance}} (int square1, int square2)
+\begin{DoxyCompactList}\small\item\em Calculates the Manhattan distance between two squares. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Math utilities and index conversion calculations for the board. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{_calc_functions_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_calc_functions_8h_a1eb44e6bd95de17bb5f42816a4c849f1}\index{CalcFunctions.h@{CalcFunctions.h}!add\_piece\_to\_board@{add\_piece\_to\_board}}
+\index{add\_piece\_to\_board@{add\_piece\_to\_board}!CalcFunctions.h@{CalcFunctions.h}}
+\doxysubsubsection{\texorpdfstring{add\_piece\_to\_board()}{add\_piece\_to\_board()}}
+{\footnotesize\ttfamily \label{_calc_functions_8h_a1eb44e6bd95de17bb5f42816a4c849f1} 
+void add\+\_\+piece\+\_\+to\+\_\+board (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type}}}]{piece}{, }\item[{const \doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color}}}]{color}{, }\item[{int}]{index}{, }\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{}\end{DoxyParamCaption})}
+
+
+
+Adds a piece to ALL relevant bitboards. Checks for valid index input. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em piece} & The \doxylink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type} to add. \\
+\hline
+{\em color} & The \doxylink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color} of the piece. \\
+\hline
+{\em index} & The square index (0-\/63) where the piece will be placed. \\
+\hline
+{\em board} & Pointer to the board state to update. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_calc_functions_8h_aa8e3a78b29e549dcf2bc863b061b8fa3}\index{CalcFunctions.h@{CalcFunctions.h}!chebyshev\_distance@{chebyshev\_distance}}
+\index{chebyshev\_distance@{chebyshev\_distance}!CalcFunctions.h@{CalcFunctions.h}}
+\doxysubsubsection{\texorpdfstring{chebyshev\_distance()}{chebyshev\_distance()}}
+{\footnotesize\ttfamily \label{_calc_functions_8h_aa8e3a78b29e549dcf2bc863b061b8fa3} 
+int chebyshev\+\_\+distance (\begin{DoxyParamCaption}\item[{int}]{square1}{, }\item[{int}]{square2}{}\end{DoxyParamCaption})}
+
+
+
+Calculates the Chebyshev distance between two squares. 
+
+\begin{DoxyNote}{Note}
+Used for king move generation and evaluation. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em square1} & The first square index (0-\/63). \\
+\hline
+{\em square2} & The second square index (0-\/63). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The Chebyshev distance (maximum of file difference and rank difference). 
+\end{DoxyReturn}
+\Hypertarget{_calc_functions_8h_af2b093b454067e51cff5e6607588f8a5}\index{CalcFunctions.h@{CalcFunctions.h}!index\_from\_rank\_file@{index\_from\_rank\_file}}
+\index{index\_from\_rank\_file@{index\_from\_rank\_file}!CalcFunctions.h@{CalcFunctions.h}}
+\doxysubsubsection{\texorpdfstring{index\_from\_rank\_file()}{index\_from\_rank\_file()}}
+{\footnotesize\ttfamily \label{_calc_functions_8h_af2b093b454067e51cff5e6607588f8a5} 
+void index\+\_\+from\+\_\+rank\+\_\+file (\begin{DoxyParamCaption}\item[{const int}]{rank}{, }\item[{const int}]{file}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{index}{}\end{DoxyParamCaption})}
+
+
+
+LSF (least significant file) translation to index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rank} & The rank index. \\
+\hline
+{\em file} & The file index. \\
+\hline
+{\em index} & Pointer to the integer where the resulting square index (0-\/63) will be stored. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_calc_functions_8h_ad73e6ead15793d8506b17282c8236164}\index{CalcFunctions.h@{CalcFunctions.h}!manhattan\_distance@{manhattan\_distance}}
+\index{manhattan\_distance@{manhattan\_distance}!CalcFunctions.h@{CalcFunctions.h}}
+\doxysubsubsection{\texorpdfstring{manhattan\_distance()}{manhattan\_distance()}}
+{\footnotesize\ttfamily \label{_calc_functions_8h_ad73e6ead15793d8506b17282c8236164} 
+int manhattan\+\_\+distance (\begin{DoxyParamCaption}\item[{int}]{square1}{, }\item[{int}]{square2}{}\end{DoxyParamCaption})}
+
+
+
+Calculates the Manhattan distance between two squares. 
+
+\begin{DoxyNote}{Note}
+Used for evaluation logic. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em square1} & The first square index (0-\/63). \\
+\hline
+{\em square2} & The second square index (0-\/63). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The Manhattan distance (sum of file difference and rank difference). 
+\end{DoxyReturn}
+\Hypertarget{_calc_functions_8h_a19e95345edc02b1de7b447def1c4e40f}\index{CalcFunctions.h@{CalcFunctions.h}!rank\_file\_from\_index@{rank\_file\_from\_index}}
+\index{rank\_file\_from\_index@{rank\_file\_from\_index}!CalcFunctions.h@{CalcFunctions.h}}
+\doxysubsubsection{\texorpdfstring{rank\_file\_from\_index()}{rank\_file\_from\_index()}}
+{\footnotesize\ttfamily \label{_calc_functions_8h_a19e95345edc02b1de7b447def1c4e40f} 
+void rank\+\_\+file\+\_\+from\+\_\+index (\begin{DoxyParamCaption}\item[{const int}]{index}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{rank}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{file}{}\end{DoxyParamCaption})}
+
+
+
+LSF little endian rank and file translation from an index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The square index (0-\/63). \\
+\hline
+{\em rank} & Pointer to the integer where the resulting rank will be stored. \\
+\hline
+{\em file} & Pointer to the integer where the resulting file will be stored. \\
+\hline
+\end{DoxyParams}

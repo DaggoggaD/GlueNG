@@ -1,0 +1,131 @@
+\doxysection{include/\+\+Move\+Generation.h File Reference}
+\hypertarget{_move_generation_8h}{}\label{_move_generation_8h}\index{include/MoveGeneration.h@{include/MoveGeneration.h}}
+
+
+Function declarations for making/\+unmaking moves and generating legal moves.  
+
+
+{\ttfamily \+\#include "{}Headers.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{_move_generation_8h_a0f4969f28fa42b7a40869675a432ab4b}{unmake\+\_\+move}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int move, int curr\+Depth)
+\begin{DoxyCompactList}\small\item\em Resets board status, bitboards and flags. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_move_generation_8h_a38a5c605997e417d72a3ae8afa32ec4f}{make\+\_\+move}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int move, \doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color}} side\+To\+Move, int curr\+Depth)
+\begin{DoxyCompactList}\small\item\em Makes the specified move. Updates all bitboards/\+arrays inside the board struct. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_move_generation_8h_a31396b8dbe3073f56cb738ee8041b12d}{perft}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int depth)
+\begin{DoxyCompactList}\small\item\em Performance test. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_move_generation_8h_a4803641e9e7e2ecaa9f9397ece1278d1}{perft\+\_\+divide}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int depth)
+\begin{DoxyCompactList}\small\item\em Same as perft, with specific info on any square. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_move_generation_8h_a0daa9589443aedd8090ca81a296764d1}{generate\+\_\+legal\+\_\+moves}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, \doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}list)
+\begin{DoxyCompactList}\small\item\em Generates all pseudo legal moves and filters out the illegal ones. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Function declarations for making/\+unmaking moves and generating legal moves. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{_move_generation_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_move_generation_8h_a0daa9589443aedd8090ca81a296764d1}\index{MoveGeneration.h@{MoveGeneration.h}!generate\_legal\_moves@{generate\_legal\_moves}}
+\index{generate\_legal\_moves@{generate\_legal\_moves}!MoveGeneration.h@{MoveGeneration.h}}
+\doxysubsubsection{\texorpdfstring{generate\_legal\_moves()}{generate\_legal\_moves()}}
+{\footnotesize\ttfamily \label{_move_generation_8h_a0daa9589443aedd8090ca81a296764d1} 
+void generate\+\_\+legal\+\_\+moves (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{\doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}}]{list}{}\end{DoxyParamCaption})}
+
+
+
+Generates all pseudo legal moves and filters out the illegal ones. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em list} & Pointer to the \doxylink{struct_move_list}{Move\+List} to fill with legal moves. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_move_generation_8h_a38a5c605997e417d72a3ae8afa32ec4f}\index{MoveGeneration.h@{MoveGeneration.h}!make\_move@{make\_move}}
+\index{make\_move@{make\_move}!MoveGeneration.h@{MoveGeneration.h}}
+\doxysubsubsection{\texorpdfstring{make\_move()}{make\_move()}}
+{\footnotesize\ttfamily \label{_move_generation_8h_a38a5c605997e417d72a3ae8afa32ec4f} 
+void make\+\_\+move (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{move}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color}}}]{side\+To\+Move}{, }\item[{int}]{curr\+Depth}{}\end{DoxyParamCaption})}
+
+
+
+Makes the specified move. Updates all bitboards/\+arrays inside the board struct. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em move} & The packed move to make. \\
+\hline
+{\em side\+To\+Move} & The color making the move. \\
+\hline
+{\em curr\+Depth} & The current search depth. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_move_generation_8h_a31396b8dbe3073f56cb738ee8041b12d}\index{MoveGeneration.h@{MoveGeneration.h}!perft@{perft}}
+\index{perft@{perft}!MoveGeneration.h@{MoveGeneration.h}}
+\doxysubsubsection{\texorpdfstring{perft()}{perft()}}
+{\footnotesize\ttfamily \label{_move_generation_8h_a31396b8dbe3073f56cb738ee8041b12d} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} perft (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{depth}{}\end{DoxyParamCaption})}
+
+
+
+Performance test. 
+
+\begin{DoxyNote}{Note}
+Verified to depth 9. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em depth} & The target depth to reach. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The total number of leaf nodes (positions) calculated. 
+\end{DoxyReturn}
+\Hypertarget{_move_generation_8h_a4803641e9e7e2ecaa9f9397ece1278d1}\index{MoveGeneration.h@{MoveGeneration.h}!perft\_divide@{perft\_divide}}
+\index{perft\_divide@{perft\_divide}!MoveGeneration.h@{MoveGeneration.h}}
+\doxysubsubsection{\texorpdfstring{perft\_divide()}{perft\_divide()}}
+{\footnotesize\ttfamily \label{_move_generation_8h_a4803641e9e7e2ecaa9f9397ece1278d1} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} perft\+\_\+divide (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{depth}{}\end{DoxyParamCaption})}
+
+
+
+Same as perft, with specific info on any square. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em depth} & The target depth to reach. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The total number of leaf nodes calculated. 
+\end{DoxyReturn}
+\Hypertarget{_move_generation_8h_a0f4969f28fa42b7a40869675a432ab4b}\index{MoveGeneration.h@{MoveGeneration.h}!unmake\_move@{unmake\_move}}
+\index{unmake\_move@{unmake\_move}!MoveGeneration.h@{MoveGeneration.h}}
+\doxysubsubsection{\texorpdfstring{unmake\_move()}{unmake\_move()}}
+{\footnotesize\ttfamily \label{_move_generation_8h_a0f4969f28fa42b7a40869675a432ab4b} 
+void unmake\+\_\+move (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{move}{, }\item[{int}]{curr\+Depth}{}\end{DoxyParamCaption})}
+
+
+
+Resets board status, bitboards and flags. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board. \\
+\hline
+{\em move} & The packed move to unmake. \\
+\hline
+{\em curr\+Depth} & The current search depth. \\
+\hline
+\end{DoxyParams}

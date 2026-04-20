@@ -1,0 +1,60 @@
+\doxysection{include/\+\+Chess\+Structs.h File Reference}
+\hypertarget{_chess_structs_8h}{}\label{_chess_structs_8h}\index{include/ChessStructs.h@{include/ChessStructs.h}}
+
+
+Definitions for the core data structures used to represent the chessboard and game state.  
+
+
+{\ttfamily \+\#include "{}Headers.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_undo_history}{Undo\+History}}
+\begin{DoxyCompactList}\small\item\em Stores irreversible information necessary to completely unmake a move. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_board}{Board}}
+\begin{DoxyCompactList}\small\item\em Represents the complete state of a chess game. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{_chess_structs_8h_ac3e55d2faad46193d05229ed8cd236cc}{Piece\+TypeN}}~6
+\item 
+\+\#define \doxymbox{\hyperlink{_chess_structs_8h_acb6e5a3cb3d650efcbb4dff01b8dc597}{PlayerN}}~2
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct Undo\+History \doxymbox{\hyperlink{_chess_structs_8h_a267f87ce85e45837fa4a3477c5d3ecca}{Undo\+History}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Definitions for the core data structures used to represent the chessboard and game state. 
+
+
+
+\label{doc-define-members}
+\Hypertarget{_chess_structs_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_chess_structs_8h_ac3e55d2faad46193d05229ed8cd236cc}\index{ChessStructs.h@{ChessStructs.h}!PieceTypeN@{PieceTypeN}}
+\index{PieceTypeN@{PieceTypeN}!ChessStructs.h@{ChessStructs.h}}
+\doxysubsubsection{\texorpdfstring{PieceTypeN}{PieceTypeN}}
+{\footnotesize\ttfamily \label{_chess_structs_8h_ac3e55d2faad46193d05229ed8cd236cc} 
+\+\#define Piece\+TypeN~6}
+
+\Hypertarget{_chess_structs_8h_acb6e5a3cb3d650efcbb4dff01b8dc597}\index{ChessStructs.h@{ChessStructs.h}!PlayerN@{PlayerN}}
+\index{PlayerN@{PlayerN}!ChessStructs.h@{ChessStructs.h}}
+\doxysubsubsection{\texorpdfstring{PlayerN}{PlayerN}}
+{\footnotesize\ttfamily \label{_chess_structs_8h_acb6e5a3cb3d650efcbb4dff01b8dc597} 
+\+\#define PlayerN~2}
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{_chess_structs_8h_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{_chess_structs_8h_a267f87ce85e45837fa4a3477c5d3ecca}\index{ChessStructs.h@{ChessStructs.h}!UndoHistory@{UndoHistory}}
+\index{UndoHistory@{UndoHistory}!ChessStructs.h@{ChessStructs.h}}
+\doxysubsubsection{\texorpdfstring{UndoHistory}{UndoHistory}}
+{\footnotesize\ttfamily \label{_chess_structs_8h_a267f87ce85e45837fa4a3477c5d3ecca} 
+typedef struct Undo\+History Undo\+History}
+

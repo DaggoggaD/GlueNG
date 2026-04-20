@@ -1,0 +1,336 @@
+\doxysection{include/\+\+Pseudo\+Moves\+Calc.h File Reference}
+\hypertarget{_pseudo_moves_calc_8h}{}\label{_pseudo_moves_calc_8h}\index{include/PseudoMovesCalc.h@{include/PseudoMovesCalc.h}}
+
+
+This file contains the function declarations for calculating pseudo legal moves in the chess engine.  
+
+
+{\ttfamily \+\#include "{}Headers.\+h"{}}\newline
+{\ttfamily \+\#include $<$assert.\+h$>$}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_move_list}{Move\+List}}
+\begin{DoxyCompactList}\small\item\em Structure to hold a list of generated moves and their corresponding scores. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{Indent}\textbf{ Move Bit-\/\+Packing Macros}\par
+{\em Macros to extract move information from the 32 bit packed move representation.
+
+
+\begin{DoxyItemize}
+\item Bit packing structure:\+
+\item 0 -\/ 5:\+ from\+Square (0-\/63)
+\item 6 -\/ 11:\+ to\+Square (0-\/63)
+\item 12 -\/ 15:\+ piece type (0-\/5)
+\item 16 -\/ 19:\+ promotion (0 = no promotion, otherwise promoted \doxylink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type})
+\item 20:\+ en\+Passant (0 = not en\+Passant move, 1 = en\+Passant move) 
+\end{DoxyItemize}}\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{_pseudo_moves_calc_8h_a9777dd6c48e84f2a723cb8c68295edc5}{GET\+\_\+\+MOVE\+\_\+\+SOURCE}}(move)
+\item 
+\+\#define \doxymbox{\hyperlink{_pseudo_moves_calc_8h_af3ffd575c3c4eac502ebbe62714ffd6b}{GET\+\_\+\+MOVE\+\_\+\+TARGET}}(move)
+\item 
+\+\#define \doxymbox{\hyperlink{_pseudo_moves_calc_8h_a98c41d5678ba480648b49fdcb1665d90}{GET\+\_\+\+MOVE\+\_\+\+PIECE}}(move)
+\item 
+\+\#define \doxymbox{\hyperlink{_pseudo_moves_calc_8h_a5034f9562783bcb9c37422b6510765cf}{GET\+\_\+\+PROMOTION\+\_\+\+PIECE}}(move)
+\item 
+\+\#define \doxymbox{\hyperlink{_pseudo_moves_calc_8h_ac7e8c69f55be0ee265743c1ea287dee2}{GET\+\_\+\+MOVE\+\_\+\+EN\+\_\+\+PASSANT}}(move)
+\end{DoxyCompactItemize}
+\end{Indent}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct Move\+List \doxymbox{\hyperlink{_pseudo_moves_calc_8h_a99bb1620fba801587287bf41b03d66ee}{Move\+List}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8h_ae1dfe7affa869ee9fae37f523c89f2c3}{get\+\_\+knight\+\_\+pseudo\+\_\+moves}} (int square, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} own\+Pieces)
+\begin{DoxyCompactList}\small\item\em Gets the pseudo legal moves for a Knight. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8h_a6f18116b3524eac612c1e649fb0816c0}{get\+\_\+king\+\_\+pseudo\+\_\+moves}} (int square, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} own\+Pieces)
+\begin{DoxyCompactList}\small\item\em Gets the pseudo legal moves for a King. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8h_ae8629c204b57fa4ee09d9f360f431f7e}{get\+\_\+rook\+\_\+pseudo\+\_\+moves}} (int square, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} blockers, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} own\+Pieces)
+\begin{DoxyCompactList}\small\item\em Gets the pseudo legal moves for a Rook. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8h_a4fd2e8db3e249a1d3ef94ee668faaba4}{get\+\_\+bishop\+\_\+pseudo\+\_\+moves}} (int square, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} blockers, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} own\+Pieces)
+\begin{DoxyCompactList}\small\item\em Gets the pseudo legal moves for a Bishop. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8h_ae319ddb02ce55e3a81f192ba48289779}{get\+\_\+queen\+\_\+pseudo\+\_\+moves}} (int square, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} blockers, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} own\+Pieces)
+\begin{DoxyCompactList}\small\item\em Gets the pseudo legal moves for a Queen. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_pseudo_moves_calc_8h_aff972910d92dcfbc5d4c3d44236a0950}{add\+\_\+move\+\_\+to\+\_\+list}} (\doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}list, int from\+Square, int to\+Square, \doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type}} piece, \doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type}} promoted\+\_\+to, bool en\+Passant)
+\begin{DoxyCompactList}\small\item\em Encodes a move using bit packing and adds it to the \doxylink{struct_move_list}{Move\+List}. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_pseudo_moves_calc_8h_a1cd6ffe0a549f1320ec06855c0a1a88e}{white\+\_\+generate\+\_\+pseudo\+\_\+moves}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, \doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}list)
+\begin{DoxyCompactList}\small\item\em Generates all possible pseudo legal moves for White. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_pseudo_moves_calc_8h_a2bcfbddaf13e19204e03684f1d087fb4}{black\+\_\+generate\+\_\+pseudo\+\_\+moves}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, \doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}list)
+\begin{DoxyCompactList}\small\item\em Generates all possible pseudo legal moves for Black. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_pseudo_moves_calc_8h_ac88614793dbd01f7a75feb8fa278c6e2}{is\+\_\+square\+\_\+attacked}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int square, \doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color}} attacking\+Side)
+\begin{DoxyCompactList}\small\item\em Checks if a specific square is attacked by any piece of the given color. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file contains the function declarations for calculating pseudo legal moves in the chess engine. 
+
+
+\begin{DoxyItemize}
+\item It includes functions to generate pseudo-\/legal moves for each piece type, as well as a function to check if a square is attacked by any pieces of a given color. The moves are represented in a compact format using bit packing, and the file also defines macros to extract move information from the packed move representation. 
+\end{DoxyItemize}
+
+\label{doc-define-members}
+\Hypertarget{_pseudo_moves_calc_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_pseudo_moves_calc_8h_ac7e8c69f55be0ee265743c1ea287dee2}\index{PseudoMovesCalc.h@{PseudoMovesCalc.h}!GET\_MOVE\_EN\_PASSANT@{GET\_MOVE\_EN\_PASSANT}}
+\index{GET\_MOVE\_EN\_PASSANT@{GET\_MOVE\_EN\_PASSANT}!PseudoMovesCalc.h@{PseudoMovesCalc.h}}
+\doxysubsubsection{\texorpdfstring{GET\_MOVE\_EN\_PASSANT}{GET\_MOVE\_EN\_PASSANT}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8h_ac7e8c69f55be0ee265743c1ea287dee2} 
+\+\#define GET\+\_\+\+MOVE\+\_\+\+EN\+\_\+\+PASSANT(\begin{DoxyParamCaption}\item[{}]{move}{}\end{DoxyParamCaption})}
+
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(((move)\ >>\ 20)\ \&\ 0x1)}
+
+\end{DoxyCode}
+\Hypertarget{_pseudo_moves_calc_8h_a98c41d5678ba480648b49fdcb1665d90}\index{PseudoMovesCalc.h@{PseudoMovesCalc.h}!GET\_MOVE\_PIECE@{GET\_MOVE\_PIECE}}
+\index{GET\_MOVE\_PIECE@{GET\_MOVE\_PIECE}!PseudoMovesCalc.h@{PseudoMovesCalc.h}}
+\doxysubsubsection{\texorpdfstring{GET\_MOVE\_PIECE}{GET\_MOVE\_PIECE}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8h_a98c41d5678ba480648b49fdcb1665d90} 
+\+\#define GET\+\_\+\+MOVE\+\_\+\+PIECE(\begin{DoxyParamCaption}\item[{}]{move}{}\end{DoxyParamCaption})}
+
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(((move)\ >>\ 12)\ \&\ 0xF)}
+
+\end{DoxyCode}
+\Hypertarget{_pseudo_moves_calc_8h_a9777dd6c48e84f2a723cb8c68295edc5}\index{PseudoMovesCalc.h@{PseudoMovesCalc.h}!GET\_MOVE\_SOURCE@{GET\_MOVE\_SOURCE}}
+\index{GET\_MOVE\_SOURCE@{GET\_MOVE\_SOURCE}!PseudoMovesCalc.h@{PseudoMovesCalc.h}}
+\doxysubsubsection{\texorpdfstring{GET\_MOVE\_SOURCE}{GET\_MOVE\_SOURCE}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8h_a9777dd6c48e84f2a723cb8c68295edc5} 
+\+\#define GET\+\_\+\+MOVE\+\_\+\+SOURCE(\begin{DoxyParamCaption}\item[{}]{move}{}\end{DoxyParamCaption})}
+
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((move)\ \&\ 0x3F)}
+
+\end{DoxyCode}
+\Hypertarget{_pseudo_moves_calc_8h_af3ffd575c3c4eac502ebbe62714ffd6b}\index{PseudoMovesCalc.h@{PseudoMovesCalc.h}!GET\_MOVE\_TARGET@{GET\_MOVE\_TARGET}}
+\index{GET\_MOVE\_TARGET@{GET\_MOVE\_TARGET}!PseudoMovesCalc.h@{PseudoMovesCalc.h}}
+\doxysubsubsection{\texorpdfstring{GET\_MOVE\_TARGET}{GET\_MOVE\_TARGET}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8h_af3ffd575c3c4eac502ebbe62714ffd6b} 
+\+\#define GET\+\_\+\+MOVE\+\_\+\+TARGET(\begin{DoxyParamCaption}\item[{}]{move}{}\end{DoxyParamCaption})}
+
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(((move)\ >>\ 6)\ \&\ 0x3F)}
+
+\end{DoxyCode}
+\Hypertarget{_pseudo_moves_calc_8h_a5034f9562783bcb9c37422b6510765cf}\index{PseudoMovesCalc.h@{PseudoMovesCalc.h}!GET\_PROMOTION\_PIECE@{GET\_PROMOTION\_PIECE}}
+\index{GET\_PROMOTION\_PIECE@{GET\_PROMOTION\_PIECE}!PseudoMovesCalc.h@{PseudoMovesCalc.h}}
+\doxysubsubsection{\texorpdfstring{GET\_PROMOTION\_PIECE}{GET\_PROMOTION\_PIECE}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8h_a5034f9562783bcb9c37422b6510765cf} 
+\+\#define GET\+\_\+\+PROMOTION\+\_\+\+PIECE(\begin{DoxyParamCaption}\item[{}]{move}{}\end{DoxyParamCaption})}
+
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(((move)\ >>\ 16)\ \&\ 0xF)}
+
+\end{DoxyCode}
+
+
+\label{doc-typedef-members}
+\Hypertarget{_pseudo_moves_calc_8h_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{_pseudo_moves_calc_8h_a99bb1620fba801587287bf41b03d66ee}\index{PseudoMovesCalc.h@{PseudoMovesCalc.h}!MoveList@{MoveList}}
+\index{MoveList@{MoveList}!PseudoMovesCalc.h@{PseudoMovesCalc.h}}
+\doxysubsubsection{\texorpdfstring{MoveList}{MoveList}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8h_a99bb1620fba801587287bf41b03d66ee} 
+typedef struct Move\+List Move\+List}
+
+
+
+\label{doc-func-members}
+\Hypertarget{_pseudo_moves_calc_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_pseudo_moves_calc_8h_aff972910d92dcfbc5d4c3d44236a0950}\index{PseudoMovesCalc.h@{PseudoMovesCalc.h}!add\_move\_to\_list@{add\_move\_to\_list}}
+\index{add\_move\_to\_list@{add\_move\_to\_list}!PseudoMovesCalc.h@{PseudoMovesCalc.h}}
+\doxysubsubsection{\texorpdfstring{add\_move\_to\_list()}{add\_move\_to\_list()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8h_aff972910d92dcfbc5d4c3d44236a0950} 
+void add\+\_\+move\+\_\+to\+\_\+list (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{int}]{from\+Square}{, }\item[{int}]{to\+Square}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type}}}]{piece}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type}}}]{promoted\+\_\+to}{, }\item[{bool}]{en\+Passant}{}\end{DoxyParamCaption})}
+
+
+
+Encodes a move using bit packing and adds it to the \doxylink{struct_move_list}{Move\+List}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & Pointer to the \doxylink{struct_move_list}{Move\+List} where the move will be added. \\
+\hline
+{\em from\+Square} & The starting square index (0-\/63). \\
+\hline
+{\em to\+Square} & The destination square index (0-\/63). \\
+\hline
+{\em piece} & The type of piece being moved. \\
+\hline
+{\em promoted\+\_\+to} & The piece type to promote to (0 if not a promotion). \\
+\hline
+{\em en\+Passant} & Boolean indicating if the move is an en-\/passant capture. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_pseudo_moves_calc_8h_a2bcfbddaf13e19204e03684f1d087fb4}\index{PseudoMovesCalc.h@{PseudoMovesCalc.h}!black\_generate\_pseudo\_moves@{black\_generate\_pseudo\_moves}}
+\index{black\_generate\_pseudo\_moves@{black\_generate\_pseudo\_moves}!PseudoMovesCalc.h@{PseudoMovesCalc.h}}
+\doxysubsubsection{\texorpdfstring{black\_generate\_pseudo\_moves()}{black\_generate\_pseudo\_moves()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8h_a2bcfbddaf13e19204e03684f1d087fb4} 
+void black\+\_\+generate\+\_\+pseudo\+\_\+moves (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{\doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}}]{list}{}\end{DoxyParamCaption})}
+
+
+
+Generates all possible pseudo legal moves for Black. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board state. \\
+\hline
+{\em list} & Pointer to the \doxylink{struct_move_list}{Move\+List} to populate. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_pseudo_moves_calc_8h_a4fd2e8db3e249a1d3ef94ee668faaba4}\index{PseudoMovesCalc.h@{PseudoMovesCalc.h}!get\_bishop\_pseudo\_moves@{get\_bishop\_pseudo\_moves}}
+\index{get\_bishop\_pseudo\_moves@{get\_bishop\_pseudo\_moves}!PseudoMovesCalc.h@{PseudoMovesCalc.h}}
+\doxysubsubsection{\texorpdfstring{get\_bishop\_pseudo\_moves()}{get\_bishop\_pseudo\_moves()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8h_a4fd2e8db3e249a1d3ef94ee668faaba4} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} get\+\_\+bishop\+\_\+pseudo\+\_\+moves (\begin{DoxyParamCaption}\item[{int}]{square}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{blockers}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{own\+Pieces}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the pseudo legal moves for a Bishop. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em square} & The square index (0-\/63) where the Bishop is located. \\
+\hline
+{\em blockers} & A bitboard representing all pieces on the board (both colors). \\
+\hline
+{\em own\+Pieces} & A bitboard representing all pieces of the moving side. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A bitboard with all valid target squares for the Bishop. 
+\end{DoxyReturn}
+\Hypertarget{_pseudo_moves_calc_8h_a6f18116b3524eac612c1e649fb0816c0}\index{PseudoMovesCalc.h@{PseudoMovesCalc.h}!get\_king\_pseudo\_moves@{get\_king\_pseudo\_moves}}
+\index{get\_king\_pseudo\_moves@{get\_king\_pseudo\_moves}!PseudoMovesCalc.h@{PseudoMovesCalc.h}}
+\doxysubsubsection{\texorpdfstring{get\_king\_pseudo\_moves()}{get\_king\_pseudo\_moves()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8h_a6f18116b3524eac612c1e649fb0816c0} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} get\+\_\+king\+\_\+pseudo\+\_\+moves (\begin{DoxyParamCaption}\item[{int}]{square}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{own\+Pieces}{}\end{DoxyParamCaption})}
+
+
+
+Gets the pseudo legal moves for a King. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em square} & The square index (0-\/63) where the King is located. \\
+\hline
+{\em own\+Pieces} & A bitboard representing all pieces of the moving side. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A bitboard with all valid target squares for the King. 
+\end{DoxyReturn}
+\Hypertarget{_pseudo_moves_calc_8h_ae1dfe7affa869ee9fae37f523c89f2c3}\index{PseudoMovesCalc.h@{PseudoMovesCalc.h}!get\_knight\_pseudo\_moves@{get\_knight\_pseudo\_moves}}
+\index{get\_knight\_pseudo\_moves@{get\_knight\_pseudo\_moves}!PseudoMovesCalc.h@{PseudoMovesCalc.h}}
+\doxysubsubsection{\texorpdfstring{get\_knight\_pseudo\_moves()}{get\_knight\_pseudo\_moves()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8h_ae1dfe7affa869ee9fae37f523c89f2c3} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} get\+\_\+knight\+\_\+pseudo\+\_\+moves (\begin{DoxyParamCaption}\item[{int}]{square}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{own\+Pieces}{}\end{DoxyParamCaption})}
+
+
+
+Gets the pseudo legal moves for a Knight. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em square} & The square index (0-\/63) where the Knight is located. \\
+\hline
+{\em own\+Pieces} & A bitboard representing all pieces of the moving side. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A bitboard with all valid target squares for the Knight. 
+\end{DoxyReturn}
+\Hypertarget{_pseudo_moves_calc_8h_ae319ddb02ce55e3a81f192ba48289779}\index{PseudoMovesCalc.h@{PseudoMovesCalc.h}!get\_queen\_pseudo\_moves@{get\_queen\_pseudo\_moves}}
+\index{get\_queen\_pseudo\_moves@{get\_queen\_pseudo\_moves}!PseudoMovesCalc.h@{PseudoMovesCalc.h}}
+\doxysubsubsection{\texorpdfstring{get\_queen\_pseudo\_moves()}{get\_queen\_pseudo\_moves()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8h_ae319ddb02ce55e3a81f192ba48289779} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} get\+\_\+queen\+\_\+pseudo\+\_\+moves (\begin{DoxyParamCaption}\item[{int}]{square}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{blockers}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{own\+Pieces}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the pseudo legal moves for a Queen. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em square} & The square index (0-\/63) where the Queen is located. \\
+\hline
+{\em blockers} & A bitboard representing all pieces on the board (both colors). \\
+\hline
+{\em own\+Pieces} & A bitboard representing all pieces of the moving side. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A bitboard with all valid target squares for the Queen. 
+\end{DoxyReturn}
+\Hypertarget{_pseudo_moves_calc_8h_ae8629c204b57fa4ee09d9f360f431f7e}\index{PseudoMovesCalc.h@{PseudoMovesCalc.h}!get\_rook\_pseudo\_moves@{get\_rook\_pseudo\_moves}}
+\index{get\_rook\_pseudo\_moves@{get\_rook\_pseudo\_moves}!PseudoMovesCalc.h@{PseudoMovesCalc.h}}
+\doxysubsubsection{\texorpdfstring{get\_rook\_pseudo\_moves()}{get\_rook\_pseudo\_moves()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8h_ae8629c204b57fa4ee09d9f360f431f7e} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} get\+\_\+rook\+\_\+pseudo\+\_\+moves (\begin{DoxyParamCaption}\item[{int}]{square}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{blockers}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{own\+Pieces}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the pseudo legal moves for a Rook. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em square} & The square index (0-\/63) where the Rook is located. \\
+\hline
+{\em blockers} & A bitboard representing all pieces on the board (both colors). \\
+\hline
+{\em own\+Pieces} & A bitboard representing all pieces of the moving side. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A bitboard with all valid target squares for the Rook. 
+\end{DoxyReturn}
+\Hypertarget{_pseudo_moves_calc_8h_ac88614793dbd01f7a75feb8fa278c6e2}\index{PseudoMovesCalc.h@{PseudoMovesCalc.h}!is\_square\_attacked@{is\_square\_attacked}}
+\index{is\_square\_attacked@{is\_square\_attacked}!PseudoMovesCalc.h@{PseudoMovesCalc.h}}
+\doxysubsubsection{\texorpdfstring{is\_square\_attacked()}{is\_square\_attacked()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8h_ac88614793dbd01f7a75feb8fa278c6e2} 
+bool is\+\_\+square\+\_\+attacked (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{square}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color}}}]{attacking\+Side}{}\end{DoxyParamCaption})}
+
+
+
+Checks if a specific square is attacked by any piece of the given color. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board state. \\
+\hline
+{\em square} & The index of the square to check (0-\/63). \\
+\hline
+{\em attacking\+Side} & The color of the potential attackers. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the square is attacked by the specified side, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{_pseudo_moves_calc_8h_a1cd6ffe0a549f1320ec06855c0a1a88e}\index{PseudoMovesCalc.h@{PseudoMovesCalc.h}!white\_generate\_pseudo\_moves@{white\_generate\_pseudo\_moves}}
+\index{white\_generate\_pseudo\_moves@{white\_generate\_pseudo\_moves}!PseudoMovesCalc.h@{PseudoMovesCalc.h}}
+\doxysubsubsection{\texorpdfstring{white\_generate\_pseudo\_moves()}{white\_generate\_pseudo\_moves()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8h_a1cd6ffe0a549f1320ec06855c0a1a88e} 
+void white\+\_\+generate\+\_\+pseudo\+\_\+moves (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{\doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}}]{list}{}\end{DoxyParamCaption})}
+
+
+
+Generates all possible pseudo legal moves for White. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board state. \\
+\hline
+{\em list} & Pointer to the \doxylink{struct_move_list}{Move\+List} to populate. \\
+\hline
+\end{DoxyParams}

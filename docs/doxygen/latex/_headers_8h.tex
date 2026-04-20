@@ -1,0 +1,215 @@
+\doxysection{include/\+\+Headers.h File Reference}
+\hypertarget{_headers_8h}{}\label{_headers_8h}\index{include/Headers.h@{include/Headers.h}}
+
+
+Centralized header file containing game constants, evaluation weights and includes.  
+
+
+{\ttfamily \+\#include "{}Chess\+Definitions.\+h"{}}\newline
+{\ttfamily \+\#include "{}Chess\+Structs.\+h"{}}\newline
+{\ttfamily \+\#include "{}Fen\+Functions.\+h"{}}\newline
+{\ttfamily \+\#include "{}Debug.\+h"{}}\newline
+{\ttfamily \+\#include "{}Look\+Up\+Tables.\+h"{}}\newline
+{\ttfamily \+\#include "{}Magic\+Bitboards.\+h"{}}\newline
+{\ttfamily \+\#include "{}Pseudo\+Moves\+Calc.\+h"{}}\newline
+{\ttfamily \+\#include "{}Calc\+Functions.\+h"{}}\newline
+{\ttfamily \+\#include "{}Glue\+NG.\+h"{}}\newline
+{\ttfamily \+\#include "{}Move\+Generation.\+h"{}}\newline
+{\ttfamily \+\#include "{}Move\+Evaluation.\+h"{}}\newline
+{\ttfamily \+\#include "{}Pesto\+Tables.\+h"{}}\newline
+{\ttfamily \+\#include "{}Transp\+Tables.\+h"{}}\newline
+{\ttfamily \+\#include "{}UCI.\+h"{}}\newline
+{\ttfamily \+\#include $<$math.\+h$>$}\newline
+{\ttfamily \+\#include $<$string.\+h$>$}\newline
+{\ttfamily \+\#include $<$inttypes.\+h$>$}\newline
+{\ttfamily \+\#include $<$intrin.\+h$>$}\newline
+{\ttfamily \+\#include $<$time.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_af08ec37a8c99d747fb60fa15bc28678b}{\+\_\+\+CRT\+\_\+\+SECURE\+\_\+\+NO\+\_\+\+WARNINGS}}
+\end{DoxyCompactItemize}
+\begin{Indent}\textbf{ Game Constants}\par
+{\em Core limits and configuration parameters for the engine\textquotesingle{}s search and hash tables. }\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_a12c2040f25d8e3a7b9e1c2024c618cb6}{INF}}~1000000
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_ac7750c4fbf0872db681936cf75f39618}{EXTENSION\+\_\+\+DEEPNESS}}~16
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_aafd045f3232c051cc6b016faf73838b1}{MAX\+\_\+\+PLY}}~50
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_aff2f9f643149b87035310798f31a5b15}{MAX\+\_\+\+TURNS}}~100
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_a599ec0ea02fc3b85bf5c5acabba0780d}{STANDARD\+\_\+\+HASH\+\_\+\+SIZE\+\_\+\+MB}}~64
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_a018d9802b5537b3dbc89aef8d7eb0492}{BRD\+\_\+\+SIZE}}~64
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_abd3a30fc3788102c14b9de3b715172fb}{ASP\+\_\+\+WINDOW}}~50
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Evaluation Constants}\par
+{\em Weights and parameters used in the static evaluation function. }\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_a87e52386155d5fe3bc2e32cf15ae19e6}{MAX\+\_\+\+MATERIAL}}~6200
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_a7c21e3a7072519340d449e99809a6f9b}{END\+\_\+\+GAME\+\_\+\+SCORE}}~2000
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_a0df9558195b2eb056abbaf4fec8956ad}{LAZY\+\_\+\+EVAL\+\_\+\+MARGIN}}~150
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_a91d0141710084bd8e8ccbec86d2df51a}{KING\+\_\+\+BIAS\+\_\+\+SCORE}}~200
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_a86ed9d2be76106f30f4f320672085fca}{KING\+\_\+\+CLOSENESS\+\_\+\+BIAS}}~10
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_a84136bfe6f8a397aab90fcbd118851f6}{DOUBLED\+\_\+\+PAWN\+\_\+\+PENALTY}}~10
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_a812f65d6c991cb012206e57dae431004}{ISOLATED\+\_\+\+PAWN\+\_\+\+PENALTY}}~15
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_a3384a5a540cab162e2b292204d057a55}{PASSED\+\_\+\+PAWN\+\_\+\+BONUS}}~50
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_a3a08af895bb510cbcf7f0b94cd461373}{KNIGHT\+\_\+\+MOBILITY\+\_\+\+BONUS}}~4
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_acefe03bc0bf7ec762205a03c87c7a92e}{BISHOP\+\_\+\+MOBILITY\+\_\+\+BONUS}}~3
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_ade4a4422895b0d208e90f37b4a946721}{ROOK\+\_\+\+MOBILITY\+\_\+\+BONUS}}~1
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_a4d593e733166fbae00475893bb967042}{KING\+\_\+\+FILE\+\_\+\+OPEN\+\_\+\+PENALTY}}~50
+\item 
+\+\#define \doxymbox{\hyperlink{_headers_8h_a5cac9ec83415c3b71ad6d46916799d48}{KING\+\_\+\+ADJ\+\_\+\+OPEN\+\_\+\+PENALTY}}~30
+\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\doxysubsection{Detailed Description}
+Centralized header file containing game constants, evaluation weights and includes. 
+
+
+
+\label{doc-define-members}
+\Hypertarget{_headers_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_headers_8h_af08ec37a8c99d747fb60fa15bc28678b}\index{Headers.h@{Headers.h}!\_CRT\_SECURE\_NO\_WARNINGS@{\_CRT\_SECURE\_NO\_WARNINGS}}
+\index{\_CRT\_SECURE\_NO\_WARNINGS@{\_CRT\_SECURE\_NO\_WARNINGS}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{\_CRT\_SECURE\_NO\_WARNINGS}{\_CRT\_SECURE\_NO\_WARNINGS}}
+{\footnotesize\ttfamily \label{_headers_8h_af08ec37a8c99d747fb60fa15bc28678b} 
+\+\#define \+\_\+\+CRT\+\_\+\+SECURE\+\_\+\+NO\+\_\+\+WARNINGS}
+
+\Hypertarget{_headers_8h_abd3a30fc3788102c14b9de3b715172fb}\index{Headers.h@{Headers.h}!ASP\_WINDOW@{ASP\_WINDOW}}
+\index{ASP\_WINDOW@{ASP\_WINDOW}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{ASP\_WINDOW}{ASP\_WINDOW}}
+{\footnotesize\ttfamily \label{_headers_8h_abd3a30fc3788102c14b9de3b715172fb} 
+\+\#define ASP\+\_\+\+WINDOW~50}
+
+\Hypertarget{_headers_8h_acefe03bc0bf7ec762205a03c87c7a92e}\index{Headers.h@{Headers.h}!BISHOP\_MOBILITY\_BONUS@{BISHOP\_MOBILITY\_BONUS}}
+\index{BISHOP\_MOBILITY\_BONUS@{BISHOP\_MOBILITY\_BONUS}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{BISHOP\_MOBILITY\_BONUS}{BISHOP\_MOBILITY\_BONUS}}
+{\footnotesize\ttfamily \label{_headers_8h_acefe03bc0bf7ec762205a03c87c7a92e} 
+\+\#define BISHOP\+\_\+\+MOBILITY\+\_\+\+BONUS~3}
+
+\Hypertarget{_headers_8h_a018d9802b5537b3dbc89aef8d7eb0492}\index{Headers.h@{Headers.h}!BRD\_SIZE@{BRD\_SIZE}}
+\index{BRD\_SIZE@{BRD\_SIZE}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{BRD\_SIZE}{BRD\_SIZE}}
+{\footnotesize\ttfamily \label{_headers_8h_a018d9802b5537b3dbc89aef8d7eb0492} 
+\+\#define BRD\+\_\+\+SIZE~64}
+
+\Hypertarget{_headers_8h_a84136bfe6f8a397aab90fcbd118851f6}\index{Headers.h@{Headers.h}!DOUBLED\_PAWN\_PENALTY@{DOUBLED\_PAWN\_PENALTY}}
+\index{DOUBLED\_PAWN\_PENALTY@{DOUBLED\_PAWN\_PENALTY}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{DOUBLED\_PAWN\_PENALTY}{DOUBLED\_PAWN\_PENALTY}}
+{\footnotesize\ttfamily \label{_headers_8h_a84136bfe6f8a397aab90fcbd118851f6} 
+\+\#define DOUBLED\+\_\+\+PAWN\+\_\+\+PENALTY~10}
+
+\Hypertarget{_headers_8h_a7c21e3a7072519340d449e99809a6f9b}\index{Headers.h@{Headers.h}!END\_GAME\_SCORE@{END\_GAME\_SCORE}}
+\index{END\_GAME\_SCORE@{END\_GAME\_SCORE}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{END\_GAME\_SCORE}{END\_GAME\_SCORE}}
+{\footnotesize\ttfamily \label{_headers_8h_a7c21e3a7072519340d449e99809a6f9b} 
+\+\#define END\+\_\+\+GAME\+\_\+\+SCORE~2000}
+
+\Hypertarget{_headers_8h_ac7750c4fbf0872db681936cf75f39618}\index{Headers.h@{Headers.h}!EXTENSION\_DEEPNESS@{EXTENSION\_DEEPNESS}}
+\index{EXTENSION\_DEEPNESS@{EXTENSION\_DEEPNESS}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{EXTENSION\_DEEPNESS}{EXTENSION\_DEEPNESS}}
+{\footnotesize\ttfamily \label{_headers_8h_ac7750c4fbf0872db681936cf75f39618} 
+\+\#define EXTENSION\+\_\+\+DEEPNESS~16}
+
+\Hypertarget{_headers_8h_a12c2040f25d8e3a7b9e1c2024c618cb6}\index{Headers.h@{Headers.h}!INF@{INF}}
+\index{INF@{INF}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{INF}{INF}}
+{\footnotesize\ttfamily \label{_headers_8h_a12c2040f25d8e3a7b9e1c2024c618cb6} 
+\+\#define INF~1000000}
+
+\Hypertarget{_headers_8h_a812f65d6c991cb012206e57dae431004}\index{Headers.h@{Headers.h}!ISOLATED\_PAWN\_PENALTY@{ISOLATED\_PAWN\_PENALTY}}
+\index{ISOLATED\_PAWN\_PENALTY@{ISOLATED\_PAWN\_PENALTY}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{ISOLATED\_PAWN\_PENALTY}{ISOLATED\_PAWN\_PENALTY}}
+{\footnotesize\ttfamily \label{_headers_8h_a812f65d6c991cb012206e57dae431004} 
+\+\#define ISOLATED\+\_\+\+PAWN\+\_\+\+PENALTY~15}
+
+\Hypertarget{_headers_8h_a5cac9ec83415c3b71ad6d46916799d48}\index{Headers.h@{Headers.h}!KING\_ADJ\_OPEN\_PENALTY@{KING\_ADJ\_OPEN\_PENALTY}}
+\index{KING\_ADJ\_OPEN\_PENALTY@{KING\_ADJ\_OPEN\_PENALTY}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{KING\_ADJ\_OPEN\_PENALTY}{KING\_ADJ\_OPEN\_PENALTY}}
+{\footnotesize\ttfamily \label{_headers_8h_a5cac9ec83415c3b71ad6d46916799d48} 
+\+\#define KING\+\_\+\+ADJ\+\_\+\+OPEN\+\_\+\+PENALTY~30}
+
+\Hypertarget{_headers_8h_a91d0141710084bd8e8ccbec86d2df51a}\index{Headers.h@{Headers.h}!KING\_BIAS\_SCORE@{KING\_BIAS\_SCORE}}
+\index{KING\_BIAS\_SCORE@{KING\_BIAS\_SCORE}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{KING\_BIAS\_SCORE}{KING\_BIAS\_SCORE}}
+{\footnotesize\ttfamily \label{_headers_8h_a91d0141710084bd8e8ccbec86d2df51a} 
+\+\#define KING\+\_\+\+BIAS\+\_\+\+SCORE~200}
+
+\Hypertarget{_headers_8h_a86ed9d2be76106f30f4f320672085fca}\index{Headers.h@{Headers.h}!KING\_CLOSENESS\_BIAS@{KING\_CLOSENESS\_BIAS}}
+\index{KING\_CLOSENESS\_BIAS@{KING\_CLOSENESS\_BIAS}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{KING\_CLOSENESS\_BIAS}{KING\_CLOSENESS\_BIAS}}
+{\footnotesize\ttfamily \label{_headers_8h_a86ed9d2be76106f30f4f320672085fca} 
+\+\#define KING\+\_\+\+CLOSENESS\+\_\+\+BIAS~10}
+
+\Hypertarget{_headers_8h_a4d593e733166fbae00475893bb967042}\index{Headers.h@{Headers.h}!KING\_FILE\_OPEN\_PENALTY@{KING\_FILE\_OPEN\_PENALTY}}
+\index{KING\_FILE\_OPEN\_PENALTY@{KING\_FILE\_OPEN\_PENALTY}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{KING\_FILE\_OPEN\_PENALTY}{KING\_FILE\_OPEN\_PENALTY}}
+{\footnotesize\ttfamily \label{_headers_8h_a4d593e733166fbae00475893bb967042} 
+\+\#define KING\+\_\+\+FILE\+\_\+\+OPEN\+\_\+\+PENALTY~50}
+
+\Hypertarget{_headers_8h_a3a08af895bb510cbcf7f0b94cd461373}\index{Headers.h@{Headers.h}!KNIGHT\_MOBILITY\_BONUS@{KNIGHT\_MOBILITY\_BONUS}}
+\index{KNIGHT\_MOBILITY\_BONUS@{KNIGHT\_MOBILITY\_BONUS}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{KNIGHT\_MOBILITY\_BONUS}{KNIGHT\_MOBILITY\_BONUS}}
+{\footnotesize\ttfamily \label{_headers_8h_a3a08af895bb510cbcf7f0b94cd461373} 
+\+\#define KNIGHT\+\_\+\+MOBILITY\+\_\+\+BONUS~4}
+
+\Hypertarget{_headers_8h_a0df9558195b2eb056abbaf4fec8956ad}\index{Headers.h@{Headers.h}!LAZY\_EVAL\_MARGIN@{LAZY\_EVAL\_MARGIN}}
+\index{LAZY\_EVAL\_MARGIN@{LAZY\_EVAL\_MARGIN}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{LAZY\_EVAL\_MARGIN}{LAZY\_EVAL\_MARGIN}}
+{\footnotesize\ttfamily \label{_headers_8h_a0df9558195b2eb056abbaf4fec8956ad} 
+\+\#define LAZY\+\_\+\+EVAL\+\_\+\+MARGIN~150}
+
+\Hypertarget{_headers_8h_a87e52386155d5fe3bc2e32cf15ae19e6}\index{Headers.h@{Headers.h}!MAX\_MATERIAL@{MAX\_MATERIAL}}
+\index{MAX\_MATERIAL@{MAX\_MATERIAL}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{MAX\_MATERIAL}{MAX\_MATERIAL}}
+{\footnotesize\ttfamily \label{_headers_8h_a87e52386155d5fe3bc2e32cf15ae19e6} 
+\+\#define MAX\+\_\+\+MATERIAL~6200}
+
+\Hypertarget{_headers_8h_aafd045f3232c051cc6b016faf73838b1}\index{Headers.h@{Headers.h}!MAX\_PLY@{MAX\_PLY}}
+\index{MAX\_PLY@{MAX\_PLY}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{MAX\_PLY}{MAX\_PLY}}
+{\footnotesize\ttfamily \label{_headers_8h_aafd045f3232c051cc6b016faf73838b1} 
+\+\#define MAX\+\_\+\+PLY~50}
+
+For quiescence search, not the main search. The main search is limited by MAX\+\_\+\+TURNS. \Hypertarget{_headers_8h_aff2f9f643149b87035310798f31a5b15}\index{Headers.h@{Headers.h}!MAX\_TURNS@{MAX\_TURNS}}
+\index{MAX\_TURNS@{MAX\_TURNS}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{MAX\_TURNS}{MAX\_TURNS}}
+{\footnotesize\ttfamily \label{_headers_8h_aff2f9f643149b87035310798f31a5b15} 
+\+\#define MAX\+\_\+\+TURNS~100}
+
+\Hypertarget{_headers_8h_a3384a5a540cab162e2b292204d057a55}\index{Headers.h@{Headers.h}!PASSED\_PAWN\_BONUS@{PASSED\_PAWN\_BONUS}}
+\index{PASSED\_PAWN\_BONUS@{PASSED\_PAWN\_BONUS}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{PASSED\_PAWN\_BONUS}{PASSED\_PAWN\_BONUS}}
+{\footnotesize\ttfamily \label{_headers_8h_a3384a5a540cab162e2b292204d057a55} 
+\+\#define PASSED\+\_\+\+PAWN\+\_\+\+BONUS~50}
+
+\Hypertarget{_headers_8h_ade4a4422895b0d208e90f37b4a946721}\index{Headers.h@{Headers.h}!ROOK\_MOBILITY\_BONUS@{ROOK\_MOBILITY\_BONUS}}
+\index{ROOK\_MOBILITY\_BONUS@{ROOK\_MOBILITY\_BONUS}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{ROOK\_MOBILITY\_BONUS}{ROOK\_MOBILITY\_BONUS}}
+{\footnotesize\ttfamily \label{_headers_8h_ade4a4422895b0d208e90f37b4a946721} 
+\+\#define ROOK\+\_\+\+MOBILITY\+\_\+\+BONUS~1}
+
+\Hypertarget{_headers_8h_a599ec0ea02fc3b85bf5c5acabba0780d}\index{Headers.h@{Headers.h}!STANDARD\_HASH\_SIZE\_MB@{STANDARD\_HASH\_SIZE\_MB}}
+\index{STANDARD\_HASH\_SIZE\_MB@{STANDARD\_HASH\_SIZE\_MB}!Headers.h@{Headers.h}}
+\doxysubsubsection{\texorpdfstring{STANDARD\_HASH\_SIZE\_MB}{STANDARD\_HASH\_SIZE\_MB}}
+{\footnotesize\ttfamily \label{_headers_8h_a599ec0ea02fc3b85bf5c5acabba0780d} 
+\+\#define STANDARD\+\_\+\+HASH\+\_\+\+SIZE\+\_\+\+MB~64}
+

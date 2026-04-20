@@ -1,0 +1,158 @@
+\doxysection{include/\+\+Look\+Up\+Tables.h File Reference}
+\hypertarget{_look_up_tables_8h}{}\label{_look_up_tables_8h}\index{include/LookUpTables.h@{include/LookUpTables.h}}
+
+
+Precomputed lookup tables for piece attacks and masks.  
+
+
+{\ttfamily \+\#include "{}Headers.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\textbf{ }\par
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{_look_up_tables_8h_a9423cf555abaf00ce0a7eeb5103ccf49}{initialize\+\_\+pawn\+\_\+single\+\_\+attack\+\_\+squares}} ()
+\begin{DoxyCompactList}\small\item\em Initializes pawn single attack squares. Called on startup. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_look_up_tables_8h_a5df41c9c350996e27bfe7c4e0d612b6b}{initialize\+\_\+knight\+\_\+attack\+\_\+squares}} ()
+\item 
+void \doxymbox{\hyperlink{_look_up_tables_8h_a22706bd42867f5f4971a5e7397039ef9}{initialize\+\_\+king\+\_\+attack\+\_\+squares}} ()
+\item 
+void \doxymbox{\hyperlink{_look_up_tables_8h_a301fb0a7f85984305ca7d065abf4030f}{initialize\+\_\+rook\+\_\+masks}} ()
+\item 
+void \doxymbox{\hyperlink{_look_up_tables_8h_adf4e8357ea38a97c4dd54fe0479de7b4}{initialize\+\_\+bishop\+\_\+masks}} ()
+\end{DoxyCompactItemize}
+
+\doxysubsubsection*{Variables}
+\begin{Indent}\textbf{ Global Lookup Arrays}\par
+{\em Arrays storing precomputed attacks and occupancy masks. }\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_look_up_tables_8h_a14ff30613916116e1572b2038693c2e3}{knight\+Attack\+Squares}} \+[64]\+
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_look_up_tables_8h_afa6c182ce6ebac6580b9cec118787afd}{king\+Attack\+Squares}} \+[64]\+
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_look_up_tables_8h_a0c4a288ab9603f22070c68b7d4ffde25}{pawn\+Single\+Attacks}} \+[\doxymbox{\hyperlink{_chess_structs_8h_acb6e5a3cb3d650efcbb4dff01b8dc597}{PlayerN}}]\+\+[64]\+
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_look_up_tables_8h_a31ace5558d4acc6c1e3c5424a517e8c1}{rook\+Occupancies\+Masks}} \+[64]\+
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_look_up_tables_8h_aaeea5e0a2d98399decb5cae00b640e63}{bishop\+Occupancies\+Masks}} \+[64]\+
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Knight Move Constants}\par
+{\em File masks used to prevent wrapping when generating Knight attacks.
+
+\begin{DoxyNote}{Note}
+From \href{https://www.chessprogramming.org/Knight_Pattern}{\texttt{https:\+/\+/\+www.\+chessprogramming.\+org/\+\+Knight\+\_\+\+Pattern}} 
+\end{DoxyNote}
+}\begin{DoxyCompactItemize}
+\item 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_look_up_tables_8h_ac784a37d2f66cdb3169361d782c3bbb7}{not\+AFile}}
+\item 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_look_up_tables_8h_a2b5e7d1209546b66614f6c12b2176c3a}{not\+HFile}}
+\item 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_look_up_tables_8h_a1a5bc55c1afe9da537d806de24dc7d3d}{not\+ABFile}}
+\item 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_look_up_tables_8h_a459eb3098ef5b5111597dfeeb02a8371}{not\+GHFile}}
+\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\doxysubsection{Detailed Description}
+Precomputed lookup tables for piece attacks and masks. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{_look_up_tables_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_look_up_tables_8h_adf4e8357ea38a97c4dd54fe0479de7b4}\index{LookUpTables.h@{LookUpTables.h}!initialize\_bishop\_masks@{initialize\_bishop\_masks}}
+\index{initialize\_bishop\_masks@{initialize\_bishop\_masks}!LookUpTables.h@{LookUpTables.h}}
+\doxysubsubsection{\texorpdfstring{initialize\_bishop\_masks()}{initialize\_bishop\_masks()}}
+{\footnotesize\ttfamily \label{_look_up_tables_8h_adf4e8357ea38a97c4dd54fe0479de7b4} 
+void initialize\+\_\+bishop\+\_\+masks (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_look_up_tables_8h_a22706bd42867f5f4971a5e7397039ef9}\index{LookUpTables.h@{LookUpTables.h}!initialize\_king\_attack\_squares@{initialize\_king\_attack\_squares}}
+\index{initialize\_king\_attack\_squares@{initialize\_king\_attack\_squares}!LookUpTables.h@{LookUpTables.h}}
+\doxysubsubsection{\texorpdfstring{initialize\_king\_attack\_squares()}{initialize\_king\_attack\_squares()}}
+{\footnotesize\ttfamily \label{_look_up_tables_8h_a22706bd42867f5f4971a5e7397039ef9} 
+void initialize\+\_\+king\+\_\+attack\+\_\+squares (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_look_up_tables_8h_a5df41c9c350996e27bfe7c4e0d612b6b}\index{LookUpTables.h@{LookUpTables.h}!initialize\_knight\_attack\_squares@{initialize\_knight\_attack\_squares}}
+\index{initialize\_knight\_attack\_squares@{initialize\_knight\_attack\_squares}!LookUpTables.h@{LookUpTables.h}}
+\doxysubsubsection{\texorpdfstring{initialize\_knight\_attack\_squares()}{initialize\_knight\_attack\_squares()}}
+{\footnotesize\ttfamily \label{_look_up_tables_8h_a5df41c9c350996e27bfe7c4e0d612b6b} 
+void initialize\+\_\+knight\+\_\+attack\+\_\+squares (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_look_up_tables_8h_a9423cf555abaf00ce0a7eeb5103ccf49}\index{LookUpTables.h@{LookUpTables.h}!initialize\_pawn\_single\_attack\_squares@{initialize\_pawn\_single\_attack\_squares}}
+\index{initialize\_pawn\_single\_attack\_squares@{initialize\_pawn\_single\_attack\_squares}!LookUpTables.h@{LookUpTables.h}}
+\doxysubsubsection{\texorpdfstring{initialize\_pawn\_single\_attack\_squares()}{initialize\_pawn\_single\_attack\_squares()}}
+{\footnotesize\ttfamily \label{_look_up_tables_8h_a9423cf555abaf00ce0a7eeb5103ccf49} 
+void initialize\+\_\+pawn\+\_\+single\+\_\+attack\+\_\+squares (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Initializes pawn single attack squares. Called on startup. 
+
+\Hypertarget{_look_up_tables_8h_a301fb0a7f85984305ca7d065abf4030f}\index{LookUpTables.h@{LookUpTables.h}!initialize\_rook\_masks@{initialize\_rook\_masks}}
+\index{initialize\_rook\_masks@{initialize\_rook\_masks}!LookUpTables.h@{LookUpTables.h}}
+\doxysubsubsection{\texorpdfstring{initialize\_rook\_masks()}{initialize\_rook\_masks()}}
+{\footnotesize\ttfamily \label{_look_up_tables_8h_a301fb0a7f85984305ca7d065abf4030f} 
+void initialize\+\_\+rook\+\_\+masks (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-var-members}
+\Hypertarget{_look_up_tables_8h_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{_look_up_tables_8h_aaeea5e0a2d98399decb5cae00b640e63}\index{LookUpTables.h@{LookUpTables.h}!bishopOccupanciesMasks@{bishopOccupanciesMasks}}
+\index{bishopOccupanciesMasks@{bishopOccupanciesMasks}!LookUpTables.h@{LookUpTables.h}}
+\doxysubsubsection{\texorpdfstring{bishopOccupanciesMasks}{bishopOccupanciesMasks}}
+{\footnotesize\ttfamily \label{_look_up_tables_8h_aaeea5e0a2d98399decb5cae00b640e63} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} bishop\+Occupancies\+Masks\+[64]\+\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{_look_up_tables_8h_afa6c182ce6ebac6580b9cec118787afd}\index{LookUpTables.h@{LookUpTables.h}!kingAttackSquares@{kingAttackSquares}}
+\index{kingAttackSquares@{kingAttackSquares}!LookUpTables.h@{LookUpTables.h}}
+\doxysubsubsection{\texorpdfstring{kingAttackSquares}{kingAttackSquares}}
+{\footnotesize\ttfamily \label{_look_up_tables_8h_afa6c182ce6ebac6580b9cec118787afd} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} king\+Attack\+Squares\+[64]\+\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{_look_up_tables_8h_a14ff30613916116e1572b2038693c2e3}\index{LookUpTables.h@{LookUpTables.h}!knightAttackSquares@{knightAttackSquares}}
+\index{knightAttackSquares@{knightAttackSquares}!LookUpTables.h@{LookUpTables.h}}
+\doxysubsubsection{\texorpdfstring{knightAttackSquares}{knightAttackSquares}}
+{\footnotesize\ttfamily \label{_look_up_tables_8h_a14ff30613916116e1572b2038693c2e3} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} knight\+Attack\+Squares\+[64]\+\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{_look_up_tables_8h_a1a5bc55c1afe9da537d806de24dc7d3d}\index{LookUpTables.h@{LookUpTables.h}!notABFile@{notABFile}}
+\index{notABFile@{notABFile}!LookUpTables.h@{LookUpTables.h}}
+\doxysubsubsection{\texorpdfstring{notABFile}{notABFile}}
+{\footnotesize\ttfamily \label{_look_up_tables_8h_a1a5bc55c1afe9da537d806de24dc7d3d} 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} not\+ABFile\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{_look_up_tables_8h_ac784a37d2f66cdb3169361d782c3bbb7}\index{LookUpTables.h@{LookUpTables.h}!notAFile@{notAFile}}
+\index{notAFile@{notAFile}!LookUpTables.h@{LookUpTables.h}}
+\doxysubsubsection{\texorpdfstring{notAFile}{notAFile}}
+{\footnotesize\ttfamily \label{_look_up_tables_8h_ac784a37d2f66cdb3169361d782c3bbb7} 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} not\+AFile\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{_look_up_tables_8h_a459eb3098ef5b5111597dfeeb02a8371}\index{LookUpTables.h@{LookUpTables.h}!notGHFile@{notGHFile}}
+\index{notGHFile@{notGHFile}!LookUpTables.h@{LookUpTables.h}}
+\doxysubsubsection{\texorpdfstring{notGHFile}{notGHFile}}
+{\footnotesize\ttfamily \label{_look_up_tables_8h_a459eb3098ef5b5111597dfeeb02a8371} 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} not\+GHFile\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{_look_up_tables_8h_a2b5e7d1209546b66614f6c12b2176c3a}\index{LookUpTables.h@{LookUpTables.h}!notHFile@{notHFile}}
+\index{notHFile@{notHFile}!LookUpTables.h@{LookUpTables.h}}
+\doxysubsubsection{\texorpdfstring{notHFile}{notHFile}}
+{\footnotesize\ttfamily \label{_look_up_tables_8h_a2b5e7d1209546b66614f6c12b2176c3a} 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} not\+HFile\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{_look_up_tables_8h_a0c4a288ab9603f22070c68b7d4ffde25}\index{LookUpTables.h@{LookUpTables.h}!pawnSingleAttacks@{pawnSingleAttacks}}
+\index{pawnSingleAttacks@{pawnSingleAttacks}!LookUpTables.h@{LookUpTables.h}}
+\doxysubsubsection{\texorpdfstring{pawnSingleAttacks}{pawnSingleAttacks}}
+{\footnotesize\ttfamily \label{_look_up_tables_8h_a0c4a288ab9603f22070c68b7d4ffde25} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} pawn\+Single\+Attacks\+[\doxymbox{\hyperlink{_chess_structs_8h_acb6e5a3cb3d650efcbb4dff01b8dc597}{PlayerN}}]\+\+[64]\+\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{_look_up_tables_8h_a31ace5558d4acc6c1e3c5424a517e8c1}\index{LookUpTables.h@{LookUpTables.h}!rookOccupanciesMasks@{rookOccupanciesMasks}}
+\index{rookOccupanciesMasks@{rookOccupanciesMasks}!LookUpTables.h@{LookUpTables.h}}
+\doxysubsubsection{\texorpdfstring{rookOccupanciesMasks}{rookOccupanciesMasks}}
+{\footnotesize\ttfamily \label{_look_up_tables_8h_a31ace5558d4acc6c1e3c5424a517e8c1} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} rook\+Occupancies\+Masks\+[64]\+\hspace{0.3cm}{\ttfamily [extern]}}
+

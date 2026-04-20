@@ -1,0 +1,59 @@
+\doxysection{Transp\+Tables.\+h}
+\hypertarget{_transp_tables_8h_source}{}\label{_transp_tables_8h_source}\index{include/TranspTables.h@{include/TranspTables.h}}
+\doxymbox{\hyperlink{_transp_tables_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ TRANSP\_TABLES}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ TRANSP\_TABLES}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_headers_8h}{Headers.h}}"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ rot(x,k)\ (((x)<<(k))|((x)>>(64-\/(k))))}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{extern}\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_transp_tables_8h_a6cee1dd2a9cb9b8eac2544afbef2bd7c}{pieceKeys}}[2][6][64];\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{extern}\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_transp_tables_8h_a0d722099edd4bb49986a788839e38450}{sideKey}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{extern}\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_transp_tables_8h_a312e65f50fc2f078a7edbb2a13398fd6}{castleKeys}}[16];\ \ \ \ \ \ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{extern}\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_transp_tables_8h_a69b382c5d68b6604b92fc1c56f68a8a2}{enPassantKeys}}[8];\ \ \ \ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structranctx}{ranctx}}\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{structranctx_a31d51c7e8f6726ef81e671e590ab14ad}{a}};\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{structranctx_a63e10815b7e73969ac48a62992e4006a}{b}};\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{structranctx_a4de457c51a5b2dcd5e00948569f9e661}{c}};\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{structranctx_adaf2c01b7e10017c3894aec769b47c77}{d}};\ }
+\DoxyCodeLine{00034\ \}\ \doxymbox{\hyperlink{structranctx}{ranctx}};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00040\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \doxymbox{\hyperlink{_transp_tables_8h_a0a7b134a0db7b1d02a89e89191ceddf2a813410fb97d25f0c3798f18fef6a394c}{EXACT}},}
+\DoxyCodeLine{00042\ \ \ \ \ \doxymbox{\hyperlink{_transp_tables_8h_a0a7b134a0db7b1d02a89e89191ceddf2a47e073572a47a01522b766b027f1a16c}{ALPHA}},}
+\DoxyCodeLine{00043\ \ \ \ \ \doxymbox{\hyperlink{_transp_tables_8h_a0a7b134a0db7b1d02a89e89191ceddf2afbaa3fc38bba7fcfaffd6e5d346288c9}{BETA}}}
+\DoxyCodeLine{00044\ \}\ \doxymbox{\hyperlink{_transp_tables_8h_a0a7b134a0db7b1d02a89e89191ceddf2}{HashFlag}};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00050\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_transp_entry}{TranspEntry}}\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{struct_transp_entry_a114914fbaa710217dc79d78a29117107}{key}};}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_transp_entry_a875103f004230ce4a3c468e22cb87233}{depth}};}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_transp_entry_a6384aea0887f992305327a695bf82ab9}{eval}};}
+\DoxyCodeLine{00054\ \ \ \ \ \doxymbox{\hyperlink{_transp_tables_8h_a0a7b134a0db7b1d02a89e89191ceddf2}{HashFlag}}\ \doxymbox{\hyperlink{struct_transp_entry_a10261a75421d85dcb52edacab4218330}{flag}};}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_transp_entry_a1ed5acaaee02d8401e604f6b79e5fbc3}{bestMove}};}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_transp_entry_a16f29c7105f5d621b140751ea85a5b4f}{ancient}};}
+\DoxyCodeLine{00057\ \}\ \doxymbox{\hyperlink{struct_transp_entry}{TranspEntry}};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{extern}\ \doxymbox{\hyperlink{struct_transp_entry}{TranspEntry}}*\ \doxymbox{\hyperlink{_transp_tables_8h_a5a00d23c62bf7e6fb04e0f7ffc71b1a5}{TT}};}
+\DoxyCodeLine{00060\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_transp_tables_8h_a5c57ca6079f36c381baa0ccf14d84619}{current\_age}};}
+\DoxyCodeLine{00061\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_transp_tables_8h_a1ff0b1839327f4b79114d9071f6b50e8}{ttSize}};}
+\DoxyCodeLine{00062\ \textcolor{keyword}{extern}\ \doxymbox{\hyperlink{structranctx}{ranctx}}\ \doxymbox{\hyperlink{_transp_tables_8h_a13f93fc73cbcd9bc026e0112997bb00d}{rng}};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00069\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_transp_tables_8h_aa969fd87a1f4b121adf8678e6e525608}{ran\_val}}(\doxymbox{\hyperlink{structranctx}{ranctx}}*\ x);}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00076\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_transp_tables_8h_aab39112e3fac8dc74ee4ea80d6bec24c}{ran\_init}}(\doxymbox{\hyperlink{structranctx}{ranctx}}*\ x,\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ seed);}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00081\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_transp_tables_8h_a496dfd318013aaea43d571577334d381}{init\_random\_keys}}();}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00090\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_transp_tables_8h_a0304fdc8e0250a9e481333c2532ac169}{get\_zobrist\_code}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board);}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00097\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ get\_hash\_index(\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ hashKey)\ \{\ \textcolor{keywordflow}{return}\ hashKey\ \%\ \doxymbox{\hyperlink{_transp_tables_8h_a1ff0b1839327f4b79114d9071f6b50e8}{ttSize}};\ \}}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00105\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_transp_tables_8h_ad474a21825794504a2ba8f497aeddee2}{init\_tt}}(\textcolor{keywordtype}{int}\ sizeMB);}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00117\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_transp_tables_8h_add461942646de2b1dbe655c126030cb7}{store\_tt\_entry}}(\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ key,\ \textcolor{keywordtype}{int}\ depth,\ \textcolor{keywordtype}{int}\ eval,\ \doxymbox{\hyperlink{_transp_tables_8h_a0a7b134a0db7b1d02a89e89191ceddf2}{HashFlag}}\ flag,\ \textcolor{keywordtype}{int}\ bestMove);}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ !TRANSP\_TABLES}}
+
+\end{DoxyCode}

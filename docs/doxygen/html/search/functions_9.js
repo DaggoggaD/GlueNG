@@ -1,0 +1,9 @@
+var searchData=
+[
+  ['main_0',['main',['../_glue_n_g_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'GlueNG.c']]],
+  ['make_5fmove_1',['make_move',['../_move_generation_8h.html#a38a5c605997e417d72a3ae8afa32ec4f',1,'make_move(Board *board, int move, SelectionColor sideToMove, int currDepth):&#160;MoveGeneration.c'],['../_move_generation_8c.html#a38a5c605997e417d72a3ae8afa32ec4f',1,'make_move(Board *board, int move, SelectionColor sideToMove, int currDepth):&#160;MoveGeneration.c']]],
+  ['make_5fnull_5fmove_2',['make_null_move',['../_move_evaluation_8h.html#ab4a492c379cff5b70d9a451d678a59e6',1,'make_null_move(Board *board, int currDepth):&#160;MoveEvaluation.c'],['../_move_evaluation_8c.html#ab4a492c379cff5b70d9a451d678a59e6',1,'make_null_move(Board *board, int currDepth):&#160;MoveEvaluation.c']]],
+  ['manhattan_5fdistance_3',['manhattan_distance',['../_calc_functions_8h.html#ad73e6ead15793d8506b17282c8236164',1,'manhattan_distance(int square1, int square2):&#160;CalcFunctions.c'],['../_calc_functions_8c.html#ad73e6ead15793d8506b17282c8236164',1,'manhattan_distance(int square1, int square2):&#160;CalcFunctions.c']]],
+  ['material_5fevaluation_4',['material_evaluation',['../_move_evaluation_8h.html#af975d71787c61860ddae88da7fe832e4',1,'material_evaluation(Board *board, SelectionColor side, int *noPawnEval):&#160;MoveEvaluation.c'],['../_move_evaluation_8c.html#af975d71787c61860ddae88da7fe832e4',1,'material_evaluation(Board *board, SelectionColor side, int *noPawnEval):&#160;MoveEvaluation.c']]],
+  ['mobility_5fevaluation_5',['mobility_evaluation',['../_move_evaluation_8h.html#a9ac63be42f0f4a0bb503887629832add',1,'mobility_evaluation(Board *board, SelectionColor side, int *noPawnEval):&#160;MoveEvaluation.h'],['../_move_evaluation_8c.html#a73f45d50b7e81f00e4fb1b39d3eaa4ab',1,'mobility_evaluation(Board *board):&#160;MoveEvaluation.c']]]
+];

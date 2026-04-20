@@ -1,5 +1,11 @@
 #include "../include/TranspTables.h"
 // RKISS from chessprogramming.org, see https://www.chessprogramming.org/Bob_Jenkins#RKISS
+
+U64 pieceKeys[2][6][64];
+U64 sideKey;
+U64 castleKeys[16];
+U64 enPassantKeys[8];
+ranctx rng;
 TranspEntry* TT = NULL;
 int current_age = 0;
 int ttSize = 0;

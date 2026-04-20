@@ -1,0 +1,24 @@
+\doxysection{Move\+Generation.\+h}
+\hypertarget{_move_generation_8h_source}{}\label{_move_generation_8h_source}\index{include/MoveGeneration.h@{include/MoveGeneration.h}}
+\doxymbox{\hyperlink{_move_generation_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ MOVE\_GENERATION\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ MOVE\_GENERATION\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_headers_8h}{Headers.h}}"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00017\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_move_generation_8h_a0f4969f28fa42b7a40869675a432ab4b}{unmake\_move}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ move,\ \textcolor{keywordtype}{int}\ currDepth);}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00026\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_move_generation_8h_a38a5c605997e417d72a3ae8afa32ec4f}{make\_move}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ move,\ \doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{SelectionColor}}\ sideToMove,\ \textcolor{keywordtype}{int}\ currDepth);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00035\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_move_generation_8h_a31396b8dbe3073f56cb738ee8041b12d}{perft}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ depth);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00043\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_move_generation_8h_a4803641e9e7e2ecaa9f9397ece1278d1}{perft\_divide}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \textcolor{keywordtype}{int}\ depth);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00050\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_move_generation_8h_a0daa9589443aedd8090ca81a296764d1}{generate\_legal\_moves}}(\doxymbox{\hyperlink{struct_board}{Board}}*\ board,\ \doxymbox{\hyperlink{struct_move_list}{MoveList}}*\ list);}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ !MOVE\_GENERATION\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,142 @@
+\doxysection{include/\+\+Fen\+Functions.h File Reference}
+\hypertarget{_fen_functions_8h}{}\label{_fen_functions_8h}\index{include/FenFunctions.h@{include/FenFunctions.h}}
+
+
+Function declarations for parsing and loading FEN strings.  
+
+
+{\ttfamily \+\#include "{}Headers.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_ac7176b069e3697300fd45e6db5899deb}{Piece\+Id}} \doxymbox{\hyperlink{_fen_functions_8h_a747502a294b3e73f887347a2117fda3e}{select\+\_\+fen\+\_\+piece}} (const char piece)
+\begin{DoxyCompactList}\small\item\em Translates a FEN piece character to the corresponding \doxylink{_chess_definitions_8h_ac7176b069e3697300fd45e6db5899deb}{Piece\+Id} enum value. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_fen_functions_8h_af3ed54b0bec6b26f4c4d7fd3c0f86953}{place\+\_\+fen\+\_\+pieces}} (const char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}fen, \doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board)
+\begin{DoxyCompactList}\small\item\em Parses the piece placement portion of a FEN string and updates the board\textquotesingle{}s bitboards accordingly. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_fen_functions_8h_a1703bb0101ecfb4b89bd71de294367e9}{set\+\_\+fen\+\_\+castling\+\_\+permissions}} (const char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}fen, \doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board)
+\begin{DoxyCompactList}\small\item\em Parses (max 4) characters representing castling permissions in powers of 2. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_fen_functions_8h_a1a83806a4c9982c36e913a48733b1548}{set\+\_\+fen\+\_\+en\+\_\+passant}} (const char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}fen, \doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board)
+\begin{DoxyCompactList}\small\item\em Parses the en passant square and converts it to a little-\/endian index. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_fen_functions_8h_a21b61f16c7e936ab911a3b0cfcbab5ba}{set\+\_\+fen\+\_\+half\+\_\+moves}} (const char \texorpdfstring{$\ast$}{*}fen, \doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board)
+\begin{DoxyCompactList}\small\item\em Parses the halfmove clock. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_fen_functions_8h_a1f3ec7551d4e3c8607e3cab3c6d93672}{load\+\_\+fen\+\_\+board}} (const char \texorpdfstring{$\ast$}{*}fen, \doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board)
+\begin{DoxyCompactList}\small\item\em Loads a complete FEN string into the given board structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Function declarations for parsing and loading FEN strings. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{_fen_functions_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_fen_functions_8h_a1f3ec7551d4e3c8607e3cab3c6d93672}\index{FenFunctions.h@{FenFunctions.h}!load\_fen\_board@{load\_fen\_board}}
+\index{load\_fen\_board@{load\_fen\_board}!FenFunctions.h@{FenFunctions.h}}
+\doxysubsubsection{\texorpdfstring{load\_fen\_board()}{load\_fen\_board()}}
+{\footnotesize\ttfamily \label{_fen_functions_8h_a1f3ec7551d4e3c8607e3cab3c6d93672} 
+void load\+\_\+fen\+\_\+board (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{fen}{, }\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{}\end{DoxyParamCaption})}
+
+
+
+Loads a complete FEN string into the given board structure. 
+
+\begin{DoxyNote}{Note}
+Since FEN is big-\/endian, it\textquotesingle{}s translated to little-\/endian internally. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em fen} & The full FEN string to parse. \\
+\hline
+{\em board} & Pointer to the board state to populate. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_fen_functions_8h_af3ed54b0bec6b26f4c4d7fd3c0f86953}\index{FenFunctions.h@{FenFunctions.h}!place\_fen\_pieces@{place\_fen\_pieces}}
+\index{place\_fen\_pieces@{place\_fen\_pieces}!FenFunctions.h@{FenFunctions.h}}
+\doxysubsubsection{\texorpdfstring{place\_fen\_pieces()}{place\_fen\_pieces()}}
+{\footnotesize\ttfamily \label{_fen_functions_8h_af3ed54b0bec6b26f4c4d7fd3c0f86953} 
+void place\+\_\+fen\+\_\+pieces (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{fen}{, }\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{}\end{DoxyParamCaption})}
+
+
+
+Parses the piece placement portion of a FEN string and updates the board\textquotesingle{}s bitboards accordingly. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fen} & Pointer to the FEN string pointer (advanced as it parses). \\
+\hline
+{\em board} & Pointer to the board state to update. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_fen_functions_8h_a747502a294b3e73f887347a2117fda3e}\index{FenFunctions.h@{FenFunctions.h}!select\_fen\_piece@{select\_fen\_piece}}
+\index{select\_fen\_piece@{select\_fen\_piece}!FenFunctions.h@{FenFunctions.h}}
+\doxysubsubsection{\texorpdfstring{select\_fen\_piece()}{select\_fen\_piece()}}
+{\footnotesize\ttfamily \label{_fen_functions_8h_a747502a294b3e73f887347a2117fda3e} 
+\doxymbox{\hyperlink{_chess_definitions_8h_ac7176b069e3697300fd45e6db5899deb}{Piece\+Id}} select\+\_\+fen\+\_\+piece (\begin{DoxyParamCaption}\item[{const char}]{piece}{}\end{DoxyParamCaption})}
+
+
+
+Translates a FEN piece character to the corresponding \doxylink{_chess_definitions_8h_ac7176b069e3697300fd45e6db5899deb}{Piece\+Id} enum value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em piece} & The character representing the piece in FEN format. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The corresponding \doxylink{_chess_definitions_8h_ac7176b069e3697300fd45e6db5899deb}{Piece\+Id}. Returns -\/1 for \textquotesingle{}/\+\textquotesingle{} (separation char), and EMPTY for an invalid/\+int character. 
+\end{DoxyReturn}
+\Hypertarget{_fen_functions_8h_a1703bb0101ecfb4b89bd71de294367e9}\index{FenFunctions.h@{FenFunctions.h}!set\_fen\_castling\_permissions@{set\_fen\_castling\_permissions}}
+\index{set\_fen\_castling\_permissions@{set\_fen\_castling\_permissions}!FenFunctions.h@{FenFunctions.h}}
+\doxysubsubsection{\texorpdfstring{set\_fen\_castling\_permissions()}{set\_fen\_castling\_permissions()}}
+{\footnotesize\ttfamily \label{_fen_functions_8h_a1703bb0101ecfb4b89bd71de294367e9} 
+void set\+\_\+fen\+\_\+castling\+\_\+permissions (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{fen}{, }\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{}\end{DoxyParamCaption})}
+
+
+
+Parses (max 4) characters representing castling permissions in powers of 2. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fen} & Pointer to the FEN string pointer. \\
+\hline
+{\em board} & Pointer to the board state to update. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_fen_functions_8h_a1a83806a4c9982c36e913a48733b1548}\index{FenFunctions.h@{FenFunctions.h}!set\_fen\_en\_passant@{set\_fen\_en\_passant}}
+\index{set\_fen\_en\_passant@{set\_fen\_en\_passant}!FenFunctions.h@{FenFunctions.h}}
+\doxysubsubsection{\texorpdfstring{set\_fen\_en\_passant()}{set\_fen\_en\_passant()}}
+{\footnotesize\ttfamily \label{_fen_functions_8h_a1a83806a4c9982c36e913a48733b1548} 
+void set\+\_\+fen\+\_\+en\+\_\+passant (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{fen}{, }\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{}\end{DoxyParamCaption})}
+
+
+
+Parses the en passant square and converts it to a little-\/endian index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fen} & Pointer to the FEN string pointer. \\
+\hline
+{\em board} & Pointer to the board state to update. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_fen_functions_8h_a21b61f16c7e936ab911a3b0cfcbab5ba}\index{FenFunctions.h@{FenFunctions.h}!set\_fen\_half\_moves@{set\_fen\_half\_moves}}
+\index{set\_fen\_half\_moves@{set\_fen\_half\_moves}!FenFunctions.h@{FenFunctions.h}}
+\doxysubsubsection{\texorpdfstring{set\_fen\_half\_moves()}{set\_fen\_half\_moves()}}
+{\footnotesize\ttfamily \label{_fen_functions_8h_a21b61f16c7e936ab911a3b0cfcbab5ba} 
+void set\+\_\+fen\+\_\+half\+\_\+moves (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{fen}{, }\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{}\end{DoxyParamCaption})}
+
+
+
+Parses the halfmove clock. 
+
+\begin{DoxyNote}{Note}
+Full move clock is currently ignored. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em fen} & Pointer to the FEN string. \\
+\hline
+{\em board} & Pointer to the board state to update. \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,52 @@
+\chapter{Glue\+NG }
+\hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{GlueNG@{GlueNG}}
+\label{md__r_e_a_d_m_e_autotoc_md0}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md0}%
+
+
+Glue\+NG is a C-\/based chess engine developed for educational purposes to explore the classic architectures and algorithms of chess programming. It implements the UCI (Universal Chess Interface) protocol, making it compatible with major GUIs (e.\+g., Cutechess, Arena, MATE).
+
+{\itshape Note:\+ better real human written documentation is available in docs/\+. This readme file is just a temporary "{}presentation"{} of the project.}\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysection{\texorpdfstring{Architecture and Representation}{Architecture and Representation}}\label{md__r_e_a_d_m_e_autotoc_md1}
+
+\begin{DoxyItemize}
+\item {\bfseries{Bitboards:\+}} The chessboard is represented internally using 64-\/bit integers (\doxylink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}). This approach guarantees extreme efficiency in move calculation and evaluation through bitwise operations (AND, OR, XOR).
+\item {\bfseries{Move Generation:\+}} Pseudo-\/legal move generator, with move legality validation performed contextually during the search (checking for checks after execting the move). It supports all standard rules:\+ castling, en passant, promotions.
+\item {\bfseries{Zobrist Hashing:\+}} A 64-\/bit incremental hashing system used to uniquely identify the board state (including castling rights and en passant files). This is fundamental for the functioning of the engine\textquotesingle{}s long-\/term memory.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{\texorpdfstring{Search Algorithms}{Search Algorithms}}\label{md__r_e_a_d_m_e_autotoc_md2}
+
+\begin{DoxyItemize}
+\item {\bfseries{Nega\+Max with Alpha-\/\+Beta Pruning:\+}} The core algorithm for traversing the move tree. It utilizes a Fail-\/\+Soft logic to progressively narrow the search window.
+\item {\bfseries{Iterative Deepening:\+}} The search is not executed at a fixed depth in a single pass; instead, it starts at depth 1 and increments iteratively. This ensures optimal time management and provides better move ordering for shallow nodes.
+\item {\bfseries{Quiescence Search:\+}} To mitigate the Horizon Effect, at the end of the standard search depth, the engine continues to expand branches containing captures and promotions, stabilizing the static evaluation function.
+\item {\bfseries{Check Extensions:\+}} The search depth is dynamically extended by 1 ply when the engine is in check, preventing it from ignoring critical tactical sequences or imminent checkmates.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysection{\texorpdfstring{Move Ordering}{Move Ordering}}\label{md__r_e_a_d_m_e_autotoc_md3}
+The efficiency of Alpha-\/\+Beta pruning heavily relies on move ordering. Glue\+NG orders generated moves by assigning pre-\/search scores:\+
+\begin{DoxyEnumerate}
+\item {\bfseries{TT Move:\+}} The best move previously found in the Transposition Table for the current position is given absolute priority.
+\item {\bfseries{Promotions:\+}} Moves leading to a promotion receive a bonus proportional to the promoted piece.
+\item {\bfseries{MVV-\/\+LVA (Most Valuable Victim -\/ Least Valuable Attacker):\+}} Captures are preferentially ordered by evaluating the difference in value between the prey and the attacker (e.\+g., a Pawn capturing a Queen is evaluated first).
+\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysection{\texorpdfstring{Transposition Table (TT)}{Transposition Table (TT)}}\label{md__r_e_a_d_m_e_autotoc_md4}
+The engine implements a hash table to store evaluations of previously explored positions, eliminating recalculation times in the event of move transpositions.
+\begin{DoxyItemize}
+\item Nodes are saved as EXACT (true value), ALPHA (Fail-\/\+Low, Upper Bound), or BETA (Fail-\/\+High, Lower Bound).
+\item Replacement strategy is based on the saved search depth compared to the requested depth.
+\item Age management is used to distinguish and overwrite positions from previous games.
+\item Supports the {\ttfamily ucinewgame} command to safely reset the table during automated tournaments.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysection{\texorpdfstring{Evaluation Function}{Evaluation Function}}\label{md__r_e_a_d_m_e_autotoc_md5}
+The static board evaluation returns a score in centipawns (cp) based on the perspective of the side to move.
+\begin{DoxyItemize}
+\item {\bfseries{Material:\+}} Standard piece weight calculation.
+\item {\bfseries{Piece-\/\+Square Tables (PST):\+}} Encourages the development of pieces towards ideal squares (e.\+g., knights in the center, controlling the center with pawns in the opening).
+\item {\bfseries{Endgame Recognition:\+}} Dynamic interpolation between opening/\+middlegame evaluations and endgame evaluations based on remaining material.
+\item {\bfseries{Mating Net (Edge Attraction):\+}} In the endgame, the engine calculates the Manhattan distance between the Kings and assigns bonuses to force the opponent\textquotesingle{}s King towards the edge of the board, facilitating checkmate.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysection{\texorpdfstring{UCI Protocol and Usage}{UCI Protocol and Usage}}\label{md__r_e_a_d_m_e_autotoc_md6}
+Glue\+NG communicates via standard input/\+output using the UCI standard. Supported commands include:\+
+\begin{DoxyItemize}
+\item {\ttfamily uci}, {\ttfamily isready}
+\item {\ttfamily position startpos \+[moves ...]\+}, {\ttfamily position fen ... \+[moves ...]\+}
+\item {\ttfamily go wtime \+[ms]\+ btime \+[ms]\+ winc \+[ms]\+ binc \+[ms]\+}
+\item {\ttfamily ucinewgame}
+\item {\ttfamily d} (Debug command to print the visual board representation to the terminal)
+\end{DoxyItemize}
+
+Note:\+ this .md file was ai-\/generated. It\textquotesingle{}ll be fixed when the project releases. 

@@ -1,0 +1,38 @@
+\doxysection{Magic\+Bitboards.\+h}
+\hypertarget{_magic_bitboards_8h_source}{}\label{_magic_bitboards_8h_source}\index{include/MagicBitboards.h@{include/MagicBitboards.h}}
+\doxymbox{\hyperlink{_magic_bitboards_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#ifndef\ MAGIC\_BITBOARDS\_H}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ MAGIC\_BITBOARDS\_H}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_headers_8h}{Headers.h}}"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structm_entry}{mEntry}}\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{structm_entry_afa5e033d9d7cf516975c52af4b45be4f}{occupanciesMask}};}
+\DoxyCodeLine{00020\ \ \ \ \ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{structm_entry_aa2ede9293668d8d66b035f4013e6a3ec}{magicN}};}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short}\ \doxymbox{\hyperlink{structm_entry_aacd4f23c596e3c38d550eaeacc01e790}{indexBits}};}
+\DoxyCodeLine{00022\ \}\ \doxymbox{\hyperlink{_magic_bitboards_8h_a963cb82e1239366c40939d3d33891872}{MagicEntry}};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{extern}\ \doxymbox{\hyperlink{_magic_bitboards_8h_a963cb82e1239366c40939d3d33891872}{MagicEntry}}\ \doxymbox{\hyperlink{_magic_bitboards_8h_a7075475cb2b042c88b79e22cc461ac2f}{RookMagics}}[\doxymbox{\hyperlink{_headers_8h_a018d9802b5537b3dbc89aef8d7eb0492}{BRD\_SIZE}}];}
+\DoxyCodeLine{00030\ \textcolor{keyword}{extern}\ \doxymbox{\hyperlink{_magic_bitboards_8h_a963cb82e1239366c40939d3d33891872}{MagicEntry}}\ \doxymbox{\hyperlink{_magic_bitboards_8h_a90a90e1c36568c08ef0d231020b0a7d7}{BishopMagics}}[\doxymbox{\hyperlink{_headers_8h_a018d9802b5537b3dbc89aef8d7eb0492}{BRD\_SIZE}}];}
+\DoxyCodeLine{00031\ \textcolor{keyword}{extern}\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_magic_bitboards_8h_a03149b2bd0026f99ec0c25eba8935ac8}{RookMoves}}[\doxymbox{\hyperlink{_headers_8h_a018d9802b5537b3dbc89aef8d7eb0492}{BRD\_SIZE}}][4096];}
+\DoxyCodeLine{00032\ \textcolor{keyword}{extern}\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_magic_bitboards_8h_a4595eae3067a9a4941eeb2ad62ef2f07}{BishopMoves}}[\doxymbox{\hyperlink{_headers_8h_a018d9802b5537b3dbc89aef8d7eb0492}{BRD\_SIZE}}][512];}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00043\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_magic_bitboards_8h_a3b4d5b9b8a3b83e02fc3a4528bdd94e0}{get\_magic\_index}}(\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ b,\ \doxymbox{\hyperlink{_magic_bitboards_8h_a963cb82e1239366c40939d3d33891872}{MagicEntry}}*\ entry);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00052\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_magic_bitboards_8h_ac83f679193fe3e5bd56d8b1d5b5099db}{count\_active\_bits}}(\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ b);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00062\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_magic_bitboards_8h_a37dca072f15f071832fe1dc23157f2c2}{set\_occupancies\_mapping}}(\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ mask,\ \textcolor{keywordtype}{int}\ patternID);}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00071\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_magic_bitboards_8h_aa3d7e3ac4641b12da0f7b6bdcea55c8e}{calc\_rook\_attack\_rays}}(\textcolor{keywordtype}{int}\ square,\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ blockers);}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00079\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ \doxymbox{\hyperlink{_magic_bitboards_8h_a2a0c2a43663d7dc51cc7f430ec42e995}{calc\_bishop\_attack\_rays}}(\textcolor{keywordtype}{int}\ square,\ \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}\ blockers);}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00086\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_magic_bitboards_8h_a8131584250f3af111454a3e5acb29f53}{initialize\_magic\_bitboards}}();}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ !MAGIC\_BITBOARDS\_H}}
+
+\end{DoxyCode}

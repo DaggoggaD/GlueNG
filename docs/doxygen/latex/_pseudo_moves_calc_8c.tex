@@ -1,0 +1,428 @@
+\doxysection{src/\+\+Pseudo\+Moves\+Calc.c File Reference}
+\hypertarget{_pseudo_moves_calc_8c}{}\label{_pseudo_moves_calc_8c}\index{src/PseudoMovesCalc.c@{src/PseudoMovesCalc.c}}
+{\ttfamily \+\#include "{}../\+include/\+\+Pseudo\+Moves\+Calc.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_ae1dfe7affa869ee9fae37f523c89f2c3}{get\+\_\+knight\+\_\+pseudo\+\_\+moves}} (int square, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} own\+Pieces)
+\begin{DoxyCompactList}\small\item\em Gets the pseudo legal moves for a Knight. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a6f18116b3524eac612c1e649fb0816c0}{get\+\_\+king\+\_\+pseudo\+\_\+moves}} (int square, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} own\+Pieces)
+\begin{DoxyCompactList}\small\item\em Gets the pseudo legal moves for a King. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_ae8629c204b57fa4ee09d9f360f431f7e}{get\+\_\+rook\+\_\+pseudo\+\_\+moves}} (int square, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} blockers, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} own\+Pieces)
+\begin{DoxyCompactList}\small\item\em Gets the pseudo legal moves for a Rook. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a4fd2e8db3e249a1d3ef94ee668faaba4}{get\+\_\+bishop\+\_\+pseudo\+\_\+moves}} (int square, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} blockers, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} own\+Pieces)
+\begin{DoxyCompactList}\small\item\em Gets the pseudo legal moves for a Bishop. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_ae319ddb02ce55e3a81f192ba48289779}{get\+\_\+queen\+\_\+pseudo\+\_\+moves}} (int square, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} blockers, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} own\+Pieces)
+\begin{DoxyCompactList}\small\item\em Gets the pseudo legal moves for a Queen. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a5830e6bef2cd4c7968e84eb3bfb95d2f}{no\+\_\+ea\+\_\+pawns}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} b)
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_ad30b5aae16bbcd951264388370d98058}{so\+\_\+ea\+\_\+pawns}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} b)
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a366850b779fa62b0fa7a2d24d857a38b}{no\+\_\+we\+\_\+pawns}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} b)
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_ad587330b39bf96cd425231cc8ae22474}{so\+\_\+we\+\_\+pawns}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} b)
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_af18d9f8a40a64345acf05c0a955f3a1c}{north\+\_\+one\+\_\+pawns}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} pawns)
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a256ea0a39618094e35aea30a6434d077}{south\+\_\+one\+\_\+pawns}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} pawns)
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a1a65dd6d0aeb89aca732bd90655825b8}{single\+\_\+white\+\_\+pawn\+\_\+pushes}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} pawns, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} all\+Pieces)
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a22f2fafa4f15e7353e564195744cd427}{single\+\_\+black\+\_\+pawn\+\_\+pushes}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} pawns, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} all\+Pieces)
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a74f3f4041a1ff4c55152aa1e44880c38}{double\+\_\+white\+\_\+pawn\+\_\+pushes}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} pawns, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} all\+Pieces)
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a1de298080340b3f8b88dcd930545f16a}{double\+\_\+black\+\_\+pawn\+\_\+pushes}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} pawns, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} all\+Pieces)
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a6609ec96e62290070ed87d697015fc3e}{white\+\_\+pawns\+\_\+able\+\_\+to\+\_\+push}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} pawns, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} all\+Pieces)
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a658a1cb11d586af12822f36c8922e29c}{black\+\_\+pawns\+\_\+able\+\_\+to\+\_\+push}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} pawns, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} all\+Pieces)
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a19ae16bb2718308e1fe54f00f2f12892}{white\+\_\+pawns\+\_\+able\+\_\+to\+\_\+double\+\_\+push}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} pawns, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} all\+Pieces)
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a9a59d1663f563ac02921cf38392bfe09}{black\+\_\+pawns\+\_\+able\+\_\+to\+\_\+double\+\_\+push}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} pawns, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} all\+Pieces)
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a17d63e690c8f198db1ca5ef4cbf97c96}{white\+\_\+pawns\+\_\+all\+\_\+attacks}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} pawns)
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_ad6f66047e2d54a1656050368853b3812}{black\+\_\+pawns\+\_\+all\+\_\+attacks}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} pawns)
+\item 
+void \doxymbox{\hyperlink{_pseudo_moves_calc_8c_aff972910d92dcfbc5d4c3d44236a0950}{add\+\_\+move\+\_\+to\+\_\+list}} (\doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}list, int from\+Square, int to\+Square, \doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type}} piece, \doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type}} promoted\+\_\+to, bool en\+Passant)
+\begin{DoxyCompactList}\small\item\em Encodes a move using bit packing and adds it to the \doxylink{struct_move_list}{Move\+List}. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a1cd6ffe0a549f1320ec06855c0a1a88e}{white\+\_\+generate\+\_\+pseudo\+\_\+moves}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, \doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}list)
+\begin{DoxyCompactList}\small\item\em Generates all possible pseudo legal moves for White. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a2bcfbddaf13e19204e03684f1d087fb4}{black\+\_\+generate\+\_\+pseudo\+\_\+moves}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, \doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}list)
+\begin{DoxyCompactList}\small\item\em Generates all possible pseudo legal moves for Black. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_pseudo_moves_calc_8c_ac88614793dbd01f7a75feb8fa278c6e2}{is\+\_\+square\+\_\+attacked}} (\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}board, int square, \doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color}} attacking\+Side)
+\begin{DoxyCompactList}\small\item\em Checks if a specific square is attacked by any piece of the given color. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_af2e5504263094ffae5f44b18b6eba18d}{rank1}} = 0x00000000000000\+FFULL
+\item 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_ad8c8e100c597dd28f404105360834043}{rank2}} = 0x000000000000\+FF00\+ULL
+\item 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a52f9fbb978d3dfa524fe160cbf5e8e98}{rank4}} = 0x00000000\+FF000000\+ULL
+\item 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a2691696685295558ccc305b4eeec6e5f}{rank5}} = 0x000000\+FF00000000\+ULL
+\item 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a11c4c9914c3cc85c4314ba1fffd8d2e2}{rank8}} = 0x\+FF00000000000000\+ULL
+\item 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a7cc2b2c9fcf458b0986eefc084ab25b4}{Castling\+Blockers}} \+[4]\+
+\item 
+const int \doxymbox{\hyperlink{_pseudo_moves_calc_8c_a23c9a8a96b68afa833994cab001dbacd}{Castling\+Destinations}} \+[4]\+
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{_pseudo_moves_calc_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_pseudo_moves_calc_8c_aff972910d92dcfbc5d4c3d44236a0950}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!add\_move\_to\_list@{add\_move\_to\_list}}
+\index{add\_move\_to\_list@{add\_move\_to\_list}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{add\_move\_to\_list()}{add\_move\_to\_list()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_aff972910d92dcfbc5d4c3d44236a0950} 
+void add\+\_\+move\+\_\+to\+\_\+list (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{int}]{from\+Square}{, }\item[{int}]{to\+Square}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type}}}]{piece}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a12ed9719bbdf7bc596ff7a6f4bf3f021}{Piece\+Type}}}]{promoted\+\_\+to}{, }\item[{bool}]{en\+Passant}{}\end{DoxyParamCaption})}
+
+
+
+Encodes a move using bit packing and adds it to the \doxylink{struct_move_list}{Move\+List}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & Pointer to the \doxylink{struct_move_list}{Move\+List} where the move will be added. \\
+\hline
+{\em from\+Square} & The starting square index (0-\/63). \\
+\hline
+{\em to\+Square} & The destination square index (0-\/63). \\
+\hline
+{\em piece} & The type of piece being moved. \\
+\hline
+{\em promoted\+\_\+to} & The piece type to promote to (0 if not a promotion). \\
+\hline
+{\em en\+Passant} & Boolean indicating if the move is an en-\/passant capture. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_pseudo_moves_calc_8c_a2bcfbddaf13e19204e03684f1d087fb4}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!black\_generate\_pseudo\_moves@{black\_generate\_pseudo\_moves}}
+\index{black\_generate\_pseudo\_moves@{black\_generate\_pseudo\_moves}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{black\_generate\_pseudo\_moves()}{black\_generate\_pseudo\_moves()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a2bcfbddaf13e19204e03684f1d087fb4} 
+void black\+\_\+generate\+\_\+pseudo\+\_\+moves (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{\doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}}]{list}{}\end{DoxyParamCaption})}
+
+
+
+Generates all possible pseudo legal moves for Black. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board state. \\
+\hline
+{\em list} & Pointer to the \doxylink{struct_move_list}{Move\+List} to populate. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_pseudo_moves_calc_8c_a9a59d1663f563ac02921cf38392bfe09}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!black\_pawns\_able\_to\_double\_push@{black\_pawns\_able\_to\_double\_push}}
+\index{black\_pawns\_able\_to\_double\_push@{black\_pawns\_able\_to\_double\_push}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{black\_pawns\_able\_to\_double\_push()}{black\_pawns\_able\_to\_double\_push()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a9a59d1663f563ac02921cf38392bfe09} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} black\+\_\+pawns\+\_\+able\+\_\+to\+\_\+double\+\_\+push (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{pawns}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{all\+Pieces}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_pseudo_moves_calc_8c_a658a1cb11d586af12822f36c8922e29c}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!black\_pawns\_able\_to\_push@{black\_pawns\_able\_to\_push}}
+\index{black\_pawns\_able\_to\_push@{black\_pawns\_able\_to\_push}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{black\_pawns\_able\_to\_push()}{black\_pawns\_able\_to\_push()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a658a1cb11d586af12822f36c8922e29c} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} black\+\_\+pawns\+\_\+able\+\_\+to\+\_\+push (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{pawns}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{all\+Pieces}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_pseudo_moves_calc_8c_ad6f66047e2d54a1656050368853b3812}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!black\_pawns\_all\_attacks@{black\_pawns\_all\_attacks}}
+\index{black\_pawns\_all\_attacks@{black\_pawns\_all\_attacks}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{black\_pawns\_all\_attacks()}{black\_pawns\_all\_attacks()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_ad6f66047e2d54a1656050368853b3812} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} black\+\_\+pawns\+\_\+all\+\_\+attacks (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{pawns}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_pseudo_moves_calc_8c_a1de298080340b3f8b88dcd930545f16a}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!double\_black\_pawn\_pushes@{double\_black\_pawn\_pushes}}
+\index{double\_black\_pawn\_pushes@{double\_black\_pawn\_pushes}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{double\_black\_pawn\_pushes()}{double\_black\_pawn\_pushes()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a1de298080340b3f8b88dcd930545f16a} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} double\+\_\+black\+\_\+pawn\+\_\+pushes (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{pawns}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{all\+Pieces}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_pseudo_moves_calc_8c_a74f3f4041a1ff4c55152aa1e44880c38}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!double\_white\_pawn\_pushes@{double\_white\_pawn\_pushes}}
+\index{double\_white\_pawn\_pushes@{double\_white\_pawn\_pushes}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{double\_white\_pawn\_pushes()}{double\_white\_pawn\_pushes()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a74f3f4041a1ff4c55152aa1e44880c38} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} double\+\_\+white\+\_\+pawn\+\_\+pushes (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{pawns}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{all\+Pieces}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_pseudo_moves_calc_8c_a4fd2e8db3e249a1d3ef94ee668faaba4}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!get\_bishop\_pseudo\_moves@{get\_bishop\_pseudo\_moves}}
+\index{get\_bishop\_pseudo\_moves@{get\_bishop\_pseudo\_moves}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{get\_bishop\_pseudo\_moves()}{get\_bishop\_pseudo\_moves()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a4fd2e8db3e249a1d3ef94ee668faaba4} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} get\+\_\+bishop\+\_\+pseudo\+\_\+moves (\begin{DoxyParamCaption}\item[{int}]{square}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{blockers}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{own\+Pieces}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the pseudo legal moves for a Bishop. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em square} & The square index (0-\/63) where the Bishop is located. \\
+\hline
+{\em blockers} & A bitboard representing all pieces on the board (both colors). \\
+\hline
+{\em own\+Pieces} & A bitboard representing all pieces of the moving side. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A bitboard with all valid target squares for the Bishop. 
+\end{DoxyReturn}
+\Hypertarget{_pseudo_moves_calc_8c_a6f18116b3524eac612c1e649fb0816c0}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!get\_king\_pseudo\_moves@{get\_king\_pseudo\_moves}}
+\index{get\_king\_pseudo\_moves@{get\_king\_pseudo\_moves}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{get\_king\_pseudo\_moves()}{get\_king\_pseudo\_moves()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a6f18116b3524eac612c1e649fb0816c0} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} get\+\_\+king\+\_\+pseudo\+\_\+moves (\begin{DoxyParamCaption}\item[{int}]{square}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{own\+Pieces}{}\end{DoxyParamCaption})}
+
+
+
+Gets the pseudo legal moves for a King. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em square} & The square index (0-\/63) where the King is located. \\
+\hline
+{\em own\+Pieces} & A bitboard representing all pieces of the moving side. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A bitboard with all valid target squares for the King. 
+\end{DoxyReturn}
+\Hypertarget{_pseudo_moves_calc_8c_ae1dfe7affa869ee9fae37f523c89f2c3}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!get\_knight\_pseudo\_moves@{get\_knight\_pseudo\_moves}}
+\index{get\_knight\_pseudo\_moves@{get\_knight\_pseudo\_moves}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{get\_knight\_pseudo\_moves()}{get\_knight\_pseudo\_moves()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_ae1dfe7affa869ee9fae37f523c89f2c3} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} get\+\_\+knight\+\_\+pseudo\+\_\+moves (\begin{DoxyParamCaption}\item[{int}]{square}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{own\+Pieces}{}\end{DoxyParamCaption})}
+
+
+
+Gets the pseudo legal moves for a Knight. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em square} & The square index (0-\/63) where the Knight is located. \\
+\hline
+{\em own\+Pieces} & A bitboard representing all pieces of the moving side. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A bitboard with all valid target squares for the Knight. 
+\end{DoxyReturn}
+\Hypertarget{_pseudo_moves_calc_8c_ae319ddb02ce55e3a81f192ba48289779}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!get\_queen\_pseudo\_moves@{get\_queen\_pseudo\_moves}}
+\index{get\_queen\_pseudo\_moves@{get\_queen\_pseudo\_moves}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{get\_queen\_pseudo\_moves()}{get\_queen\_pseudo\_moves()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_ae319ddb02ce55e3a81f192ba48289779} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} get\+\_\+queen\+\_\+pseudo\+\_\+moves (\begin{DoxyParamCaption}\item[{int}]{square}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{blockers}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{own\+Pieces}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the pseudo legal moves for a Queen. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em square} & The square index (0-\/63) where the Queen is located. \\
+\hline
+{\em blockers} & A bitboard representing all pieces on the board (both colors). \\
+\hline
+{\em own\+Pieces} & A bitboard representing all pieces of the moving side. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A bitboard with all valid target squares for the Queen. 
+\end{DoxyReturn}
+\Hypertarget{_pseudo_moves_calc_8c_ae8629c204b57fa4ee09d9f360f431f7e}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!get\_rook\_pseudo\_moves@{get\_rook\_pseudo\_moves}}
+\index{get\_rook\_pseudo\_moves@{get\_rook\_pseudo\_moves}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{get\_rook\_pseudo\_moves()}{get\_rook\_pseudo\_moves()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_ae8629c204b57fa4ee09d9f360f431f7e} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} get\+\_\+rook\+\_\+pseudo\+\_\+moves (\begin{DoxyParamCaption}\item[{int}]{square}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{blockers}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{own\+Pieces}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the pseudo legal moves for a Rook. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em square} & The square index (0-\/63) where the Rook is located. \\
+\hline
+{\em blockers} & A bitboard representing all pieces on the board (both colors). \\
+\hline
+{\em own\+Pieces} & A bitboard representing all pieces of the moving side. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A bitboard with all valid target squares for the Rook. 
+\end{DoxyReturn}
+\Hypertarget{_pseudo_moves_calc_8c_ac88614793dbd01f7a75feb8fa278c6e2}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!is\_square\_attacked@{is\_square\_attacked}}
+\index{is\_square\_attacked@{is\_square\_attacked}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{is\_square\_attacked()}{is\_square\_attacked()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_ac88614793dbd01f7a75feb8fa278c6e2} 
+bool is\+\_\+square\+\_\+attacked (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{int}]{square}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_ab7080093a2f6c8a07270320832aaeccf}{Selection\+Color}}}]{attacking\+Side}{}\end{DoxyParamCaption})}
+
+
+
+Checks if a specific square is attacked by any piece of the given color. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board state. \\
+\hline
+{\em square} & The index of the square to check (0-\/63). \\
+\hline
+{\em attacking\+Side} & The color of the potential attackers. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the square is attacked by the specified side, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{_pseudo_moves_calc_8c_a5830e6bef2cd4c7968e84eb3bfb95d2f}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!no\_ea\_pawns@{no\_ea\_pawns}}
+\index{no\_ea\_pawns@{no\_ea\_pawns}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{no\_ea\_pawns()}{no\_ea\_pawns()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a5830e6bef2cd4c7968e84eb3bfb95d2f} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} no\+\_\+ea\+\_\+pawns (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{b}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_pseudo_moves_calc_8c_a366850b779fa62b0fa7a2d24d857a38b}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!no\_we\_pawns@{no\_we\_pawns}}
+\index{no\_we\_pawns@{no\_we\_pawns}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{no\_we\_pawns()}{no\_we\_pawns()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a366850b779fa62b0fa7a2d24d857a38b} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} no\+\_\+we\+\_\+pawns (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{b}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_pseudo_moves_calc_8c_af18d9f8a40a64345acf05c0a955f3a1c}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!north\_one\_pawns@{north\_one\_pawns}}
+\index{north\_one\_pawns@{north\_one\_pawns}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{north\_one\_pawns()}{north\_one\_pawns()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_af18d9f8a40a64345acf05c0a955f3a1c} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} north\+\_\+one\+\_\+pawns (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{pawns}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_pseudo_moves_calc_8c_a22f2fafa4f15e7353e564195744cd427}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!single\_black\_pawn\_pushes@{single\_black\_pawn\_pushes}}
+\index{single\_black\_pawn\_pushes@{single\_black\_pawn\_pushes}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{single\_black\_pawn\_pushes()}{single\_black\_pawn\_pushes()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a22f2fafa4f15e7353e564195744cd427} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} single\+\_\+black\+\_\+pawn\+\_\+pushes (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{pawns}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{all\+Pieces}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_pseudo_moves_calc_8c_a1a65dd6d0aeb89aca732bd90655825b8}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!single\_white\_pawn\_pushes@{single\_white\_pawn\_pushes}}
+\index{single\_white\_pawn\_pushes@{single\_white\_pawn\_pushes}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{single\_white\_pawn\_pushes()}{single\_white\_pawn\_pushes()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a1a65dd6d0aeb89aca732bd90655825b8} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} single\+\_\+white\+\_\+pawn\+\_\+pushes (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{pawns}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{all\+Pieces}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_pseudo_moves_calc_8c_ad30b5aae16bbcd951264388370d98058}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!so\_ea\_pawns@{so\_ea\_pawns}}
+\index{so\_ea\_pawns@{so\_ea\_pawns}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{so\_ea\_pawns()}{so\_ea\_pawns()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_ad30b5aae16bbcd951264388370d98058} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} so\+\_\+ea\+\_\+pawns (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{b}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_pseudo_moves_calc_8c_ad587330b39bf96cd425231cc8ae22474}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!so\_we\_pawns@{so\_we\_pawns}}
+\index{so\_we\_pawns@{so\_we\_pawns}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{so\_we\_pawns()}{so\_we\_pawns()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_ad587330b39bf96cd425231cc8ae22474} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} so\+\_\+we\+\_\+pawns (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{b}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_pseudo_moves_calc_8c_a256ea0a39618094e35aea30a6434d077}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!south\_one\_pawns@{south\_one\_pawns}}
+\index{south\_one\_pawns@{south\_one\_pawns}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{south\_one\_pawns()}{south\_one\_pawns()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a256ea0a39618094e35aea30a6434d077} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} south\+\_\+one\+\_\+pawns (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{pawns}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_pseudo_moves_calc_8c_a1cd6ffe0a549f1320ec06855c0a1a88e}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!white\_generate\_pseudo\_moves@{white\_generate\_pseudo\_moves}}
+\index{white\_generate\_pseudo\_moves@{white\_generate\_pseudo\_moves}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{white\_generate\_pseudo\_moves()}{white\_generate\_pseudo\_moves()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a1cd6ffe0a549f1320ec06855c0a1a88e} 
+void white\+\_\+generate\+\_\+pseudo\+\_\+moves (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_board}{Board}} \texorpdfstring{$\ast$}{*}}]{board}{, }\item[{\doxymbox{\hyperlink{struct_move_list}{Move\+List}} \texorpdfstring{$\ast$}{*}}]{list}{}\end{DoxyParamCaption})}
+
+
+
+Generates all possible pseudo legal moves for White. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em board} & Pointer to the current board state. \\
+\hline
+{\em list} & Pointer to the \doxylink{struct_move_list}{Move\+List} to populate. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_pseudo_moves_calc_8c_a19ae16bb2718308e1fe54f00f2f12892}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!white\_pawns\_able\_to\_double\_push@{white\_pawns\_able\_to\_double\_push}}
+\index{white\_pawns\_able\_to\_double\_push@{white\_pawns\_able\_to\_double\_push}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{white\_pawns\_able\_to\_double\_push()}{white\_pawns\_able\_to\_double\_push()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a19ae16bb2718308e1fe54f00f2f12892} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} white\+\_\+pawns\+\_\+able\+\_\+to\+\_\+double\+\_\+push (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{pawns}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{all\+Pieces}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_pseudo_moves_calc_8c_a6609ec96e62290070ed87d697015fc3e}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!white\_pawns\_able\_to\_push@{white\_pawns\_able\_to\_push}}
+\index{white\_pawns\_able\_to\_push@{white\_pawns\_able\_to\_push}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{white\_pawns\_able\_to\_push()}{white\_pawns\_able\_to\_push()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a6609ec96e62290070ed87d697015fc3e} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} white\+\_\+pawns\+\_\+able\+\_\+to\+\_\+push (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{pawns}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{all\+Pieces}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_pseudo_moves_calc_8c_a17d63e690c8f198db1ca5ef4cbf97c96}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!white\_pawns\_all\_attacks@{white\_pawns\_all\_attacks}}
+\index{white\_pawns\_all\_attacks@{white\_pawns\_all\_attacks}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{white\_pawns\_all\_attacks()}{white\_pawns\_all\_attacks()}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a17d63e690c8f198db1ca5ef4cbf97c96} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} white\+\_\+pawns\+\_\+all\+\_\+attacks (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{pawns}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-var-members}
+\Hypertarget{_pseudo_moves_calc_8c_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{_pseudo_moves_calc_8c_a7cc2b2c9fcf458b0986eefc084ab25b4}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!CastlingBlockers@{CastlingBlockers}}
+\index{CastlingBlockers@{CastlingBlockers}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{CastlingBlockers}{CastlingBlockers}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a7cc2b2c9fcf458b0986eefc084ab25b4} 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} Castling\+Blockers\+[4]\+}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \{}
+\DoxyCodeLine{\ \ \ \ 96ULL,}
+\DoxyCodeLine{\ \ \ \ 14ULL,}
+\DoxyCodeLine{\ \ \ \ 0x6000000000000000ULL,}
+\DoxyCodeLine{\ \ \ \ 0x0E00000000000000ULL,}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{_pseudo_moves_calc_8c_a23c9a8a96b68afa833994cab001dbacd}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!CastlingDestinations@{CastlingDestinations}}
+\index{CastlingDestinations@{CastlingDestinations}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{CastlingDestinations}{CastlingDestinations}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a23c9a8a96b68afa833994cab001dbacd} 
+const int Castling\+Destinations\+[4]\+}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \{}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{_chess_definitions_8h_a2509d1192220c764ec65cccc5bd9766faaec6d2231567cdb9063f093d8effa224}{G1}},}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{_chess_definitions_8h_a2509d1192220c764ec65cccc5bd9766fae54c31a855b907f263d49edcdbe677bd}{C1}},}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{_chess_definitions_8h_a2509d1192220c764ec65cccc5bd9766faa1c865ccd52132fb116c4587969e6ad8}{G8}},}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{_chess_definitions_8h_a2509d1192220c764ec65cccc5bd9766fa6a72e133ec9df7aadaeef87557e5cbb0}{C8}}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{_pseudo_moves_calc_8c_af2e5504263094ffae5f44b18b6eba18d}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!rank1@{rank1}}
+\index{rank1@{rank1}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{rank1}{rank1}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_af2e5504263094ffae5f44b18b6eba18d} 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} rank1 = 0x00000000000000\+FFULL}
+
+\Hypertarget{_pseudo_moves_calc_8c_ad8c8e100c597dd28f404105360834043}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!rank2@{rank2}}
+\index{rank2@{rank2}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{rank2}{rank2}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_ad8c8e100c597dd28f404105360834043} 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} rank2 = 0x000000000000\+FF00\+ULL}
+
+\Hypertarget{_pseudo_moves_calc_8c_a52f9fbb978d3dfa524fe160cbf5e8e98}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!rank4@{rank4}}
+\index{rank4@{rank4}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{rank4}{rank4}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a52f9fbb978d3dfa524fe160cbf5e8e98} 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} rank4 = 0x00000000\+FF000000\+ULL}
+
+\Hypertarget{_pseudo_moves_calc_8c_a2691696685295558ccc305b4eeec6e5f}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!rank5@{rank5}}
+\index{rank5@{rank5}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{rank5}{rank5}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a2691696685295558ccc305b4eeec6e5f} 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} rank5 = 0x000000\+FF00000000\+ULL}
+
+\Hypertarget{_pseudo_moves_calc_8c_a11c4c9914c3cc85c4314ba1fffd8d2e2}\index{PseudoMovesCalc.c@{PseudoMovesCalc.c}!rank8@{rank8}}
+\index{rank8@{rank8}!PseudoMovesCalc.c@{PseudoMovesCalc.c}}
+\doxysubsubsection{\texorpdfstring{rank8}{rank8}}
+{\footnotesize\ttfamily \label{_pseudo_moves_calc_8c_a11c4c9914c3cc85c4314ba1fffd8d2e2} 
+const \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} rank8 = 0x\+FF00000000000000\+ULL}
+

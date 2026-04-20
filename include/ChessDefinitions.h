@@ -1,26 +1,34 @@
+/**
+ * @file ChessDefinitions.h
+ * @brief Basic enumerations and constants for chess pieces, colors, and squares.
+ */
 #ifndef CHESS_DEFINITIONS_H
 #define CHESS_DEFINITIONS_H
-
-
 
 #include <stdbool.h>
 #include <stdio.h>
 
+ /**
+ * @brief Unsigned 64-bit integer, used for bitboards.
+ */
 typedef unsigned long long U64;
 
-// Standard piece and square definitions taken from chess programming wiki
+/**
+ * @name Standard Definitions
+ * @brief Standard piece, color, and square definitions taken from the Chess Programming Wiki.
+ * @{
+ */
 typedef enum { PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING, NONE } PieceType;
-
 typedef enum { EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK } PieceId;
-
 typedef enum { FILE_A, FILE_B, FILE_C, FILE_D, FILE_E, FILE_F, FILE_G, FILE_NONE } FileId;
-
 typedef enum { RANK_1, RANK_2, RANK_3, RANK_4, RANK_5, RANK_6, RANK_7, RANK_8, RANK_NONE } RankId;
-
 typedef enum { WHITE, BLACK, BOTH } SelectionColor;
+/** @} */
 
-
-// Square IDs for a standard 8x8 chessboard, with NO_SQ representing an invalid square
+/**
+ * @enum SquareId
+ * @brief Square IDs for a standard 8x8 chessboard, with NO_SQ representing an invalid square.
+ */
 typedef enum {
     A1, B1, C1, D1, E1, F1, G1, H1,
     A2, B2, C2, D2, E2, F2, G2, H2,
@@ -33,10 +41,15 @@ typedef enum {
     NO_SQ
 } SquareId;
 
+/**
+ * @brief Array used to quickly update castling permissions based on the moved/captured piece's square.
+ */
 extern const int castlingMask[64];
 
-
-// Castling permissions (represented as bit flags)
+/**
+ * @enum CastlingPermissions
+ * @brief Castling permissions represented as bit flags.
+ */
 typedef enum { WKCA = 1, WQCA = 2, BKCA = 4, BQCA = 8 } CastlingPermissions;
 
 #endif // !CHESS_DEFINITIONS_H

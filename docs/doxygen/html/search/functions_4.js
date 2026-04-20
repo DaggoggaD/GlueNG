@@ -1,0 +1,7 @@
+var searchData=
+[
+  ['evaluate_0',['evaluate',['../_move_evaluation_8h.html#a3e67c53ebf0cea1b0dfc9b3025faa9e1',1,'evaluate(Board *board, int alpha, int beta):&#160;MoveEvaluation.c'],['../_move_evaluation_8c.html#a3e67c53ebf0cea1b0dfc9b3025faa9e1',1,'evaluate(Board *board, int alpha, int beta):&#160;MoveEvaluation.c']]],
+  ['evaluate_5fblack_5fpassed_5fpawns_1',['evaluate_black_passed_pawns',['../_move_evaluation_8h.html#a00e889e9d762bcfbca1a0a9aa0acf89b',1,'evaluate_black_passed_pawns(U64 wPawn, U64 bPawn, int file, int *score):&#160;MoveEvaluation.c'],['../_move_evaluation_8c.html#a00e889e9d762bcfbca1a0a9aa0acf89b',1,'evaluate_black_passed_pawns(U64 wPawn, U64 bPawn, int file, int *score):&#160;MoveEvaluation.c']]],
+  ['evaluate_5fmove_2',['evaluate_move',['../_move_evaluation_8h.html#a74bc9c4cc3d4455640ec5abcc5ffbef9',1,'evaluate_move(Board *board, int move, SearchState *state, int *legalMoves, MoveList *list):&#160;MoveEvaluation.c'],['../_move_evaluation_8c.html#a74bc9c4cc3d4455640ec5abcc5ffbef9',1,'evaluate_move(Board *board, int move, SearchState *state, int *legalMoves, MoveList *list):&#160;MoveEvaluation.c']]],
+  ['evaluate_5fwhite_5fpassed_5fpawns_3',['evaluate_white_passed_pawns',['../_move_evaluation_8h.html#a59a1fbff388b49fd2f1518bcc6c49269',1,'evaluate_white_passed_pawns(U64 wPawn, U64 bPawn, int file, int *score):&#160;MoveEvaluation.c'],['../_move_evaluation_8c.html#a59a1fbff388b49fd2f1518bcc6c49269',1,'evaluate_white_passed_pawns(U64 wPawn, U64 bPawn, int file, int *score):&#160;MoveEvaluation.c']]]
+];

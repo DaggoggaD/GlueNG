@@ -1,0 +1,237 @@
+\doxysection{include/\+\+Magic\+Bitboards.h File Reference}
+\hypertarget{_magic_bitboards_8h}{}\label{_magic_bitboards_8h}\index{include/MagicBitboards.h@{include/MagicBitboards.h}}
+
+
+Definitions and functions for sliding piece move generation using Magic Bitboards.  
+
+
+{\ttfamily \+\#include "{}Headers.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{structm_entry}{m\+Entry}}
+\begin{DoxyCompactList}\small\item\em Represents a single magic entry for a specific square and piece type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \doxymbox{\hyperlink{structm_entry}{m\+Entry}} \doxymbox{\hyperlink{_magic_bitboards_8h_a963cb82e1239366c40939d3d33891872}{Magic\+Entry}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{_magic_bitboards_8h_a3b4d5b9b8a3b83e02fc3a4528bdd94e0}{get\+\_\+magic\+\_\+index}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} b, \doxymbox{\hyperlink{_magic_bitboards_8h_a963cb82e1239366c40939d3d33891872}{Magic\+Entry}} \texorpdfstring{$\ast$}{*}entry)
+\begin{DoxyCompactList}\small\item\em Given a blocker configuration and a magic entry, it calculates the magic index by applying the magic multiplication and the appropriate shift. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_magic_bitboards_8h_ac83f679193fe3e5bd56d8b1d5b5099db}{count\+\_\+active\+\_\+bits}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} b)
+\begin{DoxyCompactList}\small\item\em Counts the number of all active bits in a bitboard. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_magic_bitboards_8h_a37dca072f15f071832fe1dc23157f2c2}{set\+\_\+occupancies\+\_\+mapping}} (\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} mask, int pattern\+ID)
+\begin{DoxyCompactList}\small\item\em Given a mask and a pattern\+ID, it sets the bits in the occipancy bitboard according to the active bits in the mask and the pattern\+ID. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_magic_bitboards_8h_aa3d7e3ac4641b12da0f7b6bdcea55c8e}{calc\+\_\+rook\+\_\+attack\+\_\+rays}} (int square, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} blockers)
+\begin{DoxyCompactList}\small\item\em Calculates all the attack rays for a rook, starting on the given square, and with the given blocker configuration. It also counts the blocker squares as attacked. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_magic_bitboards_8h_a2a0c2a43663d7dc51cc7f430ec42e995}{calc\+\_\+bishop\+\_\+attack\+\_\+rays}} (int square, \doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} blockers)
+\begin{DoxyCompactList}\small\item\em Same as "{}calc\+\_\+rook\+\_\+attack\+\_\+rays"{}, but for bishops. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_magic_bitboards_8h_a8131584250f3af111454a3e5acb29f53}{initialize\+\_\+magic\+\_\+bitboards}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the rook, bishop and queen magic entries and attack tables. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{Indent}\textbf{ Global Magic Arrays}\par
+{\em Precomputed tables containing magic entries and actual move bitboards. }\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_magic_bitboards_8h_a963cb82e1239366c40939d3d33891872}{Magic\+Entry}} \doxymbox{\hyperlink{_magic_bitboards_8h_a7075475cb2b042c88b79e22cc461ac2f}{Rook\+Magics}} \+[\doxymbox{\hyperlink{_headers_8h_a018d9802b5537b3dbc89aef8d7eb0492}{BRD\+\_\+\+SIZE}}]\+
+\item 
+\doxymbox{\hyperlink{_magic_bitboards_8h_a963cb82e1239366c40939d3d33891872}{Magic\+Entry}} \doxymbox{\hyperlink{_magic_bitboards_8h_a90a90e1c36568c08ef0d231020b0a7d7}{Bishop\+Magics}} \+[\doxymbox{\hyperlink{_headers_8h_a018d9802b5537b3dbc89aef8d7eb0492}{BRD\+\_\+\+SIZE}}]\+
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_magic_bitboards_8h_a03149b2bd0026f99ec0c25eba8935ac8}{Rook\+Moves}} \+[\doxymbox{\hyperlink{_headers_8h_a018d9802b5537b3dbc89aef8d7eb0492}{BRD\+\_\+\+SIZE}}]\+\+[4096]\+
+\item 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} \doxymbox{\hyperlink{_magic_bitboards_8h_a4595eae3067a9a4941eeb2ad62ef2f07}{Bishop\+Moves}} \+[\doxymbox{\hyperlink{_headers_8h_a018d9802b5537b3dbc89aef8d7eb0492}{BRD\+\_\+\+SIZE}}]\+\+[512]\+
+\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\doxysubsection{Detailed Description}
+Definitions and functions for sliding piece move generation using Magic Bitboards. 
+
+
+\begin{DoxyItemize}
+\item \begin{DoxyNote}{Note}
+Learnt from:\+
+\end{DoxyNote}
+
+\item \href{https://analog-hors.github.io/site/magic-bitboards/}{\texttt{https:\+/\+/\+analog-\/hors.\+github.\+io/\+site/\+magic-\/bitboards/\+}}
+\item \href{https://www.chessprogramming.org/Magic_Bitboards}{\texttt{https:\+/\+/\+www.\+chessprogramming.\+org/\+\+Magic\+\_\+\+Bitboards}} 
+\end{DoxyItemize}
+
+\label{doc-typedef-members}
+\Hypertarget{_magic_bitboards_8h_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{_magic_bitboards_8h_a963cb82e1239366c40939d3d33891872}\index{MagicBitboards.h@{MagicBitboards.h}!MagicEntry@{MagicEntry}}
+\index{MagicEntry@{MagicEntry}!MagicBitboards.h@{MagicBitboards.h}}
+\doxysubsubsection{\texorpdfstring{MagicEntry}{MagicEntry}}
+{\footnotesize\ttfamily \label{_magic_bitboards_8h_a963cb82e1239366c40939d3d33891872} 
+typedef struct \doxymbox{\hyperlink{structm_entry}{m\+Entry}} \doxymbox{\hyperlink{_magic_bitboards_8h_a963cb82e1239366c40939d3d33891872}{Magic\+Entry}}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{_magic_bitboards_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_magic_bitboards_8h_a2a0c2a43663d7dc51cc7f430ec42e995}\index{MagicBitboards.h@{MagicBitboards.h}!calc\_bishop\_attack\_rays@{calc\_bishop\_attack\_rays}}
+\index{calc\_bishop\_attack\_rays@{calc\_bishop\_attack\_rays}!MagicBitboards.h@{MagicBitboards.h}}
+\doxysubsubsection{\texorpdfstring{calc\_bishop\_attack\_rays()}{calc\_bishop\_attack\_rays()}}
+{\footnotesize\ttfamily \label{_magic_bitboards_8h_a2a0c2a43663d7dc51cc7f430ec42e995} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} calc\+\_\+bishop\+\_\+attack\+\_\+rays (\begin{DoxyParamCaption}\item[{int}]{square}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{blockers}{}\end{DoxyParamCaption})}
+
+
+
+Same as "{}calc\+\_\+rook\+\_\+attack\+\_\+rays"{}, but for bishops. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em square} & Bishop position, 0-\/63 index. \\
+\hline
+{\em blockers} & Bitboard with blocker positions. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The bitboard containing the bishop\textquotesingle{}s attack rays. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_magic_bitboards_8h_aa3d7e3ac4641b12da0f7b6bdcea55c8e}\index{MagicBitboards.h@{MagicBitboards.h}!calc\_rook\_attack\_rays@{calc\_rook\_attack\_rays}}
+\index{calc\_rook\_attack\_rays@{calc\_rook\_attack\_rays}!MagicBitboards.h@{MagicBitboards.h}}
+\doxysubsubsection{\texorpdfstring{calc\_rook\_attack\_rays()}{calc\_rook\_attack\_rays()}}
+{\footnotesize\ttfamily \label{_magic_bitboards_8h_aa3d7e3ac4641b12da0f7b6bdcea55c8e} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} calc\+\_\+rook\+\_\+attack\+\_\+rays (\begin{DoxyParamCaption}\item[{int}]{square}{, }\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{blockers}{}\end{DoxyParamCaption})}
+
+
+
+Calculates all the attack rays for a rook, starting on the given square, and with the given blocker configuration. It also counts the blocker squares as attacked. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em square} & Rook position, 0-\/63 index. \\
+\hline
+{\em blockers} & Bitboard with blocker positions. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The bitboard containing the rook\textquotesingle{}s attack rays. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_magic_bitboards_8h_ac83f679193fe3e5bd56d8b1d5b5099db}\index{MagicBitboards.h@{MagicBitboards.h}!count\_active\_bits@{count\_active\_bits}}
+\index{count\_active\_bits@{count\_active\_bits}!MagicBitboards.h@{MagicBitboards.h}}
+\doxysubsubsection{\texorpdfstring{count\_active\_bits()}{count\_active\_bits()}}
+{\footnotesize\ttfamily \label{_magic_bitboards_8h_ac83f679193fe3e5bd56d8b1d5b5099db} 
+int count\+\_\+active\+\_\+bits (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{b}{}\end{DoxyParamCaption})}
+
+
+
+Counts the number of all active bits in a bitboard. 
+
+
+\begin{DoxyItemize}
+\item \begin{DoxyNote}{Note}
+Could use \+\_\+\+\_\+popcnt64. However, it is only called during initialization, so it is not a performance concern.
+\end{DoxyNote}
+
+\item 
+\begin{DoxyParams}{Parameters}
+{\em b} & The bitboard to evaluate. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of active bits. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_magic_bitboards_8h_a3b4d5b9b8a3b83e02fc3a4528bdd94e0}\index{MagicBitboards.h@{MagicBitboards.h}!get\_magic\_index@{get\_magic\_index}}
+\index{get\_magic\_index@{get\_magic\_index}!MagicBitboards.h@{MagicBitboards.h}}
+\doxysubsubsection{\texorpdfstring{get\_magic\_index()}{get\_magic\_index()}}
+{\footnotesize\ttfamily \label{_magic_bitboards_8h_a3b4d5b9b8a3b83e02fc3a4528bdd94e0} 
+int get\+\_\+magic\+\_\+index (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{b}{, }\item[{\doxymbox{\hyperlink{_magic_bitboards_8h_a963cb82e1239366c40939d3d33891872}{Magic\+Entry}} \texorpdfstring{$\ast$}{*}}]{entry}{}\end{DoxyParamCaption})}
+
+
+
+Given a blocker configuration and a magic entry, it calculates the magic index by applying the magic multiplication and the appropriate shift. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em b} & Blocker configuration bitboard. \\
+\hline
+{\em entry} & Magic entry containing the occupancy mask, the magic number and the index bits. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The calculated magic index. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\Hypertarget{_magic_bitboards_8h_a8131584250f3af111454a3e5acb29f53}\index{MagicBitboards.h@{MagicBitboards.h}!initialize\_magic\_bitboards@{initialize\_magic\_bitboards}}
+\index{initialize\_magic\_bitboards@{initialize\_magic\_bitboards}!MagicBitboards.h@{MagicBitboards.h}}
+\doxysubsubsection{\texorpdfstring{initialize\_magic\_bitboards()}{initialize\_magic\_bitboards()}}
+{\footnotesize\ttfamily \label{_magic_bitboards_8h_a8131584250f3af111454a3e5acb29f53} 
+void initialize\+\_\+magic\+\_\+bitboards (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the rook, bishop and queen magic entries and attack tables. 
+
+
+\begin{DoxyItemize}
+\item \begin{DoxyNote}{Note}
+Could easily be optimized by merging the loops, but it is clearer to keep them separated, and the initialization is only done once on startup, so it is not a problem. 
+\end{DoxyNote}
+
+\end{DoxyItemize}\Hypertarget{_magic_bitboards_8h_a37dca072f15f071832fe1dc23157f2c2}\index{MagicBitboards.h@{MagicBitboards.h}!set\_occupancies\_mapping@{set\_occupancies\_mapping}}
+\index{set\_occupancies\_mapping@{set\_occupancies\_mapping}!MagicBitboards.h@{MagicBitboards.h}}
+\doxysubsubsection{\texorpdfstring{set\_occupancies\_mapping()}{set\_occupancies\_mapping()}}
+{\footnotesize\ttfamily \label{_magic_bitboards_8h_a37dca072f15f071832fe1dc23157f2c2} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} set\+\_\+occupancies\+\_\+mapping (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}}}]{mask}{, }\item[{int}]{pattern\+ID}{}\end{DoxyParamCaption})}
+
+
+
+Given a mask and a pattern\+ID, it sets the bits in the occipancy bitboard according to the active bits in the mask and the pattern\+ID. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em mask} & Pre-\/calculated bitboard, all possible positions without blockers and edges. \\
+\hline
+{\em pattern\+ID} & Number from 0 to 2\texorpdfstring{$^\wedge$}{\string^}(active bits in the mask) -\/ 1, used to set the corresponding bits in the occupancy bitboard. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The constructed occupancy bitboard. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}
+
+\label{doc-var-members}
+\Hypertarget{_magic_bitboards_8h_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{_magic_bitboards_8h_a90a90e1c36568c08ef0d231020b0a7d7}\index{MagicBitboards.h@{MagicBitboards.h}!BishopMagics@{BishopMagics}}
+\index{BishopMagics@{BishopMagics}!MagicBitboards.h@{MagicBitboards.h}}
+\doxysubsubsection{\texorpdfstring{BishopMagics}{BishopMagics}}
+{\footnotesize\ttfamily \label{_magic_bitboards_8h_a90a90e1c36568c08ef0d231020b0a7d7} 
+\doxymbox{\hyperlink{_magic_bitboards_8h_a963cb82e1239366c40939d3d33891872}{Magic\+Entry}} Bishop\+Magics\+[\doxymbox{\hyperlink{_headers_8h_a018d9802b5537b3dbc89aef8d7eb0492}{BRD\+\_\+\+SIZE}}]\+\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{_magic_bitboards_8h_a4595eae3067a9a4941eeb2ad62ef2f07}\index{MagicBitboards.h@{MagicBitboards.h}!BishopMoves@{BishopMoves}}
+\index{BishopMoves@{BishopMoves}!MagicBitboards.h@{MagicBitboards.h}}
+\doxysubsubsection{\texorpdfstring{BishopMoves}{BishopMoves}}
+{\footnotesize\ttfamily \label{_magic_bitboards_8h_a4595eae3067a9a4941eeb2ad62ef2f07} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} Bishop\+Moves\+[\doxymbox{\hyperlink{_headers_8h_a018d9802b5537b3dbc89aef8d7eb0492}{BRD\+\_\+\+SIZE}}]\+\+[512]\+\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{_magic_bitboards_8h_a7075475cb2b042c88b79e22cc461ac2f}\index{MagicBitboards.h@{MagicBitboards.h}!RookMagics@{RookMagics}}
+\index{RookMagics@{RookMagics}!MagicBitboards.h@{MagicBitboards.h}}
+\doxysubsubsection{\texorpdfstring{RookMagics}{RookMagics}}
+{\footnotesize\ttfamily \label{_magic_bitboards_8h_a7075475cb2b042c88b79e22cc461ac2f} 
+\doxymbox{\hyperlink{_magic_bitboards_8h_a963cb82e1239366c40939d3d33891872}{Magic\+Entry}} Rook\+Magics\+[\doxymbox{\hyperlink{_headers_8h_a018d9802b5537b3dbc89aef8d7eb0492}{BRD\+\_\+\+SIZE}}]\+\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{_magic_bitboards_8h_a03149b2bd0026f99ec0c25eba8935ac8}\index{MagicBitboards.h@{MagicBitboards.h}!RookMoves@{RookMoves}}
+\index{RookMoves@{RookMoves}!MagicBitboards.h@{MagicBitboards.h}}
+\doxysubsubsection{\texorpdfstring{RookMoves}{RookMoves}}
+{\footnotesize\ttfamily \label{_magic_bitboards_8h_a03149b2bd0026f99ec0c25eba8935ac8} 
+\doxymbox{\hyperlink{_chess_definitions_8h_a24c386d3758eba951eb7532fdbb45804}{U64}} Rook\+Moves\+[\doxymbox{\hyperlink{_headers_8h_a018d9802b5537b3dbc89aef8d7eb0492}{BRD\+\_\+\+SIZE}}]\+\+[4096]\+\hspace{0.3cm}{\ttfamily [extern]}}
+

@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['b1_0',['B1',['../_chess_definitions_8h.html#a2509d1192220c764ec65cccc5bd9766fad90c5e7444630b8d170b08d0853aae21',1,'ChessDefinitions.h']]],
+  ['b2_1',['B2',['../_chess_definitions_8h.html#a2509d1192220c764ec65cccc5bd9766fa9bfbe74b27169e5bd5bd5dc020fdd00b',1,'ChessDefinitions.h']]],
+  ['b3_2',['B3',['../_chess_definitions_8h.html#a2509d1192220c764ec65cccc5bd9766fa008e5845e069ecd71e49f3d18ec21130',1,'ChessDefinitions.h']]],
+  ['b4_3',['B4',['../_chess_definitions_8h.html#a2509d1192220c764ec65cccc5bd9766fa6e242c85f0b91e8879200ec3004a4cab',1,'ChessDefinitions.h']]],
+  ['b5_4',['B5',['../_chess_definitions_8h.html#a2509d1192220c764ec65cccc5bd9766faf238f32976f4a2c27a517bd1ad47be36',1,'ChessDefinitions.h']]],
+  ['b6_5',['B6',['../_chess_definitions_8h.html#a2509d1192220c764ec65cccc5bd9766fa0eb7e951c71ad8f7ea59d513e8d57747',1,'ChessDefinitions.h']]],
+  ['b7_6',['B7',['../_chess_definitions_8h.html#a2509d1192220c764ec65cccc5bd9766fa561ae7a12dd8bf549f1b7e647354297e',1,'ChessDefinitions.h']]],
+  ['b8_7',['B8',['../_chess_definitions_8h.html#a2509d1192220c764ec65cccc5bd9766fa36820f60b2f0bee85a682e3f0b6e0fea',1,'ChessDefinitions.h']]],
+  ['bb_8',['bB',['../_chess_definitions_8h.html#ac7176b069e3697300fd45e6db5899debab0c70cf58d95ae054b33676333c16b41',1,'ChessDefinitions.h']]],
+  ['beta_9',['BETA',['../_transp_tables_8h.html#a0a7b134a0db7b1d02a89e89191ceddf2afbaa3fc38bba7fcfaffd6e5d346288c9',1,'TranspTables.h']]],
+  ['bishop_10',['BISHOP',['../_chess_definitions_8h.html#a12ed9719bbdf7bc596ff7a6f4bf3f021a6bc4b5ac244475b6bd2595d608f18814',1,'ChessDefinitions.h']]],
+  ['bk_11',['bK',['../_chess_definitions_8h.html#ac7176b069e3697300fd45e6db5899debae563898f2eb35891b28311f1bdd6d74b',1,'ChessDefinitions.h']]],
+  ['bkca_12',['BKCA',['../_chess_definitions_8h.html#a67ed716b90f53466e2444fc5470996bbadca5d258ee038af989898b86acb9476d',1,'ChessDefinitions.h']]],
+  ['black_13',['BLACK',['../_chess_definitions_8h.html#ab7080093a2f6c8a07270320832aaeccfaf77fb67151d0c18d397069ad8c271ba3',1,'ChessDefinitions.h']]],
+  ['bn_14',['bN',['../_chess_definitions_8h.html#ac7176b069e3697300fd45e6db5899deba3d5b44ec8710049da801e4f0ad74e8c2',1,'ChessDefinitions.h']]],
+  ['both_15',['BOTH',['../_chess_definitions_8h.html#ab7080093a2f6c8a07270320832aaeccfa627abe5a430420baf29ebe1940a7f2fb',1,'ChessDefinitions.h']]],
+  ['bp_16',['bP',['../_chess_definitions_8h.html#ac7176b069e3697300fd45e6db5899deba79c461c3a23d04c94cc7718d38b938cb',1,'ChessDefinitions.h']]],
+  ['bq_17',['bQ',['../_chess_definitions_8h.html#ac7176b069e3697300fd45e6db5899deba0c7e8e5d9e9597075a4aec0af5c9033f',1,'ChessDefinitions.h']]],
+  ['bqca_18',['BQCA',['../_chess_definitions_8h.html#a67ed716b90f53466e2444fc5470996bba910d51b4da7f402dc4416fe3237afb7b',1,'ChessDefinitions.h']]],
+  ['br_19',['bR',['../_chess_definitions_8h.html#ac7176b069e3697300fd45e6db5899deba8b6736d91dfcadd8e1dc5d72e729e370',1,'ChessDefinitions.h']]]
+];

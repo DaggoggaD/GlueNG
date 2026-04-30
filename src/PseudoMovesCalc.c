@@ -336,7 +336,7 @@ static inline void white_generate_queen_pseudo(Board* board, MoveList* list) {
 
 static inline void white_generate_king_pseudo(Board* board, MoveList* list) {
 	U64 king = board->pieceBitboards[WHITE][KING];
-	if (king) { // Usiamo if perché c'è un solo Re
+	if (king) {
 		int square = get_lsb_index(king);
 		U64 attacks = get_king_pseudo_moves(square, board->occupiedBitboards[WHITE]);
 
